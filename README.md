@@ -92,7 +92,3 @@ All components return a div, and so the css can be accessed/overwritten in the f
     // css goes here
 }
 ```
-
-## License
-
-n/a © [lewiswolf](https://github.com/lewiswolf)
