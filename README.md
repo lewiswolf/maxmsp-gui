@@ -15,7 +15,7 @@ npm i maxmsp-gui
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 
 import * as MaxMSP from 'maxmsp-gui'
 import 'maxmsp-gui/dist/index.css'
@@ -89,9 +89,10 @@ All components return a div, and so the css can be accessed/overwritten in the f
 
 ```css
 .wrapper div:nth-of-type(n) {
-	// css goes here
+    // css goes here
 }
 ```
+
 ## License
 
 n/a © [lewiswolf](https://github.com/lewiswolf)
