@@ -1,0 +1,9 @@
+@mixin main() {
+	cursor: default;
+	user-select: none;
+	font-family: Arial;
+	word-break: break-word;
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: transparent;
+	position: relative;
+}

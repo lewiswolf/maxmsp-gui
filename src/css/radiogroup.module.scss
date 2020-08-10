@@ -1,0 +1,42 @@
+@import './main.scss';
+
+.radiogroup {
+	@include main();
+	height: fit-content;
+	width: fit-content;
+	max-width: 100%;
+	background: unset;
+	overflow: hidden;
+
+	> li {
+		width: fit-content;
+		display: flex;
+		float: right;
+		clear: right;
+
+		p {
+			height: inherit;
+			width: fit-content;
+			margin: 0;
+			float: right;
+			text-align: right;
+			vertical-align: middle;
+			overflow-x: hidden;
+			font-size: 16px;
+			font-weight: bold;
+			color: black;
+		}
+
+		div {
+			height: inherit;
+			width: 20px;
+			background: #333333;
+			display: grid;
+			place-items: center;
+
+			svg {
+				width: inherit;
+			}
+		}
+	}
+}
