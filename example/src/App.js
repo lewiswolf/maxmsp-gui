@@ -10,6 +10,7 @@ export default function App() {
     <MaxMSP.Ezdac />
     <MaxMSP.Message text={'text'} />
     <MaxMSP.Object text={'text'} />
+    <MaxMSP.Playbar />
     <MaxMSP.RadioGroup />
     <MaxMSP.Slider />
     <MaxMSP.TextButton />
