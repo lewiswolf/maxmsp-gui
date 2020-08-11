@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { ReactComponent as SVG } from '../svg/toggle.svg'
-import style from '../css/toggle.module.scss'
+import style from '../scss/toggle.module.scss'
 
 export default class Toggle extends Component {
     static propTypes = {

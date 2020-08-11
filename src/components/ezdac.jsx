@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { ReactComponent as SVG } from '../svg/ezdac.svg'
-import style from '../css/ezdac.module.scss'
+import style from '../scss/ezdac.module.scss'
 
 export default class Ezdac extends Component {
     static propTypes = {

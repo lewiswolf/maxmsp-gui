@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import propTypes from 'prop-types'
 import { ReactComponent as PauseButton } from '../svg/playbar-pause.svg'
 import { ReactComponent as PlayButton } from '../svg/playbar-play.svg'
-import style from '../css/playbar.module.scss'
+import style from '../scss/playbar.module.scss'
 
 export default class Playbar extends Component {
     static propTypes = {
@@ -118,19 +118,6 @@ export default class Playbar extends Component {
                         onTouchStart: () => this.playButtonMouseDown(),
                     }
                 )}
-                {/* <SVG
-					style={{
-						fill: !this.props.inactive ? '#cee5e8' : '#808080',
-						background: this.state.playMouseDown
-							? 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)'
-							: 'inherit',
-					}}
-					src={require(`../svg/playbar-${
-						!this.props.inactive && this.state.isPlaying ? 'pause' : 'play'
-					}.svg`)}
-					onMouseDown={() => this.playButtonMouseDown()}
-					onTouchStart={() => this.playButtonMouseDown()}
-				/> */}
                 <hr />
                 <svg
                     version='1.1'

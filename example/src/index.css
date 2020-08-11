@@ -5,12 +5,12 @@ body {
 
 #root {
     display: grid;
-    grid-template-rows: repeat(11, 70px);
+    grid-template-rows: repeat(12, 70px);
     place-items: center;
 }
 
 h2 {
-    font: Arial;
+    font-family: Arial;
     user-select: none;
     padding: 0 5px;
     text-align: center;

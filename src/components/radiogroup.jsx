@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { ReactComponent as SVG } from '../svg/radiogroup-row.svg'
-import style from '../css/radiogroup.module.scss'
+import style from '../scss/radiogroup.module.scss'
 
 export default class RadioGroup extends Component {
     static propTypes = {

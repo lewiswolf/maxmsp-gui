@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import propTypes from 'prop-types'
-import style from '../css/slider.module.scss'
-
-/*
-	- could have an orientation option... 
-		props would be 
-			length (to replace width): {n-px} default 200
-			orientation: { true for horizontal and false for vertical } default true
-*/
+import style from '../scss/slider.module.scss'
 
 const sliderColors = {
     positive: '#CEE5E8',
@@ -20,12 +13,14 @@ export default class Slider extends Component {
     static propTypes = {
         value: propTypes.number,
         length: propTypes.number,
+        vertical: propTypes.bool, // ?
         onChange: propTypes.func,
     }
 
     static defaultProps = {
         value: 0,
         length: 200,
+        vertical: false, // ?
     }
 
     state = {

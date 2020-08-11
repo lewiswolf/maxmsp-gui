@@ -70,7 +70,7 @@ export default function main() => {
         />
 
         <MaxMSP.Toggle
-            initial={true || false} // default 0
+            initial={true || false} // default false
             onClick={(bool) => console.log(bool)} // 0 or 1
         />
 
@@ -92,3 +92,5 @@ All components return a div, and so the css can be accessed/overwritten in the f
     // css goes here
 }
 ```
+
+This package was made with `npx create-react-library`

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { ReactComponent as SVG } from '../svg/inlet.svg'
-import style from '../css/object.module.scss'
+import style from '../scss/object.module.scss'
 
 export default class Object extends Component {
     static propTypes = {

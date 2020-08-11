@@ -15,7 +15,7 @@ export default function App() {
     <MaxMSP.Slider />
     <MaxMSP.TextButton />
     <MaxMSP.Toggle />
-    <MaxMSP.Umenu />
+    <MaxMSP.Umenu items={['foo', 'bar']} />
   </React.Fragment>
   )
 }

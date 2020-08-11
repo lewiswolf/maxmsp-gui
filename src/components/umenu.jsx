@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import propTypes from 'prop-types'
 import { ReactComponent as SVG } from '../svg/umenu-arrow.svg'
-import style from '../css/umenu.module.scss'
+import style from '../scss/umenu.module.scss'
 
 export default class Umenu extends Component {
     static propTypes = {
