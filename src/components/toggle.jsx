@@ -34,7 +34,9 @@ export default class Toggle extends Component {
             >
                 <SVG
                     style={{
-                        background: this.state.toggle ? '#CEE5E8' : '#595959',
+                        background: this.state.toggle
+                            ? 'radial-gradient(22px circle at center,#cee5e8 50%,#333333 50%)'
+                            : '#595959',
                     }}
                 />
             </div>
