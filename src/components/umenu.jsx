@@ -100,6 +100,10 @@ export default class Umenu extends Component {
                         )
                 }
             )
+        } else {
+            this.setState({
+                dropdownDisplay: false,
+            })
         }
     }
 
