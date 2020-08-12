@@ -42,15 +42,9 @@ export default class Playbar extends Component {
             })
 
         this.props.setPlaying !== prevProps.setPlaying &&
-            this.setState(
-                {
-                    isPlaying: this.props.setPlaying,
-                },
-                () =>
-                    !this.props.inactive &&
-                    this.props.isPlaying &&
-                    this.props.isPlaying(this.state.isPlaying)
-            )
+            this.setState({
+                isPlaying: this.props.setPlaying,
+            })
     }
 
     componentDidMount() {
