@@ -63,8 +63,8 @@ export default class RadioGroup extends Component {
                                     style={{
                                         background:
                                             i === this.state.index
-                                                ? '#CEE5E8'
-                                                : '#595959',
+                                                ? 'radial-gradient(18px circle at center,#cee5e8 50%,#333333 50%)'
+                                                : 'radial-gradient(18px circle at center,#595959 50%,#333333 50%)',
                                     }}
                                 />
                             </div>
