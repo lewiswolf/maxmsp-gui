@@ -5,28 +5,38 @@ import style from '../scss/ezdac.module.scss'
 
 export default class Ezdac extends Component {
     static propTypes = {
-        initial: propTypes.bool,
+        value: propTypes.bool,
         onClick: propTypes.func,
     }
 
     static defaultProps = {
-        initial: false,
+        value: false,
     }
 
     state = {
-        toggle: this.props.initial,
+        toggle: this.props.value,
     }
 
-    handleClick = () => {
-        this.setState(
-            { toggle: !this.state.toggle },
-            () => this.props.onClick && this.props.onClick(this.state.toggle)
-        )
+    componentDidUpdate(prevProps) {
+        prevProps.value !== this.props.value &&
+            this.setState({
+                toggle: this.props.value,
+            })
     }
 
     render() {
         return (
-            <div className={style.ezdac} onMouseDown={() => this.handleClick()}>
+            <div
+                className={style.ezdac}
+                onMouseDown={() =>
+                    this.setState(
+                        { toggle: !this.state.toggle },
+                        () =>
+                            this.props.onClick &&
+                            this.props.onClick(this.state.toggle)
+                    )
+                }
+            >
                 <SVG
                     style={{
                         background: this.state.toggle ? '#CEE5E8' : '#595959',

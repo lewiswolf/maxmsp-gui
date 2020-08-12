@@ -5,16 +5,23 @@ import style from '../scss/toggle.module.scss'
 
 export default class Toggle extends Component {
     static propTypes = {
-        initial: propTypes.bool,
+        value: propTypes.bool,
         onClick: propTypes.func,
     }
 
     static defaultProps = {
-        initial: false,
+        value: false,
     }
 
     state = {
-        toggle: this.props.initial,
+        toggle: this.props.value,
+    }
+
+    componentDidUpdate(prevProps) {
+        prevProps.value !== this.props.value &&
+            this.setState({
+                toggle: this.props.value,
+            })
     }
 
     render() {
