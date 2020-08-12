@@ -1,67 +1,67 @@
 @import './main.scss';
 
 @mixin thumbStyle {
-	height: 20px;
-	width: 12px;
-	appearance: none;
-	background: none;
-	border: 0;
-	opacity: 0;
+    height: 20px;
+    width: 12px;
+    appearance: none;
+    background: none;
+    border: 0;
+    opacity: 0;
 }
 
 .playbar {
-	@include main();
-	height: 20px;
-	// width set by component
-	max-width: 100%;
-	background: #333333;
+    @include main();
+    height: 20px;
+    // width set by component
+    max-width: 100%;
+    background: #333333;
 
-	svg {
-		height: 20px;
-		width: 20px;
+    svg {
+        height: 20px;
+        width: 20px;
 
-		&:last-of-type {
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			margin: auto;
-			pointer-events: none;
-		}
-	}
+        &:last-of-type {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            pointer-events: none;
+        }
+    }
 
-	hr {
-		height: 2px;
-		width: calc(100% - 37px);
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 26px;
-		margin: auto;
-		background: #808080;
-		outline: 0;
-		border: 0;
-	}
+    hr {
+        height: 2px;
+        width: calc(100% - 37px);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 26px;
+        margin: auto;
+        background: #808080;
+        outline: 0;
+        border: 0;
+    }
 
-	input {
-		height: 20px;
-		margin: 0;
-		width: calc(100% - 25px);
-		padding: 0 5px 0 0;
-		background: inherit;
-		appearance: none;
-		float: right;
-		z-index: 10;
+    input {
+        height: 20px;
+        margin: 0;
+        width: calc(100% - 25px);
+        padding: 0 5px 0 0;
+        background: inherit;
+        appearance: none;
+        float: right;
+        z-index: 10;
 
-		&:focus {
-			outline: none;
-		}
+        &:focus {
+            outline: none;
+        }
 
-		&::-webkit-slider-thumb {
-			@include thumbStyle();
-		}
+        &::-webkit-slider-thumb {
+            @include thumbStyle();
+        }
 
-		&::-moz-range-thumb {
-			@include thumbStyle();
-		}
-	}
+        &::-moz-range-thumb {
+            @include thumbStyle();
+        }
+    }
 }

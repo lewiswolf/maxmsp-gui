@@ -1,24 +1,28 @@
 @import './main.scss';
 
 .message {
-	@include main();
-	height: fit-content;
-	min-height: 24px;
-	width: fit-content;
-	min-width: 29.5px;
-	background: linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%);
-	border-radius: 5px;
+    @include main();
+    height: fit-content;
+    min-height: 24px;
+    width: fit-content;
+    min-width: 29.5px;
+    background: linear-gradient(
+        to top,
+        rgb(51, 51, 51) 0%,
+        rgb(76, 76, 76) 100%
+    );
+    border-radius: 5px;
 
-	p {
-		padding: 5px 5px;
-		margin: auto 0;
-		line-height: 14px;
-		font-size: 13px;
-		color: #f7f7f7;
-		line-height: 14px;
+    p {
+        padding: 5px 5px;
+        margin: auto 0;
+        line-height: 14px;
+        font-size: 13px;
+        color: #f7f7f7;
+        line-height: 14px;
 
-		&:active {
-			padding: 6px 4px 4px 6px;
-		}
-	}
+        &:active {
+            padding: 6px 4px 4px 6px;
+        }
+    }
 }

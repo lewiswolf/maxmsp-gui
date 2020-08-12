@@ -1,39 +1,39 @@
 @import './main.scss';
 
 @mixin thumbStyle() {
-	height: 20px;
-	width: 6px;
-	appearance: none;
-	background: none;
-	border: 0;
+    height: 20px;
+    width: 6px;
+    appearance: none;
+    background: none;
+    border: 0;
 }
 
 .slider {
-	@include main();
-	height: 24px;
-	width: fit-content;
-	max-width: 100%;
-	background: #393939;
+    @include main();
+    height: 24px;
+    width: fit-content;
+    max-width: 100%;
+    background: #393939;
 
-	input {
-		height: 100%;
-		// width set by component
-		max-width: calc(100% - 10px);
-		margin: 0 5px;
-		appearance: none;
-		outline: 0;
-		border-radius: 0;
+    input {
+        height: 100%;
+        // width set by component
+        max-width: calc(100% - 10px);
+        margin: 0 5px;
+        appearance: none;
+        outline: 0;
+        border-radius: 0;
 
-		&::-webkit-slider-thumb {
-			@include thumbStyle();
-		}
+        &::-webkit-slider-thumb {
+            @include thumbStyle();
+        }
 
-		&::-moz-range-thumb {
-			@include thumbStyle();
-		}
+        &::-moz-range-thumb {
+            @include thumbStyle();
+        }
 
-		&::-moz-focus-outer {
-			border: 0;
-		}
-	}
+        &::-moz-focus-outer {
+            border: 0;
+        }
+    }
 }

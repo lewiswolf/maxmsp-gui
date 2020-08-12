@@ -1,32 +1,32 @@
 @import './main.scss';
 
 .object {
-	@include main();
-	height: fit-content;
-	min-height: 24px;
-	width: fit-content;
-	min-width: 29.5px;
-	max-width: 100%;
-	vertical-align: middle;
+    @include main();
+    height: fit-content;
+    min-height: 24px;
+    width: fit-content;
+    min-width: 29.5px;
+    max-width: 100%;
+    vertical-align: middle;
 
-	svg {
-		height: 24px;
-		position: absolute;
-		top: 0;
-		left: 5px;
-	}
+    svg {
+        height: 24px;
+        position: absolute;
+        top: 0;
+        left: 5px;
+    }
 
-	p {
-		height: fit-content;
-		min-height: 14px;
-		min-width: 19.5px;
-		max-width: calc(100% - 10px);
-		display: inline-block;
-		vertical-align: middle;
-		color: #f7f7f7;
-		line-height: 14px;
-		font-size: 13px;
-		padding: 1px 5px;
-		margin: 4px 0;
-	}
+    p {
+        height: fit-content;
+        min-height: 14px;
+        min-width: 19.5px;
+        max-width: calc(100% - 10px);
+        display: inline-block;
+        vertical-align: middle;
+        color: #f7f7f7;
+        line-height: 14px;
+        font-size: 13px;
+        padding: 1px 5px;
+        margin: 4px 0;
+    }
 }
