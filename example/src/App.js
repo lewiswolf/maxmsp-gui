@@ -13,7 +13,10 @@ export default function App() {
     <MaxMSP.Playbar />
     <MaxMSP.RadioGroup />
     <MaxMSP.Slider />
-    <MaxMSP.TextButton />
+    <div className='textbuttons'>
+      <MaxMSP.TextButton mode={false} />
+      <MaxMSP.TextButton mode={true} />
+    </div>
     <MaxMSP.Toggle />
     <MaxMSP.Umenu items={['foo', 'bar']} />
   </React.Fragment>
