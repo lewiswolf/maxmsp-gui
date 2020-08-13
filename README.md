@@ -22,7 +22,7 @@ import React from 'react'
 import * as MaxMSP from 'maxmsp-gui'
 import 'maxmsp-gui/dist/index.css'
 
-export default function main() {
+export default function App() {
     return (
         <MaxMSP.Bang
             onClick={() => console.log('bang')}
