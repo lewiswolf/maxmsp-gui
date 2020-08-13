@@ -3,7 +3,7 @@
 .radiogroup {
     @include main();
     height: fit-content;
-    width: 20px;
+    width: fit-content;
     max-width: 100%;
     background: unset;
     overflow: hidden;

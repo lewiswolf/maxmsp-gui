@@ -25,7 +25,7 @@ export default class Slider extends Component {
 
     state = {
         value:
-            this.props.value <= 100 && this.props.value >= 0
+            this.props.value <= this.props.fidelity && this.props.value >= 0
                 ? this.props.value
                 : 0,
         background: `linear-gradient(90deg, 
@@ -36,7 +36,7 @@ export default class Slider extends Component {
 
     componentDidUpdate(prevProps) {
         this.props.value !== prevProps.value &&
-            this.props.value <= 100 &&
+            this.props.value <= this.props.fidelity &&
             this.props.value >= 0 &&
             this.setState({
                 value: this.props.value,
@@ -55,22 +55,22 @@ export default class Slider extends Component {
                         ${sliderColors.negative} 0px, 
                         ${sliderColors.positive} 0px, 
                         ${sliderColors.positive} ${
-                        (sliderWidth - 6) * (value / 100) - 1
+                        (sliderWidth - 6) * (value / this.props.fidelity) - 1
                     }px, 
                         ${sliderColors.negative} ${
-                        (sliderWidth - 6) * (value / 100) - 1
+                        (sliderWidth - 6) * (value / this.props.fidelity) - 1
                     }px,
                         ${sliderColors.negative} ${
-                        (sliderWidth - 6) * (value / 100)
+                        (sliderWidth - 6) * (value / this.props.fidelity)
                     }px,
                         ${sliderColors.positive} ${
-                        (sliderWidth - 6) * (value / 100)
+                        (sliderWidth - 6) * (value / this.props.fidelity)
                     }px,
                         ${sliderColors.positive} ${
-                        (sliderWidth - 6) * (value / 100) + 6
+                        (sliderWidth - 6) * (value / this.props.fidelity) + 6
                     }px,
                         ${sliderColors.negative} ${
-                        (sliderWidth - 6) * (value / 100) + 6
+                        (sliderWidth - 6) * (value / this.props.fidelity) + 6
                     }px
                     )`,
                 },
@@ -97,7 +97,8 @@ export default class Slider extends Component {
         if (touch.clientX < rect.right - 5 && touch.clientX > rect.left + 5) {
             this.colourAndValue(
                 Math.round(
-                    (touch.clientX - (rect.x + 5)) / ((rect.width - 10) / 100)
+                    (touch.clientX - (rect.x + 5)) /
+                        ((rect.width - 10) / this.props.fidelity)
                 )
             )
         }

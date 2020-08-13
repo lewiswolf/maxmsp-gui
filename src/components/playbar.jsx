@@ -124,7 +124,8 @@ export default class Playbar extends Component {
                     style={{
                         enableBackground: 'new 0 0 84 84',
                         left: `${
-                            (this.state.width - 37) * (this.state.value / 100) +
+                            (this.state.width - 37) *
+                                (this.state.value / this.props.fidelity) +
                             16
                         }px`,
                     }}
