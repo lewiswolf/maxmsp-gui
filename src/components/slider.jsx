@@ -12,12 +12,14 @@ const sliderColors = {
 export default class Slider extends Component {
     static propTypes = {
         value: propTypes.number,
+        fidelity: propTypes.number,
         length: propTypes.number,
         onChange: propTypes.func,
     }
 
     static defaultProps = {
         value: 0,
+        fidelity: 100,
         length: 200,
     }
 
@@ -107,7 +109,7 @@ export default class Slider extends Component {
                 <input
                     type='range'
                     min='0'
-                    max='100'
+                    max={this.props.fidelity}
                     value={this.state.value}
                     onChange={(e) =>
                         this.colourAndValue(parseInt(e.target.value))

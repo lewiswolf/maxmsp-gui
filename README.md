@@ -46,7 +46,8 @@ export default function App() {
         <MaxMSP.Playbar
             inactive={true || false} // diable user interaction, default false
             width={200} // width of the slider in pixels, default 200
-            value={50} // inital/updated state, 0 to 100, default 0
+            fidelity={100} // max output of slider, default 100
+            value={50} // inital/updated state, 0 to this.props.fidelity, default 0
             setPlaying={true || false} // set isPlaying externally
             isPlaying={(bool) => console.log(bool)}
             onChange={(i) => console.log(`My value is ${i}`)} // 0 - 100
@@ -60,7 +61,8 @@ export default function App() {
         />
 
         <MaxMSP.Slider
-            value={50} // inital/updated state, 0 to 100, default 0
+            fidelity={100} // max output of slider, default 100
+            value={50} // inital/updated state, 0 to this.props.fidelity, default 0
             length={200} // width of the slider in pixels, default 200
             onChange={(i) => console.log(`My value is ${i}`)} // 0 - 100
         />

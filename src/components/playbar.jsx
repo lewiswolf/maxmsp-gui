@@ -9,6 +9,7 @@ export default class Playbar extends Component {
     static propTypes = {
         inactive: propTypes.bool,
         width: propTypes.number,
+        fidelity: propTypes.number,
         value: propTypes.number,
         setPlaying: propTypes.bool,
         isPlaying: propTypes.func,
@@ -18,6 +19,7 @@ export default class Playbar extends Component {
     static defaultProps = {
         inactive: false,
         width: 200,
+        fidelity: 100,
         value: 0,
         setPlaying: false,
     }
@@ -155,7 +157,7 @@ export default class Playbar extends Component {
                 <input
                     type='range'
                     min='0'
-                    max='100'
+                    max={this.props.fidelity}
                     value={this.state.value}
                     onMouseDown={() =>
                         this.setState({
