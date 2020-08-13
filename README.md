@@ -6,6 +6,8 @@
 
 [![NPM](https://img.shields.io/npm/v/maxmsp-gui.svg)](https://www.npmjs.com/package/maxmsp-gui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+### [Demo](https://lewiswolf.github.io/maxmsp-gui/)
+
 ## Install
 
 ```bash
@@ -20,7 +22,7 @@ import React from 'react'
 import * as MaxMSP from 'maxmsp-gui'
 import 'maxmsp-gui/dist/index.css'
 
-export default function main() => {
+export default function main() {
     return (
         <MaxMSP.Bang
             onClick={() => console.log('bang')}
@@ -66,7 +68,7 @@ export default function main() => {
         <MaxMSP.TextButton
             inactive={true || false} // diable user interaction, default false
             mode={true || false} // true for toggle, false for bang, default false
-            toggle={true || false} //
+            value={true || false} // default false
             text={'What does the textbutton say?'}
             toggleText={'What does the textbutton say when it\'s on?'}
             // mode 0 onClick
