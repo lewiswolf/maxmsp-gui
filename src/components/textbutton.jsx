@@ -91,14 +91,6 @@ export default class TextButton extends Component {
         this.setState({ externMouseDown: false, mouseDown: false })
     }
 
-    handleClick = () => {
-        if (!this.props.inactive && this.props.onClick) {
-            this.props.mode
-                ? this.props.onClick(this.state.toggle)
-                : this.props.onClick()
-        }
-    }
-
     render() {
         return (
             <div
@@ -127,17 +119,23 @@ export default class TextButton extends Component {
                             : bgGradients.neutral
                         : bgGradients.inactive,
                 }}
-                onClick={() => {
+                onClick={() =>
                     !this.props.inactive &&
-                        this.setState(
-                            {
-                                toggle: this.props.mode
-                                    ? !this.state.toggle
-                                    : false,
-                            },
-                            () => this.handleClick()
-                        )
-                }}
+                    this.setState(
+                        {
+                            toggle: this.props.mode
+                                ? !this.state.toggle
+                                : false,
+                        },
+                        () => {
+                            if (this.props.onClick) {
+                                this.props.mode
+                                    ? this.props.onClick(this.state.toggle)
+                                    : this.props.onClick()
+                            }
+                        }
+                    )
+                }
                 onMouseEnter={() =>
                     !this.props.inactive &&
                     this.setState({

@@ -13,14 +13,12 @@ export default class Slider extends Component {
     static propTypes = {
         value: propTypes.number,
         length: propTypes.number,
-        vertical: propTypes.bool, // ?
         onChange: propTypes.func,
     }
 
     static defaultProps = {
         value: 0,
         length: 200,
-        vertical: false, // ?
     }
 
     state = {
@@ -94,10 +92,7 @@ export default class Slider extends Component {
     ios = (e) => {
         const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
         const touch = e.targetTouches[0]
-        if (
-            touch.clientX < rect.x + (rect.width - 5) &&
-            touch.clientX > rect.x + 5
-        ) {
+        if (touch.clientX < rect.right - 5 && touch.clientX > rect.left + 5) {
             this.colourAndValue(
                 Math.round(
                     (touch.clientX - (rect.x + 5)) / ((rect.width - 10) / 100)

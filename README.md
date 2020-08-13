@@ -27,7 +27,7 @@ export default function main() => {
         />
 
         <MaxMSP.Ezdac
-            initial={true || false} // default false
+            value={true || false} // default false
             onClick={(bool) => console.log(bool)} // true or false
         />
 
@@ -45,9 +45,9 @@ export default function main() => {
             inactive={true || false} // diable user interaction, default false
             width={200} // width of the slider in pixels, default 200
             value={50} // inital/updated state, 0 to 100, default 0
-            setPlaying={true || false} // set isPlaying externally, once the component has mounted this will also trigger the isPlaying callback
+            setPlaying={true || false} // set isPlaying externally
             isPlaying={(bool) => console.log(bool)}
-            onChange={(i) => console.log(`My value is ${i}`)}
+            onChange={(i) => console.log(`My value is ${i}`)} // 0 - 100
         />
 
         <MaxMSP.RadioGroup
@@ -64,14 +64,20 @@ export default function main() => {
         />
 
         <MaxMSP.TextButton
-            text={'What does the textbutton say?'}
             inactive={true || false} // diable user interaction, default false
+            mode={true || false} // true for toggle, false for bang, default false
+            toggle={true || false} //
+            text={'What does the textbutton say?'}
+            toggleText={'What does the textbutton say when it\'s on?'}
+            // mode 0 onClick
             onClick={() => console.log('bang')}
+            // mode 1 onClick
+            onClick={(bool) => console.log(bool)}
         />
 
         <MaxMSP.Toggle
-            initial={true || false} // default false
-            onClick={(bool) => console.log(bool)} // 0 or 1
+            value={true || false} // default false
+            onClick={(bool) => console.log(bool)}
         />
 
         <MaxMSP.Umenu
