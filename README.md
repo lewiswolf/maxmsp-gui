@@ -24,73 +24,73 @@ import 'maxmsp-gui/dist/index.css'
 
 export default function App() {
     return (
-        <MaxMSP.Bang
-            onClick={() => console.log('bang')}
-        />
+        <React.Fragment>
+            <MaxMSP.Bang onClick={() => console.log('bang')} />
 
-        <MaxMSP.Ezdac
-            value={true || false} // default false
-            onClick={(bool) => console.log(bool)} // true or false
-        />
+            <MaxMSP.Ezdac
+                value={true || false} // default false
+                onClick={(bool) => console.log(bool)} // true or false
+            />
 
-        <MaxMSP.Message
-            text={'What does the message say?'}
-            onClick={() => console.log('bang')}
-        />
+            <MaxMSP.Message
+                text={'What does the message say?'}
+                onClick={() => console.log('bang')}
+            />
 
-        <MaxMSP.Object
-            inactive={true || false} // default false
-            text={'What is the object called?'}
-        />
+            <MaxMSP.Object
+                inactive={true || false} // default false
+                text={'What is the object called?'}
+            />
 
-        <MaxMSP.Playbar
-            inactive={true || false} // diable user interaction, default false
-            width={200} // width of the slider in pixels, default 200
-            fidelity={100} // max output of slider, default 100
-            value={50} // inital/updated state, 0 to this.props.fidelity, default 0
-            setPlaying={true || false} // set isPlaying externally
-            isPlaying={(bool) => console.log(bool)}
-            onChange={(i) => console.log(`My value is ${i}`)} // 0 - 100
-        />
+            <MaxMSP.Playbar
+                inactive={true || false} // diable user interaction, default false
+                width={200} // width of the slider in pixels, default 200
+                fidelity={100} // max output of slider, default 100
+                value={50} // inital/updated state, 0 to this.props.fidelity, default 0
+                setPlaying={true || false} // set isPlaying externally
+                isPlaying={(bool) => console.log(bool)}
+                onChange={(i) => console.log(`My value is ${i}`)} // 0 - 100
+            />
 
-        <MaxMSP.RadioGroup
-            items={['array', 'of', 'items']} // this sets the amount of radiobuttons, an array of empty strings will make just the buttons
-            inital={i} // this.props.items[i], default 0
-            spacing={24} // the height of each button in pixels, defualt 20
-            onClick={(i) => console.log(`My value is ${i}`)}
-        />
+            <MaxMSP.RadioGroup
+                items={['array', 'of', 'items']} // this sets the amount of radiobuttons, an array of empty strings will make just the buttons
+                inital={i} // this.props.items[i], default 0
+                spacing={24} // the height of each button in pixels, defualt 20
+                onClick={(i) => console.log(`My value is ${i}`)}
+            />
 
-        <MaxMSP.Slider
-            fidelity={100} // max output of slider, default 100
-            value={50} // inital/updated state, 0 to this.props.fidelity, default 0
-            length={200} // width of the slider in pixels, default 200
-            onChange={(i) => console.log(`My value is ${i}`)} // 0 - 100
-        />
+            <MaxMSP.Slider
+                fidelity={100} // max output of slider, default 100
+                value={50} // inital/updated state, 0 to this.props.fidelity, default 0
+                length={200} // width of the slider in pixels, default 200
+                onChange={(i) => console.log(`My value is ${i}`)} // 0 - 100
+            />
 
-        <MaxMSP.TextButton
-            inactive={true || false} // diable user interaction, default false
-            mode={true || false} // true for toggle, false for bang, default false
-            value={true || false} // default false
-            text={'What does the textbutton say?'}
-            toggleText={'What does the textbutton say when it\'s on?'}
-            // mode 0 onClick
-            onClick={() => console.log('bang')}
-            // mode 1 onClick
-            onClick={(bool) => console.log(bool)}
-        />
+            <MaxMSP.TextButton
+                inactive={true || false} // diable user interaction, default false
+                mode={true || false} // true for toggle, false for bang, default false
+                value={true || false} // default false
+                text={'What does the textbutton say?'}
+                toggleText={"What does the textbutton say when it's on?"}
+                // mode 0 onClick
+                onClick={() => console.log('bang')}
+                // mode 1 onClick
+                onClick={(bool) => console.log(bool)}
+            />
 
-        <MaxMSP.Toggle
-            value={true || false} // default false
-            onClick={(bool) => console.log(bool)}
-        />
+            <MaxMSP.Toggle
+                value={true || false} // default false
+                onClick={(bool) => console.log(bool)}
+            />
 
-        <MaxMSP.Umenu
-            width={200} // width of the umenu in pixels, default 100
-            items={['array', 'of', 'items']}
-            inital={i} // this.props.items[i], default 0
-            outputSymbol={true || false} // true for symbol false for int, default false
-            onChange={(x) => console.log(`My index/item is ${x}`)}
-        />
+            <MaxMSP.Umenu
+                width={200} // width of the umenu in pixels, default 100
+                items={['array', 'of', 'items']}
+                inital={i} // this.props.items[i], default 0
+                outputSymbol={true || false} // true for symbol false for int, default false
+                onChange={(x) => console.log(`My index/item is ${x}`)}
+            />
+        </React.Fragment>
     )
 }
 ```
