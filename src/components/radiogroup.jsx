@@ -6,19 +6,27 @@ import style from '../scss/radiogroup.module.scss'
 export default class RadioGroup extends Component {
     static propTypes = {
         items: propTypes.array,
-        initial: propTypes.number,
+        value: propTypes.number,
         spacing: propTypes.number,
         onClick: propTypes.func,
     }
 
     static defaultProps = {
         items: ['', ''],
-        initial: 0,
+        value: 0,
         spacing: 20,
     }
 
     state = {
-        index: this.props.initial,
+        index: this.props.value,
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.value !== prevProps.value) {
+            this.setState({
+                index: this.props.value,
+            })
+        }
     }
 
     render() {
