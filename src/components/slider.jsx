@@ -109,6 +109,7 @@ export default class Slider extends Component {
             <div className={style.slider}>
                 <input
                     type='range'
+                    aria-label='slider'
                     min='0'
                     max={this.props.fidelity}
                     value={this.state.value}

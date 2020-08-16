@@ -16,6 +16,8 @@ export default class Message extends Component {
         return (
             <div
                 className={style.message}
+                aria-label='message'
+                role='button'
                 onMouseDown={() => this.props.onClick && this.props.onClick()}
             >
                 <p>{this.props.text}</p>

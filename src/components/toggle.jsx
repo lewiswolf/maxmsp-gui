@@ -28,6 +28,9 @@ export default class Toggle extends Component {
         return (
             <div
                 className={style.toggle}
+                aria-label='toggle'
+                role='button'
+                aria-pressed={this.state.toggle}
                 onMouseDown={() => {
                     this.setState(
                         {

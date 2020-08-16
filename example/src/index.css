@@ -6,7 +6,7 @@ body {
     background-color: #e5e5e5;
 }
 
-#root {
+main {
     display: grid;
     grid-template-rows: repeat(12, 70px);
     place-items: center;

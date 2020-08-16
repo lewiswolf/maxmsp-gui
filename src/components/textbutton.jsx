@@ -95,6 +95,11 @@ export default class TextButton extends Component {
         return (
             <div
                 className={style.textbutton}
+                aria-label='textbutton'
+                role='button'
+                {...(this.props.mode && {
+                    'aria-pressed': this.state.toggle,
+                })}
                 style={{
                     color: !this.props.inactive
                         ? this.state.mouseDown && this.state.hover

@@ -28,7 +28,7 @@ export default class Umenu extends Component {
                 this.props.initial >= 0
                     ? this.props.initial
                     : 0,
-            drowdownDisplay: false,
+            dropdownDisplay: false,
             focus: null,
             objectWidth: this.props.width >= 50 ? this.props.width : 50,
             dropdownWidth: null,
@@ -108,70 +108,78 @@ export default class Umenu extends Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div
                 className={style.umenu}
-                onMouseDown={() =>
-                    this.setState(
-                        {
-                            dropdownDisplay: !this.state.dropdownDisplay,
-                            focus: null,
-                        },
-                        () => this.responsiveDropdown()
-                    )
-                }
-                onKeyDown={(e) => {
-                    if (this.state.dropdownDisplay) {
-                        switch (e.keyCode) {
-                            case 9: // tab
-                                e.preventDefault()
-                                break
-                            case 13: // return
-                                e.preventDefault()
-                                this.changeSelected()
-                                break
-                            case 27: // escape
-                                e.preventDefault()
-                                this.setState({
-                                    dropdownDisplay: false,
-                                    focus: null,
-                                })
-                                break
-                            case 38: // up
-                            case 40: // down
-                                e.preventDefault()
-                                if (this.state.focus !== null) {
-                                    this.setState({
-                                        focus:
-                                            (this.state.focus +
-                                                this.props.items.length +
-                                                (e.keyCode === 38 ? -1 : 1)) %
-                                            this.props.items.length,
-                                    })
-                                } else {
-                                    this.setState({
-                                        focus:
-                                            e.keyCode === 38
-                                                ? this.props.items.length - 1
-                                                : 1,
-                                    })
-                                }
-                                break
-                            default:
-                                break
-                        }
-                    }
-                }}
-                onBlur={() => {
-                    if (this.state.dropdownDisplay) {
-                        this.setState({
-                            dropdownDisplay: false,
-                            focus: null,
-                        })
-                    }
-                }}
-                tabIndex='0'
                 style={{ width: `${this.state.objectWidth}px` }}
+                {...(this.props.items.length > 0 && {
+                    'aria-label': 'umenu',
+                    role: 'button',
+                    'aria-pressed': this.state.dropdownDisplay,
+                    onMouseDown: () =>
+                        this.setState(
+                            {
+                                dropdownDisplay: !this.state.dropdownDisplay,
+                                focus: null,
+                            },
+                            () => this.responsiveDropdown()
+                        ),
+                    onKeyDown: (e) => {
+                        if (this.state.dropdownDisplay) {
+                            switch (e.keyCode) {
+                                case 9: // tab
+                                    e.preventDefault()
+                                    break
+                                case 13: // return
+                                    e.preventDefault()
+                                    this.changeSelected()
+                                    break
+                                case 27: // escape
+                                    e.preventDefault()
+                                    this.setState({
+                                        dropdownDisplay: false,
+                                        focus: null,
+                                    })
+                                    break
+                                case 38: // up
+                                case 40: // down
+                                    e.preventDefault()
+                                    if (this.state.focus !== null) {
+                                        this.setState({
+                                            focus:
+                                                (this.state.focus +
+                                                    this.props.items.length +
+                                                    (e.keyCode === 38
+                                                        ? -1
+                                                        : 1)) %
+                                                this.props.items.length,
+                                        })
+                                    } else {
+                                        this.setState({
+                                            focus:
+                                                e.keyCode === 38
+                                                    ? this.props.items.length -
+                                                      1
+                                                    : 1,
+                                        })
+                                    }
+                                    break
+                                default:
+                                    break
+                            }
+                        }
+                    },
+                    onBlur: () => {
+                        if (this.state.dropdownDisplay) {
+                            this.setState({
+                                dropdownDisplay: false,
+                                focus: null,
+                            })
+                        }
+                    },
+                    tabIndex: '0',
+                })}
             >
                 <p>{this.props.items && this.props.items[this.state.active]}</p>
                 <SVG />

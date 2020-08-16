@@ -35,8 +35,11 @@ export default class RadioGroup extends Component {
                 {this.props.items.map((item, i) => {
                     i++
                     return (
-                        <li
+                        <div
                             key={i}
+                            aria-label={`radiogroup button ${i}`}
+                            role='button'
+                            aria-pressed={i === this.state.index}
                             onMouseDown={() => {
                                 this.setState(
                                     {
@@ -76,7 +79,7 @@ export default class RadioGroup extends Component {
                                     }}
                                 />
                             </div>
-                        </li>
+                        </div>
                     )
                 })}
             </div>

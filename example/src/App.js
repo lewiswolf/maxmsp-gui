@@ -5,7 +5,7 @@ import 'maxmsp-gui/dist/index.css'
 
 export default function App() {
   return (
-    <React.Fragment>
+    <main>
       <h2>React component library for stylised Max MSP GUI</h2>
       <MaxMSP.Bang />
       <MaxMSP.Ezdac />
@@ -20,6 +20,6 @@ export default function App() {
       </div>
       <MaxMSP.Toggle />
       <MaxMSP.Umenu items={['foo', 'bar']} />
-    </React.Fragment>
+    </main>
   )
 }

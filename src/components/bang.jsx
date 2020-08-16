@@ -10,7 +10,12 @@ export default class Bang extends Component {
 
     render() {
         return (
-            <div className={style.bang} onMouseDown={this.props.onClick}>
+            <div
+                className={style.bang}
+                aria-label='bang'
+                role='button'
+                onMouseDown={this.props.onClick}
+            >
                 <SVG />
             </div>
         )

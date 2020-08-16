@@ -28,6 +28,9 @@ export default class Ezdac extends Component {
         return (
             <div
                 className={style.ezdac}
+                aria-label='ezdac'
+                role='button'
+                aria-pressed={this.state.toggle}
                 onMouseDown={() =>
                     this.setState(
                         { toggle: !this.state.toggle },

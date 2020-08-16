@@ -104,6 +104,9 @@ export default class Playbar extends Component {
                         ? PauseButton
                         : PlayButton,
                     {
+                        'aria-label': 'playbar toggle',
+                        role: 'button',
+                        'aria-pressed': this.state.isPlaying,
                         style: {
                             fill: !this.props.inactive ? '#cee5e8' : '#808080',
                             background: this.state.playMouseDown
@@ -157,6 +160,7 @@ export default class Playbar extends Component {
                 </svg>
                 <input
                     type='range'
+                    aria-label='playbar slider'
                     min='0'
                     max={this.props.fidelity}
                     value={this.state.value}
