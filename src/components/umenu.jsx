@@ -203,6 +203,12 @@ export default class Umenu extends Component {
                             return (
                                 <li
                                     key={i}
+                                    aria-label='umenu list item'
+                                    role='button'
+                                    aria-pressed={
+                                        this.props.items[this.state.active] ===
+                                        item
+                                    }
                                     style={{
                                         background:
                                             this.state.focus === i
