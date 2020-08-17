@@ -183,8 +183,7 @@ export default class Umenu extends Component {
             >
                 <p>{this.props.items && this.props.items[this.state.active]}</p>
                 <SVG />
-                <div
-                    className={style.umenudropdown}
+                <ul
                     style={{
                         display:
                             this.state.dropdownDisplay &&
@@ -198,37 +197,32 @@ export default class Umenu extends Component {
                                 : 'normal',
                     }}
                 >
-                    <ul>
-                        {this.props.items.map((item, i) => {
-                            return (
-                                <li
-                                    key={i}
-                                    aria-label='umenu list item'
-                                    role='button'
-                                    aria-pressed={
-                                        this.props.items[this.state.active] ===
-                                        item
-                                    }
-                                    style={{
-                                        background:
-                                            this.state.focus === i
-                                                ? '#4c4c4c'
-                                                : 'inherit',
-                                    }}
-                                    onMouseEnter={() =>
-                                        this.setState({ focus: i })
-                                    }
-                                    onMouseLeave={() =>
-                                        this.setState({ focus: null })
-                                    }
-                                    onMouseDown={() => this.changeSelected()}
-                                >
-                                    {item}
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </div>
+                    {this.props.items.map((item, i) => {
+                        return (
+                            <li
+                                key={i}
+                                aria-label='umenu list item'
+                                role='button'
+                                aria-pressed={
+                                    this.props.items[this.state.active] === item
+                                }
+                                style={{
+                                    background:
+                                        this.state.focus === i
+                                            ? '#4c4c4c'
+                                            : 'inherit',
+                                }}
+                                onMouseEnter={() => this.setState({ focus: i })}
+                                onMouseLeave={() =>
+                                    this.setState({ focus: null })
+                                }
+                                onMouseDown={() => this.changeSelected()}
+                            >
+                                {item}
+                            </li>
+                        )
+                    })}
+                </ul>
             </div>
         )
     }
