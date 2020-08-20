@@ -4,6 +4,10 @@ import * as MaxMSP from 'maxmsp-gui'
 import 'maxmsp-gui/dist/index.css'
 
 export default function App() {
+  if (window !== window.top) {
+    document.body.style.background = 'unset'
+  }
+
   return (
     <main>
       <h2>React component library for stylised Max MSP GUI</h2>
