@@ -52,6 +52,5 @@
     },
     "files": [
         "dist"
-    ],
-    "dependencies": {}
+    ]
 }
