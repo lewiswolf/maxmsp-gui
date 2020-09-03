@@ -89,7 +89,7 @@ export default function App() {
             <MaxMSP.Umenu
                 width={200} // width of the umenu in pixels, default 100
                 items={['array', 'of', 'items']}
-                inital={i} // this.props.items[i], default 0
+                value={i} // this.props.items[i], default 0
                 outputSymbol={true || false} // true for symbol false for int, default false
                 onChange={(x) => console.log(`My index/item is ${x}`)}
             />

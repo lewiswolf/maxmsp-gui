@@ -8,7 +8,7 @@ export default class Umenu extends Component {
     static propTypes = {
         items: propTypes.array,
         width: propTypes.number,
-        initial: propTypes.number,
+        value: propTypes.number,
         outputSymbol: propTypes.bool,
         onChange: propTypes.func,
     }
@@ -16,7 +16,7 @@ export default class Umenu extends Component {
     static defaultProps = {
         items: [],
         width: 100,
-        initial: 0,
+        value: 0,
         outputSymbol: false,
     }
 
@@ -24,9 +24,9 @@ export default class Umenu extends Component {
         super(props)
         this.state = {
             active:
-                this.props.initial < this.props.items.length &&
-                this.props.initial >= 0
-                    ? this.props.initial
+                this.props.value < this.props.items.length &&
+                this.props.value >= 0
+                    ? this.props.value
                     : 0,
             dropdownDisplay: false,
             focus: null,
@@ -45,6 +45,12 @@ export default class Umenu extends Component {
     componentWillUnmount() {
         window.removeEventListener('scroll', this.isNotInViewport)
         window.removeEventListener('resize', this.responsiveDropdown)
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.value !== prevProps.value) {
+            this.setState({ active: this.props.value })
+        }
     }
 
     isNotInViewport = () => {
