@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import iframeResizer from 'iframe-resizer/js/iframeResizer.contentWindow.js';
 import * as MaxMSP from 'maxmsp-gui'
 import 'maxmsp-gui/dist/index.css'
 
@@ -9,10 +10,7 @@ export default class App extends Component {
   }
 
   render() {
-    if (window !== window.top) {
-      document.body.style.background = 'unset'
-    }
-    console.log(this.state)
+    window.iframeResizer = iframeResizer;
     return (
       <main>
         <h2>React component library for stylised Max MSP GUI</h2>
