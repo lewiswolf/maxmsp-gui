@@ -40,7 +40,7 @@ export default class Playbar extends Component {
     componentDidUpdate(prevProps) {
         this.props.value !== prevProps.value &&
             this.setState({
-                value: this.props.value,
+                value: this.props.value > 100 ? 100 : this.props.value,
             })
 
         this.props.setPlaying !== prevProps.setPlaying &&
