@@ -8,8 +8,9 @@ body {
 
 main {
     display: grid;
-    grid-template-rows: repeat(12, minmax(70px, max-content));
+    grid-auto-rows: minmax(70px, max-content);
     place-items: center;
+    padding-bottom: 48px;
 }
 
 h2 {

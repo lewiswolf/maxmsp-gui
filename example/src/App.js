@@ -7,13 +7,14 @@ export default class App extends Component {
   state = {
     playing: false,
     playbar: 0,
+    iframe: window !== window.top
   }
 
   render() {
     window.iframeResizer = iframeResizer;
     return (
       <main>
-        <h2>React component library for stylised Max MSP GUI</h2>
+        {!this.state.iframe && <h2>React component library for stylised Max MSP GUI</h2>}
         <MaxMSP.Bang />
         <MaxMSP.Ezdac />
         <MaxMSP.Message text={'text'} />
