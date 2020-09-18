@@ -3,6 +3,8 @@ import iframeResizer from 'iframe-resizer/js/iframeResizer.contentWindow.js';
 import * as MaxMSP from 'maxmsp-gui'
 import 'maxmsp-gui/dist/index.css'
 
+window.iframeResizer = iframeResizer;
+
 export default class App extends Component {
   state = {
     playing: false,
@@ -11,14 +13,13 @@ export default class App extends Component {
   }
 
   render() {
-    window.iframeResizer = iframeResizer;
     return (
       <main>
         {!this.state.iframe && <h2>React component library for stylised Max MSP GUI</h2>}
         <MaxMSP.Bang />
         <MaxMSP.Ezdac />
-        <MaxMSP.Message text={'text'} />
-        <MaxMSP.Object text={'text'} />
+        <MaxMSP.Message text='text' />
+        <MaxMSP.Object text='text' />
         <MaxMSP.Playbar
           value={this.state.playbar}
           setPlaying={this.state.playing}
