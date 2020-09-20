@@ -14,15 +14,10 @@
     border-radius: 5px;
 
     p {
-        padding: 5px 5px;
         margin: auto 0;
         line-height: 14px;
         font-size: 13px;
         color: #f7f7f7;
         line-height: 14px;
-
-        &:active {
-            padding: 6px 4px 4px 6px;
-        }
     }
 }

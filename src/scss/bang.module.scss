@@ -4,13 +4,4 @@
     @include main();
     height: 24px;
     width: 24px;
-    background: #333333;
-
-    &:active {
-        background: radial-gradient(
-            10px circle at center,
-            #cee5e8 50%,
-            #333333 50%
-        );
-    }
 }
