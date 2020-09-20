@@ -7,11 +7,13 @@ import style from '../scss/bang.module.scss'
 export default class Bang extends Component {
     static propTypes = {
         ariaLabel: propTypes.string,
+        ariaPressed: propTypes.bool,
         onClick: propTypes.func,
     }
 
     static defaultProps = {
         ariaLabel: 'bang',
+        ariaPressed: null,
         onClick: () => {},
     }
 
@@ -59,11 +61,24 @@ export default class Bang extends Component {
             <div
                 className={style.bang}
                 aria-label={this.props.ariaLabel}
+                {...(this.props.ariaPressed !== null && {
+                    'aria-pressed': this.props.ariaPressed,
+                })}
                 role='button'
                 tabIndex='0'
                 onMouseDown={(e) => e.button === 0 && this.buttonPressed()}
-                onKeyDown={(e) => e.key === 'Enter' && this.buttonPressed()}
-                onKeyUp={(e) => e.key === 'Enter' && this.buttonFreed()}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        this.buttonPressed()
+                    }
+                }}
+                onKeyUp={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        this.buttonFreed()
+                    }
+                }}
             >
                 <SVG
                     tabIndex='-1'

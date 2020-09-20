@@ -6,11 +6,13 @@ import style from '../scss/message.module.scss'
 export default class Message extends Component {
     static propTypes = {
         ariaLabel: propTypes.string,
+        ariaPressed: propTypes.bool,
         text: propTypes.string,
         onClick: propTypes.func,
     }
 
     static defaultProps = {
+        ariaPressed: null,
         ariaLabel: 'message',
         text: '',
         onClick: () => {},
@@ -60,11 +62,24 @@ export default class Message extends Component {
             <div
                 className={style.message}
                 aria-label={this.props.ariaLabel}
+                {...(this.props.ariaPressed !== null && {
+                    'aria-pressed': this.props.ariaPressed,
+                })}
                 role='button'
                 tabIndex='0'
                 onMouseDown={(e) => e.button === 0 && this.buttonPressed()}
-                onKeyDown={(e) => e.key === 'Enter' && this.buttonPressed()}
-                onKeyUp={(e) => e.key === 'Enter' && this.buttonFreed()}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        this.buttonPressed()
+                    }
+                }}
+                onKeyUp={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        this.buttonFreed()
+                    }
+                }}
             >
                 <p
                     tabIndex='-1'

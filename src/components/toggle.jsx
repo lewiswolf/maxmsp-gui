@@ -68,7 +68,12 @@ export default class Toggle extends Component {
                 aria-checked={this.state.toggle}
                 tabIndex='0'
                 onMouseDown={(e) => e.button === 0 && this.togglePressed()}
-                onKeyDown={(e) => e.key === 'Enter' && this.togglePressed()}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        this.togglePressed()
+                    }
+                }}
             >
                 <SVG
                     tabIndex='-1'
