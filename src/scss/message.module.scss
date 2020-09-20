@@ -2,6 +2,7 @@
 
 .message {
     @include main();
+    @include focus();
     height: fit-content;
     min-height: 24px;
     width: fit-content;

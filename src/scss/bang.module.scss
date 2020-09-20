@@ -2,6 +2,7 @@
 
 .bang {
     @include main();
+    @include focus();
     height: 24px;
     width: 24px;
 }
