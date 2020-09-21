@@ -47,8 +47,10 @@ export default class Toggle extends Component {
     }
 
     touchstart = (e) => {
-        e.preventDefault()
-        this.togglePressed()
+        if (e.cancelable) {
+            e.preventDefault()
+            this.togglePressed()
+        }
     }
 
     togglePressed = () =>
