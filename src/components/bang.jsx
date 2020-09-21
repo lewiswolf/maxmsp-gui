@@ -31,6 +31,7 @@ export default class Bang extends Component {
         const button = ReactDOM.findDOMNode(this)
         button.addEventListener('touchstart', this.touchstart)
         button.addEventListener('touchend', this.touchend)
+        button.addEventListener('touchcancel', this.touchend)
         window.addEventListener('mouseup', this.buttonFreed)
     }
 
@@ -38,12 +39,15 @@ export default class Bang extends Component {
         const button = ReactDOM.findDOMNode(this)
         button.removeEventListener('touchstart', this.touchstart)
         button.removeEventListener('touchend', this.touchend)
+        button.removeEventListener('touchcancel', this.touchend)
         window.removeEventListener('mouseup', this.buttonFreed)
     }
 
     touchstart = (e) => {
-        e.preventDefault()
-        this.buttonPressed()
+        if (e.cancelable) {
+            e.preventDefault()
+            this.buttonPressed()
+        }
     }
 
     touchend = (e) => {
