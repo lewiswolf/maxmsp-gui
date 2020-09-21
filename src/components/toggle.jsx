@@ -66,8 +66,8 @@ export default class Toggle extends Component {
             <div
                 className={style.toggle}
                 aria-label={this.props.ariaLabel}
-                role='switch'
                 aria-checked={this.state.toggle}
+                role='switch'
                 tabIndex='0'
                 onMouseDown={(e) => e.button === 0 && this.togglePressed()}
                 onKeyDown={(e) => {
