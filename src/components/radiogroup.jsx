@@ -60,14 +60,13 @@ export default class RadioGroup extends Component {
         }
     }
 
-    togglePressed = (i) => {
+    togglePressed = (i) =>
         this.setState(
             {
                 index: i !== this.state.index ? i : 0,
             },
             () => this.props.onClick(this.state.index)
         )
-    }
 
     render() {
         return (
