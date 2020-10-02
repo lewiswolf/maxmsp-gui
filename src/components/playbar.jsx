@@ -119,7 +119,7 @@ export default class Playbar extends Component {
                             this.playButtonMouseDown()
                         }
                     }}
-                    onKeyUp={() => this.playButtonMouseUp()}
+                    onKeyUp={() => this.globalMouseUp()}
                     style={{
                         fill: !this.props.inactive ? '#cee5e8' : '#808080',
                         background: this.state.playMouseDown
