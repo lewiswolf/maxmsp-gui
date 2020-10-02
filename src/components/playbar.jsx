@@ -89,7 +89,7 @@ export default class Playbar extends Component {
     playButtonMouseDown = () =>
         this.setState(
             {
-                isPlaying: !this.state.isPlaying,
+                isPlaying: !this.props.inactive && !this.state.isPlaying,
                 playMouseDown: true,
             },
             () => !this.props.inactive && this.props.isPlaying(this.state.isPlaying)
@@ -110,6 +110,7 @@ export default class Playbar extends Component {
                 <div
                     aria-label={`${this.props.ariaLabel}: play button`}
                     aria-checked={this.state.isPlaying}
+                    aria-disabled={this.props.inactive}
                     role='switch'
                     tabIndex='0'
                     onMouseDown={(e) => e.button === 0 && this.playButtonMouseDown()}
