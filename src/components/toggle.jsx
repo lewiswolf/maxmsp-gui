@@ -26,17 +26,11 @@ export default class Toggle extends Component {
     }
 
     componentDidMount() {
-        ReactDOM.findDOMNode(this).addEventListener(
-            'touchstart',
-            this.touchstart
-        )
+        ReactDOM.findDOMNode(this).addEventListener('touchstart', this.touchstart)
     }
 
     componentWillUnmount() {
-        ReactDOM.findDOMNode(this).removeEventListener(
-            'touchstart',
-            this.touchstart
-        )
+        ReactDOM.findDOMNode(this).removeEventListener('touchstart', this.touchstart)
     }
 
     componentDidUpdate(prevProps) {

@@ -50,8 +50,7 @@ export default class Message extends Component {
         }
     }
 
-    buttonPressed = () =>
-        this.setState({ clicked: true }, () => this.props.onClick())
+    buttonPressed = () => this.setState({ clicked: true }, () => this.props.onClick())
 
     buttonFreed = () => this.setState({ clicked: false })
 
@@ -83,9 +82,7 @@ export default class Message extends Component {
                     tabIndex='-1'
                     style={{
                         outline: 0,
-                        padding: this.state.clicked
-                            ? '6px 4px 4px 6px'
-                            : '5px 5px',
+                        padding: this.state.clicked ? '6px 4px 4px 6px' : '5px 5px',
                     }}
                 >
                     {this.props.text}

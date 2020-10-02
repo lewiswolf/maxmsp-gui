@@ -49,8 +49,7 @@ export default class Bang extends Component {
         }
     }
 
-    buttonPressed = () =>
-        this.setState({ clicked: true }, () => this.props.onClick())
+    buttonPressed = () => this.setState({ clicked: true }, () => this.props.onClick())
 
     buttonFreed = () => this.setState({ clicked: false })
 

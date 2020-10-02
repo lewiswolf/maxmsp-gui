@@ -31,17 +31,11 @@ export default class RadioGroup extends Component {
     }
 
     componentDidMount() {
-        ReactDOM.findDOMNode(this).addEventListener(
-            'touchstart',
-            this.touchstart
-        )
+        ReactDOM.findDOMNode(this).addEventListener('touchstart', this.touchstart)
     }
 
     componentWillUnmount() {
-        ReactDOM.findDOMNode(this).removeEventListener(
-            'touchstart',
-            this.touchstart
-        )
+        ReactDOM.findDOMNode(this).removeEventListener('touchstart', this.touchstart)
     }
 
     componentDidUpdate(prevProps) {
@@ -58,10 +52,7 @@ export default class RadioGroup extends Component {
             let t
             ReactDOM.findDOMNode(this).childNodes.forEach((button, i) => {
                 let b = button.getBoundingClientRect()
-                if (
-                    e.targetTouches[0].clientY > b.top &&
-                    e.targetTouches[0].clientY < b.bottom
-                ) {
+                if (e.targetTouches[0].clientY > b.top && e.targetTouches[0].clientY < b.bottom) {
                     t = i + 1
                 }
             })
@@ -80,12 +71,7 @@ export default class RadioGroup extends Component {
 
     render() {
         return (
-            <div
-                className={style.radiogroup}
-                role='radiogroup'
-                aria-label={this.props.ariaLabel}
-                tabIndex='0'
-            >
+            <div className={style.radiogroup} role='radiogroup' aria-label={this.props.ariaLabel} tabIndex='0'>
                 {this.props.items.map((item, i) => {
                     i++
                     return (
@@ -95,9 +81,7 @@ export default class RadioGroup extends Component {
                             aria-checked={i === this.state.index}
                             role='radio'
                             tabIndex={i === 1 ? '0' : '-1'}
-                            onMouseDown={(e) =>
-                                e.button === 0 && this.togglePressed(i)
-                            }
+                            onMouseDown={(e) => e.button === 0 && this.togglePressed(i)}
                             onKeyDown={(e) => {
                                 switch (e.key) {
                                     case 'Enter':
@@ -111,22 +95,13 @@ export default class RadioGroup extends Component {
                                     case 'ArrowDown':
                                         e.preventDefault()
                                         let newFocus =
-                                            this.state.focus +
-                                            (e.key === 'Up' ||
-                                            e.key === 'ArrowUp'
-                                                ? -1
-                                                : 1)
-                                        if (
-                                            newFocus === this.props.items.length
-                                        ) {
+                                            this.state.focus + (e.key === 'Up' || e.key === 'ArrowUp' ? -1 : 1)
+                                        if (newFocus === this.props.items.length) {
                                             newFocus = 0
                                         } else if (newFocus < 0) {
-                                            newFocus =
-                                                this.props.items.length - 1
+                                            newFocus = this.props.items.length - 1
                                         }
-                                        ReactDOM.findDOMNode(this).childNodes[
-                                            newFocus
-                                        ].focus()
+                                        ReactDOM.findDOMNode(this).childNodes[newFocus].focus()
                                         break
                                     default:
                                         break
@@ -138,20 +113,14 @@ export default class RadioGroup extends Component {
                                 })
                             }
                             style={{
-                                height:
-                                    this.props.spacing > 16
-                                        ? `${this.props.spacing}px`
-                                        : '16px',
+                                height: this.props.spacing > 16 ? `${this.props.spacing}px` : '16px',
                             }}
                         >
                             {item && (
                                 <p
                                     tabIndex='-1'
                                     style={{
-                                        lineHeight:
-                                            this.props.spacing > 16
-                                                ? `${this.props.spacing}px`
-                                                : '16px',
+                                        lineHeight: this.props.spacing > 16 ? `${this.props.spacing}px` : '16px',
                                         paddingRight: item ? '10px' : 0,
                                         outline: 0,
                                     }}
