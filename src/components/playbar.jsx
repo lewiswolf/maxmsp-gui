@@ -31,10 +31,10 @@ export default class Playbar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: this.props.value,
             isPlaying: this.props.setPlaying,
             playMouseDown: false,
             sliderMouseDown: false,
+            value: this.props.value,
             width: this.props.width >= 100 ? this.props.width : 100,
         }
         this.globalMouseUp.bind(this)
