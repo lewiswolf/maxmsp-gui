@@ -23,23 +23,22 @@ export default class Bang extends Component {
             clicked: false,
         }
         this.touchstart.bind(this)
-        this.touchend.bind(this)
         this.buttonFreed.bind(this)
     }
 
     componentDidMount() {
         const button = ReactDOM.findDOMNode(this)
         button.addEventListener('touchstart', this.touchstart)
-        button.addEventListener('touchend', this.touchend)
-        button.addEventListener('touchcancel', this.touchend)
+        button.addEventListener('touchend', this.buttonFreed)
+        button.addEventListener('touchcancel', this.buttonFreed)
         window.addEventListener('mouseup', this.buttonFreed)
     }
 
     componentWillUnmount() {
         const button = ReactDOM.findDOMNode(this)
         button.removeEventListener('touchstart', this.touchstart)
-        button.removeEventListener('touchend', this.touchend)
-        button.removeEventListener('touchcancel', this.touchend)
+        button.removeEventListener('touchend', this.buttonFreed)
+        button.removeEventListener('touchcancel', this.buttonFreed)
         window.removeEventListener('mouseup', this.buttonFreed)
     }
 
@@ -48,11 +47,6 @@ export default class Bang extends Component {
             e.preventDefault()
             this.buttonPressed()
         }
-    }
-
-    touchend = (e) => {
-        e.preventDefault()
-        this.buttonFreed()
     }
 
     buttonPressed = () =>

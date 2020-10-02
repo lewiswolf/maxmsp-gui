@@ -6,10 +6,11 @@
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
     position: relative;
+    touch-action: none;
 }
 
 @mixin focus() {
     &:focus {
-        outline: -webkit-focus-ring-color solid 3px;
+        outline: #b4b4b4 solid 3px;
     }
 }
