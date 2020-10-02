@@ -111,6 +111,7 @@ export default class Playbar extends Component {
                     aria-label={`${this.props.ariaLabel}: play button`}
                     aria-checked={this.state.isPlaying}
                     aria-disabled={this.props.inactive}
+                    aria-readonly={this.props.inactive}
                     role='switch'
                     tabIndex='0'
                     onMouseDown={(e) => e.button === 0 && this.playButtonMouseDown()}
