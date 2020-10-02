@@ -7,21 +7,25 @@ import style from '../scss/playbar.module.scss'
 
 export default class Playbar extends Component {
     static propTypes = {
-        inactive: propTypes.bool,
-        width: propTypes.number,
+        ariaLabel: propTypes.string,
         fidelity: propTypes.number,
-        value: propTypes.number,
+        inactive: propTypes.bool,
         setPlaying: propTypes.bool,
+        value: propTypes.number,
+        width: propTypes.number,
         isPlaying: propTypes.func,
         onChange: propTypes.func,
     }
 
     static defaultProps = {
+        ariaLabel: 'playbar',
         inactive: false,
         width: 200,
         fidelity: 100,
         value: 0,
         setPlaying: false,
+        isPlaying: () => {},
+        onChange: () => {},
     }
 
     constructor(props) {
@@ -33,8 +37,27 @@ export default class Playbar extends Component {
             sliderMouseDown: false,
             width: this.props.width >= 100 ? this.props.width : 100,
         }
-        this.globalMouseUp = this.globalMouseUp.bind(this)
-        this.resize = this.resize.bind(this)
+        this.globalMouseUp.bind(this)
+        this.resize.bind(this)
+    }
+
+    componentDidMount() {
+        const playButton = ReactDOM.findDOMNode(this).childNodes[0]
+        playButton.addEventListener('touchstart', this.touchstart)
+        playButton.addEventListener('touchend', this.globalMouseUp)
+        playButton.addEventListener('touchcancel', this.globalMouseUp)
+        window.addEventListener('mouseup', this.globalMouseUp)
+        window.addEventListener('resize', this.resize)
+        this.resize()
+    }
+
+    componentWillUnmount() {
+        const playButton = ReactDOM.findDOMNode(this).childNodes[0]
+        playButton.removeEventListener('touchstart', this.touchstart)
+        playButton.removeEventListener('touchend', this.globalMouseUp)
+        playButton.removeEventListener('touchcancel', this.globalMouseUp)
+        window.removeEventListener('mouseup', this.globalMouseUp)
+        window.removeEventListener('resize', this.resize)
     }
 
     componentDidUpdate(prevProps) {
@@ -49,47 +72,32 @@ export default class Playbar extends Component {
             })
     }
 
-    componentDidMount() {
-        window.addEventListener('mouseup', this.globalMouseUp)
-        window.addEventListener('touchend', this.globalMouseUp)
-        window.addEventListener('resize', this.resize)
-        this.resize()
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('mouseup', this.globalMouseUp)
-        window.removeEventListener('touchend', this.globalMouseUp)
-        window.removeEventListener('resize', this.resize)
-    }
-
-    globalMouseUp = () => {
-        ;(this.state.playMouseDown || this.state.sliderMouseDown) &&
-            this.setState({ playMouseDown: false, sliderMouseDown: false })
-    }
-
     resize = () => {
-        const computedWidth = ReactDOM.findDOMNode(
-            this
-        ).parentNode.getBoundingClientRect().width
-        const idealWidth = this.props.width
+        const computedWidth = ReactDOM.findDOMNode(this).parentNode.getBoundingClientRect().width
         this.setState({
-            width: computedWidth < idealWidth ? computedWidth : idealWidth,
+            width: computedWidth < this.props.width ? computedWidth : this.props.width,
         })
     }
 
-    playButtonMouseDown = () => {
-        !this.state.playMouseDown &&
-            this.setState(
-                {
-                    isPlaying: !this.state.isPlaying,
-                    playMouseDown: true,
-                },
-                () =>
-                    !this.props.inactive &&
-                    this.props.isPlaying &&
-                    this.props.isPlaying(this.state.isPlaying)
-            )
+    touchstart = (e) => {
+        if (e.cancelable) {
+            e.preventDefault()
+            this.playButtonMouseDown()
+        }
     }
+
+    playButtonMouseDown = () =>
+        this.setState(
+            {
+                isPlaying: !this.state.isPlaying,
+                playMouseDown: true,
+            },
+            () => !this.props.inactive && this.props.isPlaying(this.state.isPlaying)
+        )
+
+    globalMouseUp = () =>
+        (this.state.playMouseDown || this.state.sliderMouseDown) &&
+        this.setState({ playMouseDown: false, sliderMouseDown: false })
 
     render() {
         return (
@@ -99,24 +107,30 @@ export default class Playbar extends Component {
                     width: this.state.width,
                 }}
             >
-                {React.createElement(
-                    !this.props.inactive && this.state.isPlaying
-                        ? PauseButton
-                        : PlayButton,
-                    {
-                        'aria-label': 'playbar toggle',
-                        role: 'button',
-                        'aria-pressed': this.state.isPlaying,
-                        style: {
-                            fill: !this.props.inactive ? '#cee5e8' : '#808080',
-                            background: this.state.playMouseDown
-                                ? 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)'
-                                : 'inherit',
-                        },
-                        onMouseDown: () => this.playButtonMouseDown(),
-                        onTouchStart: () => this.playButtonMouseDown(),
-                    }
-                )}
+                <div
+                    aria-label={`${this.props.ariaLabel}: play button`}
+                    aria-checked={this.state.isPlaying}
+                    role='switch'
+                    tabIndex='0'
+                    onMouseDown={(e) => e.button === 0 && this.playButtonMouseDown()}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            this.playButtonMouseDown()
+                        }
+                    }}
+                    onKeyUp={() => this.playButtonMouseUp()}
+                    style={{
+                        fill: !this.props.inactive ? '#cee5e8' : '#808080',
+                        background: this.state.playMouseDown
+                            ? 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)'
+                            : 'inherit',
+                    }}
+                >
+                    <div tabIndex='-1' style={{ outline: 0 }}>
+                        {React.createElement(!this.props.inactive && this.state.isPlaying ? PauseButton : PlayButton)}
+                    </div>
+                </div>
                 <hr />
                 <svg
                     version='1.1'
@@ -126,19 +140,13 @@ export default class Playbar extends Component {
                     xmlSpace='preserve'
                     style={{
                         enableBackground: 'new 0 0 84 84',
-                        left: `${
-                            (this.state.width - 37) *
-                                (this.state.value / this.props.fidelity) +
-                            16
-                        }px`,
+                        left: `${(this.state.width - 37) * (this.state.value / this.props.fidelity) + 16}px`,
                     }}
                 >
                     <g>
                         <path
                             style={{
-                                fill: !this.props.inactive
-                                    ? '#cee5e8'
-                                    : '#808080',
+                                fill: !this.props.inactive ? '#cee5e8' : '#808080',
                             }}
                             d='M42.13,67.02C28.24,67.05,16.97,55.8,16.98,41.93C17,28.19,28.21,16.98,41.98,16.94
 		c13.89-0.03,25.17,11.22,25.15,25.08C67.1,55.78,55.89,66.99,42.13,67.02z M42.14,25.02c-9.35-0.03-17.07,7.62-17.07,16.94
@@ -160,7 +168,11 @@ export default class Playbar extends Component {
                 </svg>
                 <input
                     type='range'
-                    aria-label='playbar slider'
+                    aria-label={`${this.props.arialabel} slider`}
+                    role='slider'
+                    aria-valuemin='0'
+                    aria-valuemax={this.props.fidelity}
+                    aria-valuenow={this.state.value}
                     min='0'
                     max={this.props.fidelity}
                     value={this.state.value}
@@ -175,12 +187,7 @@ export default class Playbar extends Component {
                         })
                     }
                     onChange={(e) =>
-                        this.setState(
-                            { value: parseInt(e.target.value) },
-                            () =>
-                                this.props.onChange &&
-                                this.props.onChange(this.state.value)
-                        )
+                        this.setState({ value: parseInt(e.target.value) }, () => this.props.onChange(this.state.value))
                     }
                 />
             </div>
