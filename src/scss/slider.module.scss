@@ -10,19 +10,20 @@
 
 .slider {
     @include main();
+    @include focus();
     height: 24px;
     width: fit-content;
     max-width: 100%;
     background: #393939;
 
     input {
-        height: 100%;
+        height: 24px;
         // width set by component
         max-width: calc(100% - 10px);
         margin: 0 5px;
         appearance: none;
-        outline: 0;
         border-radius: 0;
+        outline: 0;
 
         &::-webkit-slider-thumb {
             @include thumbStyle();
@@ -30,10 +31,6 @@
 
         &::-moz-range-thumb {
             @include thumbStyle();
-        }
-
-        &::-moz-focus-outer {
-            border: 0;
         }
     }
 }
