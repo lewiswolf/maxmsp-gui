@@ -24,6 +24,7 @@ export default class RadioGroup extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            focus: 1,
             index: this.props.value,
         }
         this.touchstart.bind(this)
@@ -79,27 +80,63 @@ export default class RadioGroup extends Component {
 
     render() {
         return (
-            <div className={style.radiogroup}>
+            <div
+                className={style.radiogroup}
+                role='radiogroup'
+                aria-label={this.props.ariaLabel}
+                tabIndex='0'
+            >
                 {this.props.items.map((item, i) => {
                     i++
                     return (
                         <div
                             key={i}
-                            aria-label={
-                                item ? item : `${this.props.ariaLabel}: ${i}`
-                            }
+                            {...(item !== '' && { 'aria-label': item })}
                             aria-checked={i === this.state.index}
-                            role='switch'
-                            tabIndex='0'
+                            role='radio'
+                            tabIndex={i === 1 ? '0' : '-1'}
                             onMouseDown={(e) =>
                                 e.button === 0 && this.togglePressed(i)
                             }
                             onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault()
-                                    this.togglePressed(i)
+                                switch (e.key) {
+                                    case 'Enter':
+                                    case ' ':
+                                        e.preventDefault()
+                                        this.togglePressed(i)
+                                        break
+                                    case 'Up':
+                                    case 'ArrowUp':
+                                    case 'Down':
+                                    case 'ArrowDown':
+                                        e.preventDefault()
+                                        let newFocus =
+                                            this.state.focus +
+                                            (e.key === 'Up' ||
+                                            e.key === 'ArrowUp'
+                                                ? -1
+                                                : 1)
+                                        if (
+                                            newFocus === this.props.items.length
+                                        ) {
+                                            newFocus = 0
+                                        } else if (newFocus < 0) {
+                                            newFocus =
+                                                this.props.items.length - 1
+                                        }
+                                        ReactDOM.findDOMNode(this).childNodes[
+                                            newFocus
+                                        ].focus()
+                                        break
+                                    default:
+                                        break
                                 }
                             }}
+                            onFocus={() =>
+                                this.setState({
+                                    focus: i - 1,
+                                })
+                            }
                             style={{
                                 height:
                                     this.props.spacing > 16
@@ -111,11 +148,11 @@ export default class RadioGroup extends Component {
                                 <p
                                     tabIndex='-1'
                                     style={{
-                                        paddingRight: item ? '10px' : 0,
                                         lineHeight:
                                             this.props.spacing > 16
                                                 ? `${this.props.spacing}px`
                                                 : '16px',
+                                        paddingRight: item ? '10px' : 0,
                                         outline: 0,
                                     }}
                                 >
@@ -125,11 +162,11 @@ export default class RadioGroup extends Component {
                             <div
                                 tabIndex='-1'
                                 style={{
-                                    outline: 0,
                                     background:
                                         i === this.state.index
                                             ? 'radial-gradient(18px circle at center,#cee5e8 50%,#333333 50%)'
                                             : 'radial-gradient(18px circle at center,#595959 50%,#333333 50%)',
+                                    outline: 0,
                                 }}
                             >
                                 <SVG />

@@ -2,6 +2,7 @@
 
 .radiogroup {
     @include main();
+    @include focus();
     height: fit-content;
     width: fit-content;
     max-width: 100%;
