@@ -193,8 +193,7 @@ export default class Playbar extends Component {
                     </g>
                 </svg>
                 <div
-                    className={style.slider}
-                    aria-label={this.props.ariaLabel}
+                    aria-label={`${this.props.ariaLabel}`}
                     aria-orientation='horizontal'
                     aria-valuemin='0'
                     aria-valuemax={this.props.fidelity}
@@ -249,9 +248,7 @@ export default class Playbar extends Component {
                         }}
                     >
                         <input
-                            aria-label={this.props.ariaLabel}
                             tabIndex='-1'
-                            role='complementary'
                             type='range'
                             min='0'
                             max={this.props.fidelity}
