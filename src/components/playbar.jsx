@@ -111,7 +111,7 @@ export default class Playbar extends Component {
     sliderTouchMove = (e) => {
         const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
         const touch = e.targetTouches[0]
-        const newVal = Math.round((touch.clientX - (rect.x + 5)) / ((rect.width - 10) / this.props.fidelity))
+        const newVal = Math.round((touch.clientX - rect.x - 25) / ((rect.width - 30) / this.props.fidelity))
         this.onChange(newVal > this.props.fidelity ? this.props.fidelity : newVal < 0 ? 0 : newVal)
     }
 
