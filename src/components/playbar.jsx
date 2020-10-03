@@ -99,7 +99,7 @@ export default class Playbar extends Component {
 
     globalMouseUp = () =>
         (this.state.playMouseDown || this.state.sliderMouseDown) &&
-        this.setState({ playMouseDown: false, sliderMouseDown: false }, () => console.log('my state changed'))
+        this.setState({ playMouseDown: false, sliderMouseDown: false })
 
     sliderTouchStart = (e) => {
         if (e.cancelable) {
@@ -193,11 +193,13 @@ export default class Playbar extends Component {
                     </g>
                 </svg>
                 <div
-                    aria-label={`${this.props.ariaLabel}`}
+                    aria-label={`${this.props.ariaLabel}: slider`}
                     aria-orientation='horizontal'
                     aria-valuemin='0'
                     aria-valuemax={this.props.fidelity}
                     aria-valuenow={this.state.value}
+                    aria-disabled={this.props.inactive}
+                    aria-readonly={this.props.inactive}
                     role='slider'
                     tabIndex='0'
                     onKeyDown={(e) => {
@@ -248,6 +250,14 @@ export default class Playbar extends Component {
                         }}
                     >
                         <input
+                            aria-label={`${this.props.ariaLabel}: slider`}
+                            aria-orientation='horizontal'
+                            aria-valuemin='0'
+                            aria-valuemax={this.props.fidelity}
+                            aria-valuenow={this.state.value}
+                            aria-disabled={this.props.inactive}
+                            aria-readonly={this.props.inactive}
+                            role='slider'
                             tabIndex='-1'
                             type='range'
                             min='0'

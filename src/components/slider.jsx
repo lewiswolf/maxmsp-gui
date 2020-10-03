@@ -158,6 +158,12 @@ export default class Slider extends Component {
                     }}
                 >
                     <input
+                        aria-label={this.props.ariaLabel}
+                        aria-orientation='horizontal'
+                        aria-valuemin='0'
+                        aria-valuemax={this.props.fidelity}
+                        aria-valuenow={this.state.value}
+                        role='slider'
                         tabIndex='-1'
                         type='range'
                         min='0'
