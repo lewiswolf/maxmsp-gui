@@ -2,15 +2,22 @@
 
 .textbutton {
     @include main();
+    @include focus();
     height: 24px;
     width: fit-content;
-    min-width: 80px;
-    max-width: calc(100% - 20px);
-    padding: 0 10px;
-    overflow: hidden;
-    line-height: 24px;
-    font-size: 13.5px;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
+    p {
+        height: 100%;
+        width: fit-content;
+        min-width: 80px;
+        max-width: calc(100% - 20px);
+        padding: 0 10px;
+        margin: 0;
+        overflow: hidden;
+        line-height: 24px;
+        font-size: 13.5px;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
