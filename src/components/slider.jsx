@@ -145,6 +145,7 @@ export default class Slider extends Component {
                     <input
                         aria-label={this.props.ariaLabel}
                         role='complementary'
+                        tabIndex='-1'
                         type='range'
                         min='0'
                         max={this.props.fidelity}

@@ -29,16 +29,12 @@ export default class Bang extends Component {
     componentDidMount() {
         const button = ReactDOM.findDOMNode(this)
         button.addEventListener('touchstart', this.touchstart)
-        button.addEventListener('touchend', this.buttonFreed)
-        button.addEventListener('touchcancel', this.buttonFreed)
         window.addEventListener('mouseup', this.buttonFreed)
     }
 
     componentWillUnmount() {
         const button = ReactDOM.findDOMNode(this)
         button.removeEventListener('touchstart', this.touchstart)
-        button.removeEventListener('touchend', this.buttonFreed)
-        button.removeEventListener('touchcancel', this.buttonFreed)
         window.removeEventListener('mouseup', this.buttonFreed)
     }
 
@@ -76,6 +72,8 @@ export default class Bang extends Component {
                         this.buttonFreed()
                     }
                 }}
+                onTouchEnd={() => this.buttonFreed()}
+                onTouchCancel={() => this.buttonFreed()}
             >
                 <SVG
                     tabIndex='-1'
