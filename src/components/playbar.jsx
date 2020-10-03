@@ -240,6 +240,7 @@ export default class Playbar extends Component {
                                 break
                         }
                     }}
+                    onKeyUp={() => this.globalMouseUp()}
                 >
                     <div
                         tabIndex='-1'
