@@ -19,11 +19,11 @@ export default class Playbar extends Component {
 
     static defaultProps = {
         ariaLabel: 'playbar',
-        inactive: false,
-        width: 200,
         fidelity: 100,
-        value: 0,
+        inactive: false,
         setPlaying: false,
+        value: 0,
+        width: 200,
         isPlaying: () => {},
         onChange: () => {},
     }
@@ -38,14 +38,16 @@ export default class Playbar extends Component {
             width: this.props.width >= 100 ? this.props.width : 100,
         }
         this.globalMouseUp.bind(this)
+        this.playButtonTouchStart.bind(this)
         this.resize.bind(this)
+        this.sliderTouchStart.bind(this)
     }
 
     componentDidMount() {
         const playButton = ReactDOM.findDOMNode(this).childNodes[0]
-        playButton.addEventListener('touchstart', this.touchstart)
-        playButton.addEventListener('touchend', this.globalMouseUp)
-        playButton.addEventListener('touchcancel', this.globalMouseUp)
+        const slider = ReactDOM.findDOMNode(this).childNodes[3].childNodes[0].childNodes[0]
+        playButton.addEventListener('touchstart', this.playButtonTouchStart)
+        slider.addEventListener('touchstart', this.sliderTouchStart)
         window.addEventListener('mouseup', this.globalMouseUp)
         window.addEventListener('resize', this.resize)
         this.resize()
@@ -53,9 +55,9 @@ export default class Playbar extends Component {
 
     componentWillUnmount() {
         const playButton = ReactDOM.findDOMNode(this).childNodes[0]
-        playButton.removeEventListener('touchstart', this.touchstart)
-        playButton.removeEventListener('touchend', this.globalMouseUp)
-        playButton.removeEventListener('touchcancel', this.globalMouseUp)
+        const slider = ReactDOM.findDOMNode(this).childNodes[3].childNodes[0].childNodes[0]
+        playButton.removeEventListener('touchstart', this.playButtonTouchStart)
+        slider.removeEventListener('touchstart', this.sliderTouchStart)
         window.removeEventListener('mouseup', this.globalMouseUp)
         window.removeEventListener('resize', this.resize)
     }
@@ -79,7 +81,7 @@ export default class Playbar extends Component {
         })
     }
 
-    touchstart = (e) => {
+    playButtonTouchStart = (e) => {
         if (e.cancelable) {
             e.preventDefault()
             this.playButtonMouseDown()
@@ -97,7 +99,25 @@ export default class Playbar extends Component {
 
     globalMouseUp = () =>
         (this.state.playMouseDown || this.state.sliderMouseDown) &&
-        this.setState({ playMouseDown: false, sliderMouseDown: false })
+        this.setState({ playMouseDown: false, sliderMouseDown: false }, () => console.log('my state changed'))
+
+    sliderTouchStart = (e) => {
+        if (e.cancelable) {
+            e.preventDefault()
+            this.sliderTouchMove(e)
+        }
+    }
+
+    sliderTouchMove = (e) => {
+        const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
+        const touch = e.targetTouches[0]
+        const newVal = Math.round((touch.clientX - (rect.x + 5)) / ((rect.width - 10) / this.props.fidelity))
+        this.onChange(newVal > this.props.fidelity ? this.props.fidelity : newVal < 0 ? 0 : newVal)
+    }
+
+    onChange = (value) =>
+        value !== this.state.value &&
+        this.setState({ value, sliderMouseDown: true }, () => this.props.onChange(this.state.value))
 
     render() {
         return (
@@ -106,6 +126,8 @@ export default class Playbar extends Component {
                 style={{
                     width: this.state.width,
                 }}
+                onTouchEnd={() => this.globalMouseUp()}
+                onTouchCancel={() => this.globalMouseUp()}
             >
                 <div
                     aria-label={`${this.props.ariaLabel}: play button`}
@@ -130,7 +152,9 @@ export default class Playbar extends Component {
                     }}
                 >
                     <div tabIndex='-1' style={{ outline: 0 }}>
-                        {React.createElement(!this.props.inactive && this.state.isPlaying ? PauseButton : PlayButton)}
+                        {React.createElement(!this.props.inactive && this.state.isPlaying ? PauseButton : PlayButton, {
+                            tabIndex: '-1',
+                        })}
                     </div>
                 </div>
                 <hr />
@@ -168,30 +192,83 @@ export default class Playbar extends Component {
                         />
                     </g>
                 </svg>
-                <input
-                    type='range'
-                    aria-label={`${this.props.arialabel} slider`}
-                    role='slider'
+                <div
+                    className={style.slider}
+                    aria-label={this.props.ariaLabel}
+                    aria-orientation='horizontal'
                     aria-valuemin='0'
                     aria-valuemax={this.props.fidelity}
                     aria-valuenow={this.state.value}
-                    min='0'
-                    max={this.props.fidelity}
-                    value={this.state.value}
-                    onMouseDown={() =>
-                        this.setState({
-                            sliderMouseDown: true,
-                        })
-                    }
-                    onTouchStart={() =>
-                        this.setState({
-                            sliderMouseDown: true,
-                        })
-                    }
-                    onChange={(e) =>
-                        this.setState({ value: parseInt(e.target.value) }, () => this.props.onChange(this.state.value))
-                    }
-                />
+                    role='slider'
+                    tabIndex='0'
+                    onKeyDown={(e) => {
+                        let newVal
+                        switch (e.key) {
+                            case 'Up':
+                            case 'ArrowUp':
+                                e.preventDefault()
+                            case 'Right':
+                            case 'ArrowRight':
+                                newVal = this.state.value + Math.round(this.props.fidelity / 100)
+                                newVal <= this.props.fidelity && this.onChange(newVal)
+                                break
+                            case 'Down':
+                            case 'ArrowDown':
+                                e.preventDefault()
+                            case 'Left':
+                            case 'ArrowLeft':
+                                newVal = this.state.value - Math.round(this.props.fidelity / 100)
+                                newVal >= 0 && this.onChange(newVal)
+                                break
+                            case 'PageUp':
+                                e.preventDefault()
+                                newVal = this.state.value + Math.round(this.props.fidelity / 10)
+                                if (newVal > this.props.fidelity) {
+                                    newVal = this.props.fidelity
+                                }
+                                this.onChange(newVal)
+                                break
+                            case 'PageDown':
+                                e.preventDefault()
+                                newVal = this.state.value - Math.round(this.props.fidelity / 10)
+                                if (newVal < 0) {
+                                    newVal = 0
+                                }
+                                this.onChange(newVal)
+                                break
+                            default:
+                                break
+                        }
+                    }}
+                >
+                    <div
+                        tabIndex='-1'
+                        style={{
+                            outline: 0,
+                        }}
+                    >
+                        <input
+                            aria-label={this.props.ariaLabel}
+                            tabIndex='-1'
+                            role='complementary'
+                            type='range'
+                            min='0'
+                            max={this.props.fidelity}
+                            value={this.state.value}
+                            onMouseDown={() =>
+                                this.setState({
+                                    sliderMouseDown: true,
+                                })
+                            }
+                            onChange={(e) => this.onChange(parseInt(e.target.value))}
+                            onTouchMove={(e) => this.sliderTouchMove(e)}
+                            style={{
+                                background: this.state.background,
+                                width: this.props.length,
+                            }}
+                        />
+                    </div>
+                </div>
             </div>
         )
     }

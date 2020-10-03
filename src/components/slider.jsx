@@ -89,14 +89,14 @@ export default class Slider extends Component {
     touchstart = (e) => {
         if (e.cancelable) {
             e.preventDefault()
-            this.ios(e)
+            this.touchmove(e)
         }
     }
 
-    ios = (e) => {
+    touchmove = (e) => {
         const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
         const touch = e.targetTouches[0]
-        let newVal = (touch.clientX - (rect.x + 5)) / ((rect.width - 10) / this.props.fidelity)
+        const newVal = Math.round((touch.clientX - (rect.x + 5)) / ((rect.width - 10) / this.props.fidelity))
         this.colourAndValue(newVal > this.props.fidelity ? this.props.fidelity : newVal < 0 ? 0 : newVal)
     }
 
@@ -166,7 +166,7 @@ export default class Slider extends Component {
                         max={this.props.fidelity}
                         value={this.state.value}
                         onChange={(e) => this.colourAndValue(parseInt(e.target.value))}
-                        onTouchMove={(e) => this.ios(e)}
+                        onTouchMove={(e) => this.touchmove(e)}
                         style={{
                             background: this.state.background,
                             width: this.props.length,
