@@ -35,6 +35,15 @@ export default class Slider extends Component {
                 ${sliderColors.negative} 6px)`,
             value: this.props.value <= this.props.fidelity && this.props.value >= 0 ? this.props.value : 0,
         }
+        this.touchstart.bind(this)
+    }
+
+    componentDidMount() {
+        ReactDOM.findDOMNode(this).childNodes[0].childNodes[0].addEventListener('touchstart', this.touchstart)
+    }
+
+    componentWillUnmount() {
+        ReactDOM.findDOMNode(this).childNodes[0].childNodes[0].removeEventListener('touchstart', this.touchstart)
     }
 
     componentDidUpdate(prevProps) {
@@ -77,12 +86,18 @@ export default class Slider extends Component {
         }
     }
 
+    touchstart = (e) => {
+        if (e.cancelable) {
+            e.preventDefault()
+            this.ios(e)
+        }
+    }
+
     ios = (e) => {
         const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
         const touch = e.targetTouches[0]
-        if (touch.clientX < rect.right - 5 && touch.clientX > rect.left + 5) {
-            this.colourAndValue(Math.round((touch.clientX - (rect.x + 5)) / ((rect.width - 10) / this.props.fidelity)))
-        }
+        let newVal = (touch.clientX - (rect.x + 5)) / ((rect.width - 10) / this.props.fidelity)
+        this.colourAndValue(newVal > this.props.fidelity ? this.props.fidelity : newVal < 0 ? 0 : newVal)
     }
 
     render() {
