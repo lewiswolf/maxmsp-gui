@@ -108,18 +108,6 @@ export default class TextButton extends Component {
         }
     }
 
-    touchend = () => {
-        !this.props.inactive &&
-            this.setState(
-                {
-                    mouseDown: false,
-                    hover: false,
-                    toggle: this.props.mode ? !this.state.toggle : false,
-                },
-                () => (this.props.mode ? this.props.onClick(this.state.toggle) : this.props.onClick())
-            )
-    }
-
     render() {
         return (
             <div
@@ -169,8 +157,24 @@ export default class TextButton extends Component {
                         )
                     }
                 }}
-                onTouchEnd={() => this.touchend()}
-                onTouchCancel={() => this.touchend()}
+                onTouchEnd={() =>
+                    !this.props.inactive &&
+                    this.setState(
+                        {
+                            mouseDown: false,
+                            hover: false,
+                            toggle: this.props.mode ? !this.state.toggle : false,
+                        },
+                        () => (this.props.mode ? this.props.onClick(this.state.toggle) : this.props.onClick())
+                    )
+                }
+                onTouchCancel={() =>
+                    !this.props.inactive &&
+                    this.setState({
+                        mouseDown: false,
+                        hover: false,
+                    })
+                }
                 style={{
                     background: !this.props.inactive
                         ? this.state.hover && !this.state.externMouseDown
