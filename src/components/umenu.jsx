@@ -155,7 +155,7 @@ export default class Umenu extends Component {
     changeSelected = (aria = false) =>
         this.setState(
             {
-                active: this.state.focus !== null ? this.state.focus : 1,
+                active: this.state.focus !== null ? this.state.focus : this.state.active,
                 dropdownDisplay: false,
             },
             () => {

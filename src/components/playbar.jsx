@@ -178,7 +178,6 @@ export default class Playbar extends Component {
                     aria-label={`${this.props.ariaLabel}: play button`}
                     aria-checked={this.state.isPlaying}
                     aria-disabled={this.props.inactive}
-                    aria-readonly={this.props.inactive}
                     role='switch'
                     tabIndex='0'
                     onMouseDown={(e) => e.button === 0 && this.playButtonMouseDown()}
@@ -237,7 +236,6 @@ export default class Playbar extends Component {
                     aria-valuemax={this.props.fidelity}
                     aria-valuenow={this.state.value}
                     aria-disabled={this.props.inactive}
-                    aria-readonly={this.props.inactive}
                     role='slider'
                     tabIndex='0'
                 >
@@ -254,7 +252,6 @@ export default class Playbar extends Component {
                             aria-valuemax={this.props.fidelity}
                             aria-valuenow={this.state.value}
                             aria-disabled={this.props.inactive}
-                            aria-readonly={this.props.inactive}
                             role='slider'
                             tabIndex='-1'
                             type='range'

@@ -27,54 +27,64 @@ export default function App() {
         <React.Fragment>
 
             <MaxMSP.Bang 
+                ariaLabel='set the aria-label tag' // defaults to the object name
+                ariaPressed={true || false} // default null
                 onClick={() => console.log('bang')} 
             />
 
             <MaxMSP.Ezdac
+                ariaLabel='set the aria-label tag' // defaults to the object name
                 value={true || false} // default false
                 onClick={(bool) => console.log(bool)} // true or false
             />
 
             <MaxMSP.Message
-                text={'What does the message say?'}
+                ariaLabel='set the aria-label tag' // defaults to the object name
+                ariaPressed={true || false} // default null
+                text='What does the message say?'
                 onClick={() => console.log('bang')}
             />
 
             <MaxMSP.Object
                 inactive={true || false} // default false
-                text={'What is the object called?'}
+                text='What is the object called?'
             />
 
             <MaxMSP.Playbar
-                inactive={true || false} // diable user interaction, default false
-                width={200} // width of the slider in pixels, default 200
+                ariaLabel='set the aria-label tag' // defaults to the object name
                 fidelity={100} // max output of slider, default 100
-                value={50} // inital/updated state, 0 to this.props.fidelity, default 0
+                inactive={true || false} // diable user interaction, default false
                 setPlaying={true || false} // set isPlaying externally
+                value={50} // inital/updated state, 0 to this.props.fidelity, default 0
+                width={200} // width of the slider in pixels, default 200
                 isPlaying={(bool) => console.log(bool)}
                 onChange={(i) => console.log(`My value is ${i}`)} // 0 - this.props.fidelity
             />
 
             <MaxMSP.RadioGroup
+                ariaLabel='set the aria-label tag' // defaults to `this.props.ariaLabel: ${item[i] || i}`
                 items={['array', 'of', 'items']} // this sets the amount of radiobuttons, strings create text alongside each button
-                value={i} // this.props.items[i], default 0
                 spacing={24} // the height of each button in pixels, defualt 20
+                value={i} // this.props.items[i], default 0
                 onClick={(i) => console.log(`My value is ${i}`)}
             />
 
             <MaxMSP.Slider
+                ariaLabel='set the aria-label tag' // defaults to the object name
                 fidelity={100} // max output of slider, default 100
-                value={50} // inital/updated state, 0 to this.props.fidelity, default 0
                 length={200} // width of the slider in pixels, default 200
+                value={50} // inital/updated state, 0 to this.props.fidelity, default 0
                 onChange={(i) => console.log(`My value is ${i}`)} // 0 - this.props.fidelity
             />
 
             <MaxMSP.TextButton
+                ariaLabel='set the aria-label tag' // defaults to the object name
+                ariaPressed={true || false} // default null, for mode 'false' only
                 inactive={true || false} // diable user interaction, default false
                 mode={true || false} // true for toggle, false for bang, default false
-                value={true || false} // default false
-                text={'What does the textbutton say?'}
-                toggleText={"What does the textbutton say when it's on?"}
+                text='What does the textbutton say?'
+                toggleText='What does the active textbutton say?'
+                value={true || false} // default false, for mode 'true' only
                 // mode 0 onClick
                 onClick={() => console.log('bang')}
                 // mode 1 onClick
@@ -82,15 +92,16 @@ export default function App() {
             />
 
             <MaxMSP.Toggle
+                ariaLabel='set the aria-label tag' // defaults to the object name
                 value={true || false} // default false
                 onClick={(bool) => console.log(bool)}
             />
 
             <MaxMSP.Umenu
-                width={200} // width of the umenu in pixels, default 100
                 items={['array', 'of', 'items']}
+                outputSymbol={true || false} // true for symbol false for int, default 
                 value={i} // this.props.items[i], default 0
-                outputSymbol={true || false} // true for symbol false for int, default false
+                width={200} // width of the umenu in pixels, default 100false
                 onChange={(x) => console.log(`My index/item is ${x}`)}
             />
 

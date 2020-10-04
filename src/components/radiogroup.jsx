@@ -76,7 +76,7 @@ export default class RadioGroup extends Component {
                     return (
                         <div
                             key={i}
-                            {...(item !== '' && { 'aria-label': item })}
+                            aria-label={item ? item : `radiogroup button ${i}`}
                             aria-checked={i === this.state.index}
                             role='radio'
                             tabIndex={i === 1 ? '0' : '-1'}

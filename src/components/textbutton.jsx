@@ -99,7 +99,7 @@ export default class TextButton extends Component {
         })
 
     touchstart = (e) => {
-        if (e.cancelable) {
+        if (e.cancelable && !this.props.inactive) {
             e.preventDefault()
             this.setState({
                 hover: true,
@@ -112,18 +112,42 @@ export default class TextButton extends Component {
         return (
             <div
                 className={style.textbutton}
-                aria-label={this.props.ariaLabel}
                 {...(!this.props.mode &&
+                    !this.props.inactive &&
                     this.props.ariaPressed !== null && {
                         'aria-pressed': this.props.ariaPressed,
                     })}
-                {...(this.props.mode && {
-                    'aria-checked': this.state.toggle,
+                {...(this.props.mode &&
+                    !this.props.inactive && {
+                        'aria-checked': this.state.toggle,
+                    })}
+                {...(!this.props.inactive && {
+                    onKeyDown: (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            this.setState({
+                                hover: true,
+                                mouseDown: true,
+                            })
+                        }
+                    },
+                    onKeyUp: (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            this.setState(
+                                {
+                                    hover: false,
+                                    mouseDown: false,
+                                    toggle: this.props.mode ? !this.state.toggle : false,
+                                },
+                                () => (this.props.mode ? this.props.onClick(this.state.toggle) : this.props.onClick())
+                            )
+                        }
+                    },
+                    'aria-label': this.props.ariaLabel,
+                    role: this.props.mode ? 'switch' : 'button',
+                    tabIndex: '0',
                 })}
-                aria-disabled={this.props.inactive}
-                aria-readonly={this.props.inactive}
-                role={this.props.mode ? 'switch' : 'button'}
-                tabIndex='0'
                 onClick={() =>
                     !this.props.inactive &&
                     this.setState(
@@ -135,28 +159,6 @@ export default class TextButton extends Component {
                 }
                 onMouseEnter={() => this.mouseHover(true)}
                 onMouseLeave={() => this.mouseHover(false)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        this.setState({
-                            hover: true,
-                            mouseDown: true,
-                        })
-                    }
-                }}
-                onKeyUp={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        this.setState(
-                            {
-                                hover: false,
-                                mouseDown: false,
-                                toggle: this.props.mode ? !this.state.toggle : false,
-                            },
-                            () => (this.props.mode ? this.props.onClick(this.state.toggle) : this.props.onClick())
-                        )
-                    }
-                }}
                 onTouchEnd={() =>
                     !this.props.inactive &&
                     this.setState(

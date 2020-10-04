@@ -9,7 +9,7 @@ export default class App extends Component {
   state = {
     playing: false,
     playbar: 0,
-    iframe: window !== window.top
+    iframe: window !== window.top,
   }
 
   render() {
@@ -21,9 +21,6 @@ export default class App extends Component {
         <MaxMSP.Message text='text' />
         <MaxMSP.Object text='text' />
         <MaxMSP.Playbar
-          value={this.state.playbar}
-          setPlaying={this.state.playing}
-          onChange={(i) => this.setState({ playbar: i })}
           isPlaying={(bool) => {
             if (bool) {
               this.interval = setInterval(() => {
@@ -42,6 +39,9 @@ export default class App extends Component {
               this.setState({ playing: bool })
             }
           }}
+          setPlaying={this.state.playing}
+          value={this.state.playbar}
+          onChange={(i) => this.setState({ playbar: i })}
         />
         <MaxMSP.RadioGroup />
         <MaxMSP.Slider />
