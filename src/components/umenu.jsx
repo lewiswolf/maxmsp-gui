@@ -6,45 +6,57 @@ import style from '../scss/umenu.module.scss'
 
 export default class Umenu extends Component {
     static propTypes = {
+        ariaLabel: propTypes.string,
         items: propTypes.array,
+        outputSymbol: propTypes.bool,
         width: propTypes.number,
         value: propTypes.number,
-        outputSymbol: propTypes.bool,
         onChange: propTypes.func,
     }
 
     static defaultProps = {
+        ariaLabel: 'umenu',
         items: [],
+        outputSymbol: false,
         width: 100,
         value: 0,
-        outputSymbol: false,
+        onChange: () => {},
     }
 
     constructor(props) {
         super(props)
         this.state = {
-            active:
-                this.props.value < this.props.items.length &&
-                this.props.value >= 0
-                    ? this.props.value
-                    : 0,
+            active: this.props.value < this.props.items.length && this.props.value >= 0 ? this.props.value : 0,
             dropdownDisplay: false,
+            dropdownWidth: null,
             focus: null,
             objectWidth: this.props.width >= 50 ? this.props.width : 50,
-            dropdownWidth: null,
         }
+        this.customBlur.bind(this)
         this.isNotInViewport.bind(this)
+        this.listTouchStart.bind(this)
         this.responsiveDropdown.bind(this)
+        this.toggleTouchStart.bind(this)
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.isNotInViewport)
+        const toggle = ReactDOM.findDOMNode(this).childNodes[0]
+        const list = ReactDOM.findDOMNode(this).childNodes[1]
+        toggle.addEventListener('touchstart', this.toggleTouchStart)
+        list.addEventListener('touchstart', this.listTouchStart)
+        window.addEventListener('mousedown', this.customBlur)
         window.addEventListener('resize', this.responsiveDropdown)
+        window.addEventListener('scroll', this.isNotInViewport)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.isNotInViewport)
+        const toggle = ReactDOM.findDOMNode(this).childNodes[0]
+        const list = ReactDOM.findDOMNode(this).childNodes[1]
+        toggle.removeEventListener('touchstart', this.toggleTouchStart)
+        list.removeEventListener('touchstart', this.listTouchStart)
+        window.removeEventListener('mousedown', this.customBlur)
         window.removeEventListener('resize', this.responsiveDropdown)
+        window.removeEventListener('scroll', this.isNotInViewport)
     }
 
     componentDidUpdate(prevProps) {
@@ -53,12 +65,32 @@ export default class Umenu extends Component {
         }
     }
 
+    toggleTouchStart = (e) => {
+        if (e.cancelable) {
+            e.preventDefault()
+            this.openDropdown(null)
+        }
+    }
+
+    openDropdown = (focus) =>
+        this.setState(
+            {
+                dropdownDisplay: !this.state.dropdownDisplay,
+                focus,
+            },
+            () => {
+                if (this.state.dropdownDisplay) {
+                    this.responsiveDropdown()
+                    this.state.focus !== null &&
+                        ReactDOM.findDOMNode(this).childNodes[1].childNodes[this.state.focus].focus()
+                }
+            }
+        )
+
     isNotInViewport = () => {
         if (this.state.dropdownDisplay) {
             const umenuDim = ReactDOM.findDOMNode(this).getBoundingClientRect()
-            const dropdownDim = ReactDOM.findDOMNode(
-                this
-            ).children[2].getBoundingClientRect()
+            const dropdownDim = ReactDOM.findDOMNode(this).childNodes[1].getBoundingClientRect()
             if (
                 umenuDim.top > window.innerHeight ||
                 dropdownDim.bottom < 0 ||
@@ -73,10 +105,9 @@ export default class Umenu extends Component {
     responsiveDropdown = () => {
         if (this.state.dropdownDisplay) {
             const maxWidth =
-                ReactDOM.findDOMNode(this).parentNode.getBoundingClientRect()
-                    .right -
+                ReactDOM.findDOMNode(this).parentNode.getBoundingClientRect().right -
                 ReactDOM.findDOMNode(this).getBoundingClientRect().left
-            const dropdown = ReactDOM.findDOMNode(this).children[2]
+            const dropdown = ReactDOM.findDOMNode(this).childNodes[1]
             this.setState(
                 {
                     dropdownWidth: 'fit-content',
@@ -90,26 +121,80 @@ export default class Umenu extends Component {
         }
     }
 
-    changeSelected = () => {
-        if (this.state.active !== this.state.focus) {
+    arrowKeys = (c) => {
+        if (this.state.focus !== null) {
             this.setState(
                 {
-                    active: this.state.focus,
-                    dropdownDisplay: false,
+                    focus: (this.state.focus + this.props.items.length + c) % this.props.items.length,
                 },
-                () => {
-                    this.props.onChange &&
-                        this.props.onChange(
-                            this.props.outputSymbol
-                                ? this.props.items[this.state.active]
-                                : this.state.active
-                        )
-                }
+                () => ReactDOM.findDOMNode(this).childNodes[1].childNodes[this.state.focus].focus()
             )
         } else {
-            this.setState({
-                dropdownDisplay: false,
+            this.setState(
+                {
+                    focus: c === -1 ? this.props.items.length - 1 : 0,
+                },
+                () => ReactDOM.findDOMNode(this).childNodes[1].childNodes[this.state.focus].focus()
+            )
+        }
+    }
+
+    listTouchStart = (e) => {
+        if (e.cancelable) {
+            let t
+            ReactDOM.findDOMNode(this).childNodes[1].childNodes.forEach((button, i) => {
+                let b = button.getBoundingClientRect()
+                if (e.targetTouches[0].clientY > b.top && e.targetTouches[0].clientY < b.bottom) {
+                    t = i
+                }
             })
+            this.setState({ focus: t })
+        }
+    }
+
+    changeSelected = (aria = false) =>
+        this.setState(
+            {
+                active: this.state.focus !== null ? this.state.focus : 1,
+                dropdownDisplay: false,
+            },
+            () => {
+                this.props.onChange(this.props.outputSymbol ? this.props.items[this.state.active] : this.state.active)
+                aria && ReactDOM.findDOMNode(this).focus()
+            }
+        )
+
+    customBlur = (e) => {
+        const umenuDim = ReactDOM.findDOMNode(this).getBoundingClientRect()
+        const dropdownDim = ReactDOM.findDOMNode(this).childNodes[1].getBoundingClientRect()
+        if (
+            !this.state.dropdownDisplay &&
+            e.clientX > umenuDim.left &&
+            e.clientX < umenuDim.right &&
+            e.clientY > umenuDim.top &&
+            e.clientY < umenuDim.bottom
+        ) {
+            return
+        } else if (this.state.dropdownDisplay) {
+            if (
+                e.clientX > umenuDim.left &&
+                e.clientX < umenuDim.right &&
+                e.clientY > umenuDim.top &&
+                e.clientY < umenuDim.bottom
+            ) {
+                return
+            } else if (
+                e.clientX > dropdownDim.left &&
+                e.clientX < dropdownDim.right &&
+                e.clientY > dropdownDim.top &&
+                e.clientY < dropdownDim.bottom
+            ) {
+                return
+            } else {
+                this.setState({ dropdownDisplay: false, focus: null }, () => ReactDOM.findDOMNode(this).blur())
+            }
+        } else {
+            ReactDOM.findDOMNode(this).blur()
         }
     }
 
@@ -119,109 +204,86 @@ export default class Umenu extends Component {
                 className={style.umenu}
                 style={{ width: `${this.state.objectWidth}px` }}
                 {...(this.props.items.length > 0 && {
-                    'aria-label': 'umenu',
+                    'aria-label': `${this.props.ariaLabel}: ${this.props.items[this.state.active]} selected`,
+                    'aria-expanded': this.state.dropdownDisplay,
+                    'aria-haspopup': 'listbox',
                     role: 'button',
-                    'aria-pressed': this.state.dropdownDisplay,
-                    onMouseDown: () =>
-                        this.setState(
-                            {
-                                dropdownDisplay: !this.state.dropdownDisplay,
-                                focus: null,
-                            },
-                            () => this.responsiveDropdown()
-                        ),
-                    onKeyDown: (e) => {
-                        if (this.state.dropdownDisplay) {
-                            switch (e.keyCode) {
-                                case 9: // tab
-                                    e.preventDefault()
-                                    break
-                                case 13: // return
-                                    e.preventDefault()
-                                    this.changeSelected()
-                                    break
-                                case 27: // escape
-                                    e.preventDefault()
-                                    this.setState({
-                                        dropdownDisplay: false,
-                                        focus: null,
-                                    })
-                                    break
-                                case 38: // up
-                                case 40: // down
-                                    e.preventDefault()
-                                    if (this.state.focus !== null) {
-                                        this.setState({
-                                            focus:
-                                                (this.state.focus +
-                                                    this.props.items.length +
-                                                    (e.keyCode === 38
-                                                        ? -1
-                                                        : 1)) %
-                                                this.props.items.length,
-                                        })
-                                    } else {
-                                        this.setState({
-                                            focus:
-                                                e.keyCode === 38
-                                                    ? this.props.items.length -
-                                                      1
-                                                    : 1,
-                                        })
-                                    }
-                                    break
-                                default:
-                                    break
-                            }
-                        }
-                    },
-                    onBlur: () => {
-                        if (this.state.dropdownDisplay) {
-                            this.setState({
-                                dropdownDisplay: false,
-                                focus: null,
-                            })
-                        }
-                    },
                     tabIndex: '0',
+                    onKeyDown: (e) => {
+                        switch (e.key) {
+                            case 'Enter':
+                                e.preventDefault()
+                                this.state.dropdownDisplay
+                                    ? this.state.focus !== null
+                                        ? this.changeSelected(true)
+                                        : this.openDropdown(null)
+                                    : this.openDropdown(0)
+                                break
+                            case 'Esc':
+                            case 'Escape':
+                                e.preventDefault()
+                                this.setState({
+                                    dropdownDisplay: false,
+                                    focus: null,
+                                })
+                                ReactDOM.findDOMNode(this).focus()
+                                break
+                            case 'Home':
+                            case 'End':
+                                e.preventDefault()
+                                this.setState({ focus: e.key === 'Home' ? 0 : this.props.items.length - 1 }, () =>
+                                    ReactDOM.findDOMNode(this).childNodes[1].childNodes[this.state.focus].focus()
+                                )
+                                break
+                            case 'Up':
+                            case 'ArrowUp':
+                                e.preventDefault()
+                                this.state.dropdownDisplay && this.arrowKeys(-1)
+                                break
+                            case 'Down':
+                            case 'ArrowDown':
+                                e.preventDefault()
+                                this.state.dropdownDisplay && this.arrowKeys(1)
+                                break
+                            default:
+                                break
+                        }
+                    },
                 })}
             >
-                <p>{this.props.items && this.props.items[this.state.active]}</p>
-                <SVG />
+                <div tabIndex='-1' onMouseDown={(e) => e.button === 0 && this.openDropdown(null)}>
+                    {this.props.items && <p>{this.props.items[this.state.active]}</p>}
+                    <SVG />
+                </div>
                 <ul
+                    aria-label={`${this.props.ariaLabel}: ${this.props.items[this.state.active]} selected`}
+                    role='listbox'
+                    tabIndex='-1'
                     style={{
-                        display:
-                            this.state.dropdownDisplay &&
-                            this.props.items.length > 0
-                                ? 'block'
-                                : 'none',
+                        display: this.state.dropdownDisplay && this.props.items.length > 0 ? 'block' : 'none',
                         width: this.state.dropdownWidth,
-                        whiteSpace:
-                            this.state.dropdownWidth === 'fit-content'
-                                ? 'nowrap'
-                                : 'normal',
+                        whiteSpace: this.state.dropdownWidth === 'fit-content' ? 'nowrap' : 'normal',
                     }}
                 >
                     {this.props.items.map((item, i) => {
                         return (
                             <li
                                 key={i}
-                                aria-label='umenu list item'
-                                role='button'
-                                aria-pressed={
-                                    this.props.items[this.state.active] === item
+                                {...(i === this.state.active && { 'aria-selected': true })}
+                                role='option'
+                                tabIndex='-1'
+                                onMouseEnter={() => this.setState({ focus: i })}
+                                onMouseLeave={() => this.setState({ focus: null })}
+                                onClick={() => this.changeSelected()}
+                                onTouchEnd={() =>
+                                    this.setState({
+                                        focus: null,
+                                    })
                                 }
                                 style={{
-                                    background:
-                                        this.state.focus === i
-                                            ? '#4c4c4c'
-                                            : 'inherit',
+                                    background: this.state.focus === i ? '#4c4c4c' : 'inherit',
+                                    outline: 0,
                                 }}
-                                onMouseEnter={() => this.setState({ focus: i })}
-                                onMouseLeave={() =>
-                                    this.setState({ focus: null })
-                                }
-                                onMouseDown={() => this.changeSelected()}
                             >
                                 {item}
                             </li>
