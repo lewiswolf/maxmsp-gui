@@ -120,7 +120,7 @@ export default class Slider extends Component {
                         case 'Right':
                         case 'ArrowRight':
                             newVal = Math.round(this.state.value + this.props.fidelity / 100)
-                            newVal <= this.props.fidelity && this.onChange(newVal)
+                            newVal <= this.props.fidelity && this.colourAndValue(newVal)
                             break
                         case 'Down':
                         case 'ArrowDown':
@@ -128,7 +128,7 @@ export default class Slider extends Component {
                         case 'Left':
                         case 'ArrowLeft':
                             newVal = Math.round(this.state.value - this.props.fidelity / 100)
-                            newVal >= 0 && this.onChange(newVal)
+                            newVal >= 0 && this.colourAndValue(newVal)
                             break
                         case 'PageUp':
                             e.preventDefault()
@@ -136,7 +136,7 @@ export default class Slider extends Component {
                             if (newVal > this.props.fidelity) {
                                 newVal = this.props.fidelity
                             }
-                            this.onChange(newVal)
+                            this.colourAndValue(newVal)
                             break
                         case 'PageDown':
                             e.preventDefault()
@@ -144,7 +144,7 @@ export default class Slider extends Component {
                             if (newVal < 0) {
                                 newVal = 0
                             }
-                            this.onChange(newVal)
+                            this.colourAndValue(newVal)
                             break
                         default:
                             break
