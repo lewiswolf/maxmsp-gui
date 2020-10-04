@@ -83,7 +83,7 @@ export default function App() {
                 inactive={true || false} // diable user interaction, default false
                 mode={true || false} // true for toggle, false for bang, default false
                 text='What does the textbutton say?'
-                toggleText='What does the active textbutton say?'
+                toggleText='What does the toggled textbutton say?'
                 value={true || false} // default false, for mode 'true' only
                 // mode 0 onClick
                 onClick={() => console.log('bang')}
@@ -98,6 +98,7 @@ export default function App() {
             />
 
             <MaxMSP.Umenu
+                ariaLabel='set the aria-label tag' // defaults to the object name
                 items={['array', 'of', 'items']}
                 outputSymbol={true || false} // true for symbol false for int, default 
                 value={i} // this.props.items[i], default 0
