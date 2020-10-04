@@ -128,6 +128,51 @@ export default class Playbar extends Component {
                 }}
                 onTouchEnd={() => this.globalMouseUp()}
                 onTouchCancel={() => this.globalMouseUp()}
+                onKeyDown={(e) => {
+                    let newVal
+                    switch (e.key) {
+                        case ' ':
+                        case 'Enter':
+                            e.preventDefault()
+                            this.playButtonMouseDown()
+                            break
+                        case 'Up':
+                        case 'ArrowUp':
+                            e.preventDefault()
+                        case 'Right':
+                        case 'ArrowRight':
+                            newVal = Math.round(this.state.value + this.props.fidelity / 100)
+                            newVal <= this.props.fidelity && this.onChange(newVal)
+                            break
+                        case 'Down':
+                        case 'ArrowDown':
+                            e.preventDefault()
+                        case 'Left':
+                        case 'ArrowLeft':
+                            newVal = Math.round(this.state.value - this.props.fidelity / 100)
+                            newVal >= 0 && this.onChange(newVal)
+                            break
+                        case 'PageUp':
+                            e.preventDefault()
+                            newVal = Math.round(this.state.value + this.props.fidelity / 10)
+                            if (newVal > this.props.fidelity) {
+                                newVal = this.props.fidelity
+                            }
+                            this.onChange(newVal)
+                            break
+                        case 'PageDown':
+                            e.preventDefault()
+                            newVal = Math.round(this.state.value - this.props.fidelity / 10)
+                            if (newVal < 0) {
+                                newVal = 0
+                            }
+                            this.onChange(newVal)
+                            break
+                        default:
+                            break
+                    }
+                }}
+                onKeyUp={() => this.globalMouseUp()}
             >
                 <div
                     aria-label={`${this.props.ariaLabel}: play button`}
@@ -137,13 +182,6 @@ export default class Playbar extends Component {
                     role='switch'
                     tabIndex='0'
                     onMouseDown={(e) => e.button === 0 && this.playButtonMouseDown()}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault()
-                            this.playButtonMouseDown()
-                        }
-                    }}
-                    onKeyUp={() => this.globalMouseUp()}
                     style={{
                         fill: !this.props.inactive ? '#cee5e8' : '#808080',
                         background: this.state.playMouseDown
@@ -202,46 +240,6 @@ export default class Playbar extends Component {
                     aria-readonly={this.props.inactive}
                     role='slider'
                     tabIndex='0'
-                    onKeyDown={(e) => {
-                        let newVal
-                        switch (e.key) {
-                            case 'Up':
-                            case 'ArrowUp':
-                                e.preventDefault()
-                            case 'Right':
-                            case 'ArrowRight':
-                                newVal = Math.round(this.state.value + this.props.fidelity / 100)
-                                newVal <= this.props.fidelity && this.onChange(newVal)
-                                break
-                            case 'Down':
-                            case 'ArrowDown':
-                                e.preventDefault()
-                            case 'Left':
-                            case 'ArrowLeft':
-                                newVal = Math.round(this.state.value - this.props.fidelity / 100)
-                                newVal >= 0 && this.onChange(newVal)
-                                break
-                            case 'PageUp':
-                                e.preventDefault()
-                                newVal = Math.round(this.state.value + this.props.fidelity / 10)
-                                if (newVal > this.props.fidelity) {
-                                    newVal = this.props.fidelity
-                                }
-                                this.onChange(newVal)
-                                break
-                            case 'PageDown':
-                                e.preventDefault()
-                                newVal = Math.round(this.state.value - this.props.fidelity / 10)
-                                if (newVal < 0) {
-                                    newVal = 0
-                                }
-                                this.onChange(newVal)
-                                break
-                            default:
-                                break
-                        }
-                    }}
-                    onKeyUp={() => this.globalMouseUp()}
                 >
                     <div
                         tabIndex='-1'
