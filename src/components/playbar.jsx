@@ -210,7 +210,7 @@ export default class Playbar extends Component {
                                 e.preventDefault()
                             case 'Right':
                             case 'ArrowRight':
-                                newVal = this.state.value + Math.round(this.props.fidelity / 100)
+                                newVal = Math.round(this.state.value + this.props.fidelity / 100)
                                 newVal <= this.props.fidelity && this.onChange(newVal)
                                 break
                             case 'Down':
@@ -218,12 +218,12 @@ export default class Playbar extends Component {
                                 e.preventDefault()
                             case 'Left':
                             case 'ArrowLeft':
-                                newVal = this.state.value - Math.round(this.props.fidelity / 100)
+                                newVal = Math.round(this.state.value - this.props.fidelity / 100)
                                 newVal >= 0 && this.onChange(newVal)
                                 break
                             case 'PageUp':
                                 e.preventDefault()
-                                newVal = this.state.value + Math.round(this.props.fidelity / 10)
+                                newVal = Math.round(this.state.value + this.props.fidelity / 10)
                                 if (newVal > this.props.fidelity) {
                                     newVal = this.props.fidelity
                                 }
@@ -231,7 +231,7 @@ export default class Playbar extends Component {
                                 break
                             case 'PageDown':
                                 e.preventDefault()
-                                newVal = this.state.value - Math.round(this.props.fidelity / 10)
+                                newVal = Math.round(this.state.value - this.props.fidelity / 10)
                                 if (newVal < 0) {
                                     newVal = 0
                                 }
