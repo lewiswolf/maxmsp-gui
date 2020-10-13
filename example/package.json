@@ -11,10 +11,10 @@
     },
     "dependencies": {
         "iframe-resizer": "file:../node_modules/iframe-resizer",
+        "maxmsp-gui": "file:..",
         "react": "file:../node_modules/react",
         "react-dom": "file:../node_modules/react-dom",
-        "react-scripts": "file:../node_modules/react-scripts",
-        "maxmsp-gui": "file:.."
+        "react-scripts": "file:../node_modules/react-scripts"
     },
     "devDependencies": {
         "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
