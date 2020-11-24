@@ -100,9 +100,9 @@ export default function App() {
             <MaxMSP.Umenu
                 ariaLabel='set the aria-label tag' // defaults to the object name
                 items={['array', 'of', 'items']}
-                outputSymbol={true || false} // true for symbol false for int, default 
+                outputSymbol={true || false} // true for symbol false for int, default false
                 value={i} // this.props.items[i], default 0
-                width={200} // width of the umenu in pixels, default 100false
+                width={200} // width of the umenu in pixels, default 100
                 onChange={(x) => console.log(`My index/item is ${x}`)}
             />
 
