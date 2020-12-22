@@ -165,6 +165,7 @@ export default class Umenu extends Component {
         )
 
     customBlur = (e) => {
+        console.log('hi')
         const umenuDim = ReactDOM.findDOMNode(this).getBoundingClientRect()
         const dropdownDim = ReactDOM.findDOMNode(this).childNodes[1].getBoundingClientRect()
         if (
@@ -245,6 +246,8 @@ export default class Umenu extends Component {
                                 e.preventDefault()
                                 this.state.dropdownDisplay && this.arrowKeys(1)
                                 break
+                            case 'Tab':
+                                this.state.dropdownDisplay && this.setState({ dropdownDisplay: false })
                             default:
                                 break
                         }
