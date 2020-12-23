@@ -11,6 +11,10 @@
     "engines": {
         "node": ">=10"
     },
+    "keywords": [
+        "max msp",
+        "maxmsp"
+    ],
     "scripts": {
         "build": "microbundle-crl --no-compress --format modern,cjs",
         "start": "microbundle-crl watch --no-compress --format modern,cjs",
