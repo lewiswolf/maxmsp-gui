@@ -62,7 +62,7 @@ export default function App() {
             />
 
             <MaxMSP.RadioGroup
-                ariaLabel='set the aria-label tag' // defaults to `this.props.ariaLabel: ${item[i] || i}`
+                ariaLabel='set the aria-label tag' // defaults to the object name
                 items={['array', 'of', 'items']} // this sets the amount of radiobuttons, strings create text alongside each button
                 spacing={24} // the height of each button in pixels, defualt 20
                 value={i} // this.props.items[i], default 0

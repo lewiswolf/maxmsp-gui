@@ -165,7 +165,6 @@ export default class Umenu extends Component {
         )
 
     customBlur = (e) => {
-        console.log('hi')
         const umenuDim = ReactDOM.findDOMNode(this).getBoundingClientRect()
         const dropdownDim = ReactDOM.findDOMNode(this).childNodes[1].getBoundingClientRect()
         if (
