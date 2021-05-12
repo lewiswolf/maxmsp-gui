@@ -99,7 +99,6 @@ export default class Slider extends Component {
     }
 
     render() {
-        console.log(this.state.value, this.props.value)
         return (
             <div
                 className={style.slider}
