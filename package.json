@@ -1,6 +1,6 @@
 {
     "name": "maxmsp-gui",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "React component library for stylised Max MSP GUI.",
     "author": "lewiswolf",
     "license": "n/a",
