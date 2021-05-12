@@ -39,6 +39,7 @@ export default class Slider extends Component {
     }
 
     componentDidMount() {
+        this.colourAndValue(this.props.value, false)
         ReactDOM.findDOMNode(this).childNodes[0].childNodes[0].addEventListener('touchstart', this.touchstart)
     }
 
@@ -47,15 +48,12 @@ export default class Slider extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        this.props.value !== prevProps.value &&
-            this.props.value <= this.props.fidelity &&
-            this.props.value >= 0 &&
-            this.setState({
-                value: this.props.value,
-            })
+        if (this.props.value !== prevProps.value && this.props.value <= this.props.fidelity && this.props.value >= 0) {
+            this.colourAndValue(this.props.value, false)
+        }
     }
 
-    colourAndValue = (value) => {
+    colourAndValue = (value, bool) => {
         const sliderWidth = ReactDOM.findDOMNode(this).getBoundingClientRect().width - 10
         if (value !== 0) {
             this.setState(
@@ -73,7 +71,7 @@ export default class Slider extends Component {
                         ${sliderColors.negative} ${(sliderWidth - 6) * (value / this.props.fidelity) + 6}px
                     )`,
                 },
-                () => this.props.onChange(this.state.value)
+                () => bool && this.props.onChange(this.state.value)
             )
         } else {
             this.setState(
@@ -81,7 +79,7 @@ export default class Slider extends Component {
                     value: 0,
                     background: `linear-gradient(90deg, ${sliderColors.off}, ${sliderColors.off} 6px, ${sliderColors.negative} 6px)`,
                 },
-                () => this.props.onChange(this.state.value)
+                () => bool && this.props.onChange(this.state.value)
             )
         }
     }
@@ -97,10 +95,11 @@ export default class Slider extends Component {
         const rect = ReactDOM.findDOMNode(this).getBoundingClientRect()
         const touch = e.targetTouches[0]
         const newVal = Math.round((touch.clientX - (rect.x + 5)) / ((rect.width - 10) / this.props.fidelity))
-        this.colourAndValue(newVal > this.props.fidelity ? this.props.fidelity : newVal < 0 ? 0 : newVal)
+        this.colourAndValue(newVal > this.props.fidelity ? this.props.fidelity : newVal < 0 ? 0 : newVa, true)
     }
 
     render() {
+        console.log(this.state.value, this.props.value)
         return (
             <div
                 className={style.slider}
@@ -120,7 +119,7 @@ export default class Slider extends Component {
                         case 'Right':
                         case 'ArrowRight':
                             newVal = Math.round(this.state.value + this.props.fidelity / 100)
-                            newVal <= this.props.fidelity && this.colourAndValue(newVal)
+                            newVal <= this.props.fidelity && this.colourAndValue(newVal, true)
                             break
                         case 'Down':
                         case 'ArrowDown':
@@ -128,7 +127,7 @@ export default class Slider extends Component {
                         case 'Left':
                         case 'ArrowLeft':
                             newVal = Math.round(this.state.value - this.props.fidelity / 100)
-                            newVal >= 0 && this.colourAndValue(newVal)
+                            newVal >= 0 && this.colourAndValue(newVal, true)
                             break
                         case 'PageUp':
                             e.preventDefault()
@@ -136,7 +135,7 @@ export default class Slider extends Component {
                             if (newVal > this.props.fidelity) {
                                 newVal = this.props.fidelity
                             }
-                            this.colourAndValue(newVal)
+                            this.colourAndValue(newVal, true)
                             break
                         case 'PageDown':
                             e.preventDefault()
@@ -144,7 +143,7 @@ export default class Slider extends Component {
                             if (newVal < 0) {
                                 newVal = 0
                             }
-                            this.colourAndValue(newVal)
+                            this.colourAndValue(newVal, true)
                             break
                         default:
                             break
@@ -169,7 +168,7 @@ export default class Slider extends Component {
                         min='0'
                         max={this.props.fidelity}
                         value={this.state.value}
-                        onChange={(e) => this.colourAndValue(parseInt(e.target.value))}
+                        onChange={(e) => this.colourAndValue(parseInt(e.target.value), true)}
                         onTouchMove={(e) => this.touchmove(e)}
                         style={{
                             background: this.state.background,
