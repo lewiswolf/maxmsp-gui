@@ -118,5 +118,3 @@ All components return a div, and so the css can be accessed/overwritten in the f
     // css goes here
 }
 ```
-
-This package was made with `npx create-react-library`
