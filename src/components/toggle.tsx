@@ -22,7 +22,7 @@ export default class Toggle extends React.Component<Props, State> {
 	static defaultProps = {
 		ariaLabel: 'toggle',
 		value: false,
-		onClick: () => {},
+		onClick: (b: boolean) => {},
 	}
 
 	constructor(props: Props) {

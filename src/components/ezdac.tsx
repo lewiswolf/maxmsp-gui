@@ -21,7 +21,7 @@ export default class Ezdac extends React.Component<Props, State> {
 
 	static defaultProps = {
 		ariaLabel: 'ezdac',
-		onClick: () => {},
+		onClick: (b: boolean) => {},
 		value: false,
 	}
 

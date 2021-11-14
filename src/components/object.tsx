@@ -9,23 +9,19 @@ interface Props {
 	text?: string
 }
 
-export default function Object(
-	props: Props = {
-		inactive: false,
-		text: '',
-	}
-): JSX.Element {
+export default function Object(props: Props): JSX.Element {
 	/* */
 
+	const { inactive = false, text = '' } = props
 	return (
 		<div
 			className={style.object}
 			style={{
-				background: props.inactive ? '#b49d7c' : '#808080',
+				background: inactive ? '#b49d7c' : '#808080',
 			}}
 		>
-			{!props.inactive && <SVG />}
-			<p style={{ background: props.inactive ? '#977e6d' : '#333333' }}>{props.text}</p>
+			{!inactive && <SVG />}
+			<p style={{ background: inactive ? '#977e6d' : '#333333' }}>{text}</p>
 		</div>
 	)
 }
