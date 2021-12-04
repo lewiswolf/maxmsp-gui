@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import iframeResizer from 'iframe-resizer/js/iframeResizer.contentWindow.js';
 import * as MaxMSP from 'maxmsp-gui'
-import 'maxmsp-gui/dist/index.css'
 
 window.iframeResizer = iframeResizer;
 
@@ -17,10 +16,10 @@ export default class App extends Component {
 			<main>
 				{!this.state.iframe && <h2>React component library for stylised Max MSP GUI</h2>}
 				<MaxMSP.Bang />
-				<MaxMSP.Ezdac />
+				{/* <MaxMSP.Ezdac />
 				<MaxMSP.Message text='text' />
-				<MaxMSP.Object text='text' />
-				<MaxMSP.Playbar
+				<MaxMSP.Object text='text' /> */}
+				{/* <MaxMSP.Playbar
 					isPlaying={(bool) => {
 						if (bool) {
 							this.interval = setInterval(() => {
@@ -48,9 +47,9 @@ export default class App extends Component {
 				<div className='textbuttons'>
 					<MaxMSP.TextButton mode={false} />
 					<MaxMSP.TextButton mode={true} />
-				</div>
-				<MaxMSP.Toggle />
-				<MaxMSP.Umenu items={['foo', 'bar']} />
+				</div> */}
+				{/* <MaxMSP.Toggle /> */}
+				{/* <MaxMSP.Umenu items={['foo', 'bar']} /> */}
 			</main>
 		)
 	}
