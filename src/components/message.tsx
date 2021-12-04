@@ -1,24 +1,26 @@
 // dependencies
 import React from 'react'
-
 // src
-import style from '../scss/bang.module.scss'
-import SVG from '../svg/bang.svg'
+
+import style from '../scss/message.module.scss'
 
 type Props = {
 	ariaLabel?: string
 	ariaPressed?: boolean | null
+	text?: string
 	onClick?: () => any
 }
 
-const Bang: React.FC<Props> = ({
-	ariaLabel = 'bang',
+const Message: React.FC<Props> = ({
 	ariaPressed = null,
+	ariaLabel = 'message',
+	text = '',
 	onClick = () => {},
 }): JSX.Element => {
 	/*
-		[bang]
+		[message]
 	*/
+
 	const self = React.useRef<HTMLDivElement>(null)
 	const [clicked, isClicked] = React.useState<boolean>(false)
 
@@ -58,10 +60,15 @@ const Bang: React.FC<Props> = ({
 			{...(ariaPressed !== null && {
 				'aria-pressed': ariaPressed,
 			})}
-			className={style.bang}
+			className={style.message}
 			ref={self}
 			role='button'
 			tabIndex={0}
+			onMouseDown={(e) => {
+				if (e.button === 0) {
+					buttonPressed()
+				}
+			}}
 			onKeyDown={(e) => {
 				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault()
@@ -74,25 +81,20 @@ const Bang: React.FC<Props> = ({
 					isClicked(false)
 				}
 			}}
-			onMouseDown={(e) => {
-				if (e.button === 0) {
-					buttonPressed()
-				}
-			}}
 			onTouchCancel={() => isClicked(false)}
 			onTouchEnd={() => isClicked(false)}
 		>
-			<SVG
+			<p
 				style={{
 					outline: 0,
-					background: clicked
-						? 'radial-gradient(10px circle at center, #cee5e8 50%, #333333 50%)'
-						: '#333333',
+					padding: clicked ? '6px 4px 4px 6px' : '5px 5px',
 				}}
 				tabIndex={-1}
-			/>
+			>
+				{text}
+			</p>
 		</div>
 	)
 }
 
-export default Bang
+export default Message

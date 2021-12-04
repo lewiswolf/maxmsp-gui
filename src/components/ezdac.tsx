@@ -17,7 +17,7 @@ const Ezdac: React.FC<Props> = ({
 	onClick = (b: boolean) => {},
 }): JSX.Element => {
 	/*
-		[ezdac].
+		[ezdac]
 	*/
 
 	const self = React.useRef<HTMLDivElement>(null)
