@@ -1,5 +1,5 @@
 export { default as Bang } from './components/bang'
-// export { default as Ezdac } from './components/ezdac'
+export { default as Ezdac } from './components/ezdac'
 // export { default as Message } from './components/message'
 // export { default as Object } from './components/object'
 // export { default as Playbar } from './components/playbar'

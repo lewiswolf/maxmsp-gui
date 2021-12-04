@@ -1,5 +1,6 @@
 // dependencies
 import React from 'react'
+
 // src
 import style from '../scss/bang.module.scss'
 import SVG from '../svg/bang.svg'
@@ -33,7 +34,7 @@ const Bang: React.FC<Props> = ({
 			The event listeners are a simple global mouse up, and touchstart that prevents bubbling.
 		*/
 		const buttonFreed = (): void => isClicked(false)
-		const touchstart = (e: TouchEvent) => {
+		const touchstart = (e: TouchEvent): void => {
 			if (e.cancelable) {
 				e.preventDefault()
 				buttonPressed()
@@ -54,19 +55,14 @@ const Bang: React.FC<Props> = ({
 
 	return (
 		<div
+			aria-label={ariaLabel}
 			{...(ariaPressed !== null && {
 				'aria-pressed': ariaPressed,
 			})}
-			aria-label={ariaLabel}
 			className={style.bang}
 			ref={self}
 			role='button'
 			tabIndex={0}
-			onMouseDown={(e) => {
-				if (e.button === 0) {
-					buttonPressed()
-				}
-			}}
 			onKeyDown={(e) => {
 				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault()
@@ -79,8 +75,13 @@ const Bang: React.FC<Props> = ({
 					isClicked(false)
 				}
 			}}
-			onTouchEnd={() => isClicked(false)}
+			onMouseDown={(e) => {
+				if (e.button === 0) {
+					buttonPressed()
+				}
+			}}
 			onTouchCancel={() => isClicked(false)}
+			onTouchEnd={() => isClicked(false)}
 		>
 			<SVG
 				style={{
