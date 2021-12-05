@@ -1,7 +1,7 @@
 // dependencies
 import React from 'react'
-// src
 
+// src
 import style from '../scss/message.module.scss'
 
 type Props = {

@@ -7,13 +7,13 @@ import SVG from '../svg/ezdac.svg'
 
 type Props = {
 	ariaLabel?: string
-	value?: boolean
+	setValue?: boolean
 	onClick?: (b: boolean) => any
 }
 
 const Ezdac: React.FC<Props> = ({
 	ariaLabel = 'ezdac',
-	value = false,
+	setValue = false,
 	onClick = (b: boolean) => {},
 }): JSX.Element => {
 	/*
@@ -21,7 +21,8 @@ const Ezdac: React.FC<Props> = ({
 	*/
 
 	const self = React.useRef<HTMLDivElement>(null)
-	const [pressed, isPressed] = React.useState<boolean>(value)
+	const [pressed, isPressed] = React.useState<boolean>(setValue)
+	React.useEffect(() => isPressed(setValue), [setValue])
 
 	const togglePressed = () => {
 		isPressed(!pressed)
@@ -48,11 +49,6 @@ const Ezdac: React.FC<Props> = ({
 			}
 		}
 	})
-
-	React.useEffect(() => {
-		// keep value and pressed in sync
-		isPressed(value)
-	}, [value])
 
 	return (
 		<div
