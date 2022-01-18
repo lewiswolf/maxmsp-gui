@@ -17,6 +17,7 @@
 	],
 	"scripts": {
 		"start": "rollup -c --watch",
+		"example": "cd example && npm run start",
 		"build": "rollup -c",
 		"lint": "npx prettier --write --config ./.prettierrc ."
 	},
@@ -32,7 +33,6 @@
 		"@types/react": "^17.0.38",
 		"@types/react-dom": "^17.0.11",
 		"gh-pages": "^3.2.3",
-		"iframe-resizer": "^4.2.11",
 		"postcss": "^8.4.5",
 		"prettier": "^2.5.1",
 		"react": "^17.0.2",
