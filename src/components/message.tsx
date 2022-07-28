@@ -1,35 +1,28 @@
 // dependencies
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/message.module.scss'
 
-type Props = {
+const Message: React.FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
 	text?: string
 	onClick?: () => any
-}
-
-const Message: React.FC<Props> = ({
-	ariaPressed = null,
-	ariaLabel = 'message',
-	text = '',
-	onClick = () => {},
-}): JSX.Element => {
+}> = ({ ariaPressed = null, ariaLabel = 'message', text = '', onClick = () => {} }) => {
 	/*
 		[message]
 	*/
 
-	const self = React.useRef<HTMLDivElement>(null)
-	const [clicked, isClicked] = React.useState<boolean>(false)
+	const self = useRef<HTMLDivElement>(null)
+	const [clicked, isClicked] = useState<boolean>(false)
 
 	const buttonPressed = (): void => {
 		isClicked(true)
 		onClick()
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		/*
 			This useEffect is used to handle the event listeners when the component mounts and unmounts.
 			The event listeners are a simple global mouse up, and touchstart that prevents bubbling.

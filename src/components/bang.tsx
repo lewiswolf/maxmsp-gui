@@ -1,33 +1,27 @@
 // dependencies
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/bang.module.scss'
 import SVG from '../svg/bang.svg'
 
-type Props = {
+const Bang: React.FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
 	onClick?: () => any
-}
-
-const Bang: React.FC<Props> = ({
-	ariaLabel = 'bang',
-	ariaPressed = null,
-	onClick = () => {},
-}): JSX.Element => {
+}> = ({ ariaLabel = 'bang', ariaPressed = null, onClick = () => {} }) => {
 	/*
 		[bang]
 	*/
-	const self = React.useRef<HTMLDivElement>(null)
-	const [clicked, isClicked] = React.useState<boolean>(false)
+	const self = useRef<HTMLDivElement>(null)
+	const [clicked, isClicked] = useState<boolean>(false)
 
 	const buttonPressed = (): void => {
 		isClicked(true)
 		onClick()
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		/*
 			This useEffect is used to handle the event listeners when the component mounts and unmounts.
 			The event listeners are a simple global mouse up, and touchstart that prevents bubbling.

@@ -1,35 +1,29 @@
 // dependencies
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/ezdac.module.scss'
 import SVG from '../svg/ezdac.svg'
 
-type Props = {
+const Ezdac: React.FC<{
 	ariaLabel?: string
 	setValue?: boolean
 	onClick?: (b: boolean) => any
-}
-
-const Ezdac: React.FC<Props> = ({
-	ariaLabel = 'ezdac',
-	setValue = false,
-	onClick = (b: boolean) => {},
-}): JSX.Element => {
+}> = ({ ariaLabel = 'ezdac', setValue = false, onClick = () => {} }) => {
 	/*
 		[ezdac]
 	*/
 
-	const self = React.useRef<HTMLDivElement>(null)
-	const [pressed, isPressed] = React.useState<boolean>(setValue)
-	React.useEffect(() => isPressed(setValue), [setValue])
+	const self = useRef<HTMLDivElement>(null)
+	const [pressed, isPressed] = useState<boolean>(setValue)
+	useEffect(() => isPressed(setValue), [setValue])
 
-	const togglePressed = () => {
+	const togglePressed = (): void => {
 		isPressed(!pressed)
 		onClick(pressed)
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		/*
 			This useEffect adds a touch event listener used to prevent bubbling.
 		*/
