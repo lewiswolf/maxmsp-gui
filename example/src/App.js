@@ -42,9 +42,9 @@ const App = () => {
 			<div className='textbuttons'>
 				<MaxMSP.TextButton mode={false} />
 				<MaxMSP.TextButton mode={true} />
-			</div>
+			</div> */}
 			<MaxMSP.Toggle />
-			<MaxMSP.Umenu items={['foo', 'bar']} /> */}
+			{/* <MaxMSP.Umenu items={['foo', 'bar']} /> */}
 		</main>
 	)
 }
