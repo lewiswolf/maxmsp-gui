@@ -3,7 +3,7 @@ import * as MaxMSP from 'maxmsp-gui'
 
 const App = () => {
 	const iframe = window !== window.top
-	if (!iframe) {
+	if (iframe) {
 		document.body.style.background = 'transparent'
 	}
 
@@ -11,10 +11,10 @@ const App = () => {
 		<main>
 			{!iframe && <h2>React component library for stylised Max MSP GUI</h2>}
 			<MaxMSP.Bang />
-			{/* <MaxMSP.Ezdac onClick={(b) => console.log(b)} value={this.state.toggle} />
-			<MaxMSP.Message text='text' onClick={() => this.setState({ toggle: !this.state.toggle })} />
-			<MaxMSP.Object text='text' inactive={true} />
-			<MaxMSP.Playbar
+			<MaxMSP.Ezdac />
+			<MaxMSP.Message text='text' />
+			<MaxMSP.Object text='text' />
+			{/* <MaxMSP.Playbar
 				isPlaying={(bool) => {
 					if (bool) {
 						this.interval = setInterval(() => {

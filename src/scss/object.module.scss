@@ -10,21 +10,20 @@
 
 	svg {
 		height: 24px;
+		margin: 0;
 		position: absolute;
 		top: 0;
 		left: 5px;
-		margin: 0;
 	}
 
 	p {
 		height: fit-content;
 		min-height: 14px;
 		min-width: 19.5px;
-		display: inline-block;
-		color: #f7f7f7;
+		margin: 4px 0;
+		padding: 1px 5px;
 		line-height: 14px;
 		font-size: 13px;
-		padding: 1px 5px;
-		margin: 4px 0;
+		color: #f7f7f7;
 	}
 }
