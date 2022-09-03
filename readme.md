@@ -17,13 +17,11 @@ npm i maxmsp-gui
 ## Usage
 
 ```tsx
-import React from 'react'
-
 import * as MaxMSP from 'maxmsp-gui'
 
 export default function App() {
     return (
-        <React.Fragment>
+        <>
 
             <MaxMSP.Bang 
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
@@ -33,7 +31,7 @@ export default function App() {
 
             <MaxMSP.Ezdac
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
-                value={true || false} // default false
+                setValue={true || false} // set the current state
                 onClick={(b: boolean) => console.log(b)} // true or false
             />
 
@@ -53,11 +51,11 @@ export default function App() {
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 fidelity={100} // max output of slider, default 100
                 inactive={true || false} // disable user interaction, default false
-                setPlaying={true || false} // set isPlaying externally
-                value={50} // initial/updated state, 0 to this.props.fidelity, default 0
+                setPlaying={true || false} // set onPlay externally
+                setValue={50} // initial/updated state, 0 to props.fidelity, default 0
                 width={200} // width of the slider in pixels, default 200
-                isPlaying={(b: boolean) => console.log(b)}
-                onChange={(v: number) => console.log(`My value is ${v}`)} // 0 - this.props.fidelity
+                onPlay={(b: boolean) => console.log(b)}
+                onChange={(v: number) => console.log(`My value is ${v}`)} // 0 - props.fidelity
             />
 
             <MaxMSP.RadioGroup
@@ -92,8 +90,8 @@ export default function App() {
 
             <MaxMSP.Toggle
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
-                value={true || false} // default false
-                onClick={(b: boolean) => console.log(b)}
+                setValue={true || false} // set the current state
+                onClick={(b: boolean) => console.log(b)} // true or false
             />
 
             <MaxMSP.Umenu
@@ -105,7 +103,7 @@ export default function App() {
                 onChange={(i: number) => console.log(`My index/item is ${i}`)}
             />
 
-        </React.Fragment>
+        </>
     )
 }
 ```
@@ -116,4 +114,14 @@ All components return a div, and so the css can be accessed/overwritten in the f
 .wrapper div:nth-of-type(n) {
     // css goes here
 }
+```
+
+## Dev
+
+```bash
+$ npm install --dev
+$ npm start 
+$ npm run example
+$ npm run lint
+$ npm run build
 ```
