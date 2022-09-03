@@ -15,25 +15,22 @@ const Ezdac: React.FC<{
 	*/
 
 	const self = useRef<HTMLDivElement>(null)
+	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(setValue)
 	useEffect(() => isPressed(setValue), [setValue])
-
+	// click event with prop
 	const togglePressed = (): void => {
 		isPressed(!pressed)
 		onClick(pressed)
 	}
-
+	// this useEffect adds a touch event listener used to prevent bubbling.
 	useEffect(() => {
-		/*
-			This useEffect adds a touch event listener used to prevent bubbling.
-		*/
 		const touchstart = (e: TouchEvent): void => {
 			if (e.cancelable) {
 				e.preventDefault()
 				togglePressed()
 			}
 		}
-		// add and remove event listeners
 		if (self.current !== null) {
 			self.current.addEventListener('touchstart', touchstart)
 		}

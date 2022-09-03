@@ -12,11 +12,14 @@ const PlaybarToggle: React.FC<{
 	setPlaying: boolean
 	onPlay: (b: boolean) => any
 }> = ({ ariaLabel, inactive, setPlaying, onPlay }): JSX.Element => {
+	/*
+		The toggle element of the playbar.
+	*/
 	const self = useRef<HTMLDivElement>(null)
-	const [mouseDown, isMouseDown] = useState<boolean>(false)
+	// is the toggle pressed - state and prop
 	const [playing, isPlaying] = useState<boolean>(setPlaying)
 	useEffect(() => isPlaying(setPlaying), [setPlaying])
-
+	// click event with prop
 	const toggle = (): void => {
 		isMouseDown(true)
 		if (!inactive) {
@@ -24,7 +27,10 @@ const PlaybarToggle: React.FC<{
 			onPlay(!playing) // this shouldn't need a logical not, but I think it is because it is nested
 		}
 	}
-
+	// mousedown state
+	const [mousedown, isMouseDown] = useState<boolean>(false)
+	// this useEffect adds a global mouse up to allow for press and hover,
+	// and a touchstart event used to prevent event bubbling.
 	useEffect(() => {
 		const mouseup = (): void => isMouseDown(false)
 		const touchstart = (e: TouchEvent): void => {
@@ -55,7 +61,7 @@ const PlaybarToggle: React.FC<{
 			role='switch'
 			style={{
 				fill: !inactive ? '#cee5e8' : '#808080',
-				background: mouseDown
+				background: mousedown
 					? 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)'
 					: 'inherit',
 			}}
@@ -92,16 +98,19 @@ const PlaybarSlider: React.FC<{
 	width: number
 	onChange: (v: number) => any
 }> = ({ ariaLabel, fidelity, inactive, setValue, width, onChange }): JSX.Element => {
+	/*
+		The slider element of the playbar.
+	*/
 	const self = useRef<HTMLDivElement>(null)
-	const [mouseDown, isMouseDown] = useState<boolean>(false)
-	const [stateWidth, updateWidth] = useState<number>(width)
+	// mousedown state
+	const [mousedown, isMouseDown] = useState<boolean>(false)
+	// slider value - state and prop
 	const [value, updateValue] = useState<number>(inactive ? 0 : setValue)
 	useEffect(() => updateValue(inactive ? 0 : setValue), [inactive, setValue])
-
+	// dynamic width - state and prop
+	// this maintains that the svg is always positioned within the slider
+	const [stateWidth, updateWidth] = useState<number>(width)
 	useEffect(() => {
-		/*
-		This use effect maintains that the position of the slider's svg remains within the computed width of the slider.
-		*/
 		const computeWidth = () => {
 			if (self.current !== null && self.current.parentElement !== null) {
 				updateWidth(
@@ -115,7 +124,7 @@ const PlaybarSlider: React.FC<{
 			window.removeEventListener('resize', computeWidth)
 		}
 	}, [width])
-
+	// this useEffect adds a global mouse up to allow for press and hover,
 	useEffect(() => {
 		const mouseup = (): void => isMouseDown(false)
 		window.addEventListener('mouseup', mouseup)
@@ -123,7 +132,7 @@ const PlaybarSlider: React.FC<{
 			window.removeEventListener('mouseup', mouseup)
 		}
 	}, [])
-
+	// onChange event with prop
 	const changeSlider = (v: number) => {
 		updateValue(v)
 		onChange(v)
@@ -151,7 +160,7 @@ const PlaybarSlider: React.FC<{
 					/>
 					<path
 						style={{
-							fill: mouseDown ? (!inactive ? '#cee5e8' : '#808080') : 'none',
+							fill: mousedown ? (!inactive ? '#cee5e8' : '#808080') : 'none',
 							opacity: 0.4,
 						}}
 						d='M42.14,25.02c9.33,0.03,16.96,7.76,16.9,17.11c-0.06,9.3-7.83,16.9-17.2,16.81c-9.2-0.08-16.78-7.76-16.77-16.99 C25.08,32.64,32.8,24.98,42.14,25.02z'
@@ -252,7 +261,12 @@ const Playbar: React.FC<{
 	onChange = () => {},
 	onPlay = () => {},
 }): JSX.Element => {
-	width = width >= 100 ? width : 100
+	/*
+		[playbar]
+	*/
+
+	width = Math.max(width, 100)
+
 	return (
 		<div className={style.playbar} style={{ width: width }}>
 			<PlaybarToggle

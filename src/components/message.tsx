@@ -15,26 +15,23 @@ const Message: React.FC<{
 	*/
 
 	const self = useRef<HTMLDivElement>(null)
-	const [clicked, isClicked] = useState<boolean>(false)
-
+	// click event with prop
 	const buttonPressed = (): void => {
-		isClicked(true)
+		isMouseDown(true)
 		onClick()
 	}
-
+	// mousedown state
+	const [mousedown, isMouseDown] = useState<boolean>(false)
+	// this useEffect adds a global mouse up to allow for press and hover,
+	// and a touchstart event used to prevent event bubbling.
 	useEffect(() => {
-		/*
-			This useEffect is used to handle the event listeners when the component mounts and unmounts.
-			The event listeners are a simple global mouse up, and touchstart that prevents bubbling.
-		*/
-		const buttonFreed = (): void => isClicked(false)
+		const buttonFreed = (): void => isMouseDown(false)
 		const touchstart = (e: TouchEvent): void => {
 			if (e.cancelable) {
 				e.preventDefault()
 				buttonPressed()
 			}
 		}
-		// add and remove event listeners
 		if (self.current !== null) {
 			window.addEventListener('mouseup', buttonFreed)
 			self.current.addEventListener('touchstart', touchstart)
@@ -71,16 +68,16 @@ const Message: React.FC<{
 			onKeyUp={(e) => {
 				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault()
-					isClicked(false)
+					isMouseDown(false)
 				}
 			}}
-			onTouchCancel={() => isClicked(false)}
-			onTouchEnd={() => isClicked(false)}
+			onTouchCancel={() => isMouseDown(false)}
+			onTouchEnd={() => isMouseDown(false)}
 		>
 			<p
 				style={{
 					outline: 0,
-					padding: clicked ? '6px 4px 4px 6px' : '5px 5px',
+					padding: mousedown ? '6px 4px 4px 6px' : '5px 5px',
 				}}
 				tabIndex={-1}
 			>

@@ -13,27 +13,25 @@ const Bang: React.FC<{
 	/*
 		[bang]
 	*/
-	const self = useRef<HTMLDivElement>(null)
-	const [clicked, isClicked] = useState<boolean>(false)
 
+	const self = useRef<HTMLDivElement>(null)
+	// click event with prop
 	const buttonPressed = (): void => {
-		isClicked(true)
+		isMouseDown(true)
 		onClick()
 	}
-
+	// mousedown state
+	const [mousedown, isMouseDown] = useState<boolean>(false)
+	// this useEffect adds a global mouse up to allow for press and hover,
+	// and a touchstart event used to prevent event bubbling.
 	useEffect(() => {
-		/*
-			This useEffect is used to handle the event listeners when the component mounts and unmounts.
-			The event listeners are a simple global mouse up, and touchstart that prevents bubbling.
-		*/
-		const buttonFreed = (): void => isClicked(false)
+		const buttonFreed = (): void => isMouseDown(false)
 		const touchstart = (e: TouchEvent): void => {
 			if (e.cancelable) {
 				e.preventDefault()
 				buttonPressed()
 			}
 		}
-		// add and remove event listeners
 		if (self.current !== null) {
 			window.addEventListener('mouseup', buttonFreed)
 			self.current.addEventListener('touchstart', touchstart)
@@ -65,7 +63,7 @@ const Bang: React.FC<{
 			onKeyUp={(e) => {
 				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault()
-					isClicked(false)
+					isMouseDown(false)
 				}
 			}}
 			onMouseDown={(e) => {
@@ -73,13 +71,13 @@ const Bang: React.FC<{
 					buttonPressed()
 				}
 			}}
-			onTouchCancel={() => isClicked(false)}
-			onTouchEnd={() => isClicked(false)}
+			onTouchCancel={() => isMouseDown(false)}
+			onTouchEnd={() => isMouseDown(false)}
 		>
 			<SVG
 				style={{
 					outline: 0,
-					background: clicked
+					background: mousedown
 						? 'radial-gradient(10px circle at center, #cee5e8 50%, #333333 50%)'
 						: '#333333',
 				}}
