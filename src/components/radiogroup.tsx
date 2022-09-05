@@ -73,13 +73,7 @@ const RadioGroup: React.FC<{
 	})
 
 	return (
-		<div
-			aria-label={ariaLabel}
-			className={style.radiogroup}
-			ref={self}
-			role='radiogroup'
-			tabIndex={0}
-		>
+		<div aria-label={ariaLabel} className={style.radiogroup} ref={self} role='radiogroup'>
 			{items.map((item: string, i: number) => {
 				i++
 				return (
@@ -89,7 +83,7 @@ const RadioGroup: React.FC<{
 						key={i}
 						role='radio'
 						style={{ height: spacing > 16 ? `${spacing}px` : '16px' }}
-						tabIndex={i === 1 ? 0 : -1}
+						tabIndex={i === Math.max(index, 1) ? 0 : -1}
 						onFocus={() => indexFocused(i - 1)}
 						onKeyDown={(e) => {
 							switch (e.key) {
