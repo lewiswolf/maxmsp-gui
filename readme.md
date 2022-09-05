@@ -32,7 +32,7 @@ export default function App() {
             <MaxMSP.Ezdac
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 setValue={true || false} // set the current state
-                onClick={(b: boolean) => console.log(b)} // true or false
+                onClick={(b: boolean) => console.log(b)}
             />
 
             <MaxMSP.Message
@@ -49,29 +49,29 @@ export default function App() {
 
             <MaxMSP.Playbar
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
-                fidelity={100} // max output of slider, default 100
+                fidelity={100} // max output of slider
                 inactive={true || false} // disable user interaction, default false
                 setPlaying={true || false} // set onPlay externally
-                setValue={50} // initial/updated state, 0 to props.fidelity, default 0
-                width={200} // width of the slider in pixels, default 200
+                setValue={0} // initial/updated state, 0 to props.fidelity
+                width={200} // width of the slider in pixels
                 onPlay={(b: boolean) => console.log(b)}
-                onChange={(v: number) => console.log(`My value is ${v}`)} // 0 - props.fidelity
+                onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
             />
 
             <MaxMSP.RadioGroup
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 items={['array', 'of', 'items']} // this sets the amount of radiobuttons, strings create text alongside each button
-                spacing={24} // the height of each button in pixels, default 20
-                value={i} // this.props.items[i], default 0
-                onClick={(v: number) => console.log(`My value is ${v}`)}
+                spacing={24} // the height of each button in pixels
+                setValue={0} // this.props.items[i]
+                onClick={(i: number) => console.log(`My value is ${i}`)}
             />
 
             <MaxMSP.Slider
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 fidelity={100} // max output of slider, default 100
                 length={200} // width of the slider in pixels, default 200
-                value={50} // initial/updated state, 0 to this.props.fidelity, default 0
-                onChange={(v: number) => console.log(`My value is ${v}`)} // 0 - this.props.fidelity
+                value={0} // initial/updated state, 0 to this.props.fidelity
+                onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - this.props.fidelity
             />
 
             <MaxMSP.TextButton
@@ -91,7 +91,7 @@ export default function App() {
             <MaxMSP.Toggle
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 setValue={true || false} // set the current state
-                onClick={(b: boolean) => console.log(b)} // true or false
+                onClick={(b: boolean) => console.log(b)}
             />
 
             <MaxMSP.Umenu

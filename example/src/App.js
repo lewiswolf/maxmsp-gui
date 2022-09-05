@@ -42,10 +42,10 @@ const App = () => {
 				onChange={(i) => setPlaybar(i)}
 				onPlay={(bool) => setPlaying(bool)}
 			/>
+			<MaxMSP.RadioGroup />
 			<MaxMSP.Toggle />
 
 			{/*
-			<MaxMSP.RadioGroup />
 			<MaxMSP.Slider />
 			<div className='textbuttons'>
 				<MaxMSP.TextButton mode={false} />
