@@ -182,10 +182,10 @@ const Umenu: React.FC<{
 		}
 	}
 
-	const changeSelected = (aria: boolean = false): void => {
-		indexPressed(focus !== null ? focus : index)
+	const changeSelected = (new_index: number, aria: boolean): void => {
+		indexPressed(new_index)
 		setDropdown(false)
-		onChange(outputSymbol ? items[index]! : index)
+		onChange(outputSymbol ? items[new_index]! : new_index)
 		aria && self.current && self.current.focus()
 	}
 
@@ -206,7 +206,7 @@ const Umenu: React.FC<{
 							e.preventDefault()
 							dropdownVisible
 								? focus !== null
-									? changeSelected(true)
+									? changeSelected(focus, true)
 									: openDropdown(null)
 								: openDropdown(0)
 							break
@@ -268,7 +268,7 @@ const Umenu: React.FC<{
 							tabIndex={-1}
 							onMouseEnter={() => setFocus(i)}
 							onMouseLeave={() => setFocus(null)}
-							onClick={() => changeSelected()}
+							onClick={() => changeSelected(i, false)}
 							onTouchEnd={() => setFocus(null)}
 							style={{
 								background: focus === i ? '#4c4c4c' : 'inherit',
