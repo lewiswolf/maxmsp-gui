@@ -44,6 +44,7 @@ const App = () => {
 			/>
 			<MaxMSP.RadioGroup />
 			<MaxMSP.Toggle />
+			<MaxMSP.Umenu items={['foo', 'bar']} />
 
 			{/*
 			<MaxMSP.Slider />
@@ -51,7 +52,6 @@ const App = () => {
 				<MaxMSP.TextButton mode={false} />
 				<MaxMSP.TextButton mode={true} />
 			</div>
-			<MaxMSP.Umenu items={['foo', 'bar']} />
 			*/}
 		</main>
 	)

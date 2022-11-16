@@ -98,9 +98,9 @@ export default function App() {
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 items={['array', 'of', 'items']}
                 outputSymbol={true || false} // true for symbol false for int, default false
-                value={i} // this.props.items[i], default 0
-                width={200} // width of the umenu in pixels, default 100
-                onChange={(i: number) => console.log(`My index/item is ${i}`)}
+                setValue={0} // this.props.items[i], default 0
+                width={100} // width of the umenu in pixels, default 100
+                onChange={(value: number | string) => console.log(`My index/item is ${i}`)}
             />
 
         </>

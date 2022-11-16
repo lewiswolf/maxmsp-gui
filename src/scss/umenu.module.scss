@@ -1,58 +1,58 @@
 @import './main.scss';
 
 .umenu {
-    @include main();
-    @include focus();
-    height: 24px;
-    // width set by component
-    max-width: 100%;
-    min-width: 40px;
-    text-align: left;
-    font-size: 13px;
-    color: #f7f7f7;
-    background: linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%);
+	@include main();
+	@include focus();
+	height: 24px;
+	// width set by component
+	max-width: 100%;
+	min-width: 40px;
+	text-align: left;
+	font-size: 13px;
+	color: #f7f7f7;
+	background: linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%);
 
-    > div {
-        outline: 0;
+	> div {
+		outline: 0;
 
-        p {
-            line-height: 24px;
-            padding: 0 22px 0 8px;
-            margin: 0;
-            text-align: left;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
+		p {
+			line-height: 24px;
+			margin: 0;
+			padding: 0 22px 0 8px;
+			text-align: left;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
 
-        svg {
-            height: 24px;
-            position: absolute;
-            top: 0;
-            right: 5px;
-        }
-    }
+		svg {
+			height: 24px;
+			position: absolute;
+			top: 0;
+			right: 5px;
+		}
+	}
 
-    ul {
-        height: fit-content;
-        position: absolute;
-        top: 24px;
-        left: 0;
-        z-index: 10;
-        background: #393939;
-        border: 1px solid black;
-        border-radius: 4px;
-        outline: 0;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        overflow: hidden;
+	ul {
+		height: fit-content;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: 24px;
+		left: 0;
+		z-index: 10;
+		outline: 0;
+		list-style: none;
+		overflow: hidden;
+		background: #393939;
+		border: 1px solid black;
+		border-radius: 4px;
 
-        li {
-            min-height: 13px;
-            padding: 5px 20px;
-            word-break: break-word;
-            text-align: justify;
-        }
-    }
+		li {
+			min-height: 13px;
+			padding: 5px 20px;
+			word-break: break-word;
+			text-align: justify;
+		}
+	}
 }
