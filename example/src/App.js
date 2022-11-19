@@ -44,15 +44,12 @@ const App = () => {
 			/>
 			<MaxMSP.RadioGroup />
 			<MaxMSP.Slider />
-			<MaxMSP.Toggle />
-			<MaxMSP.Umenu items={['foo', 'bar']} />
-
-			{/*
 			<div className='textbuttons'>
 				<MaxMSP.TextButton mode={false} />
 				<MaxMSP.TextButton mode={true} />
 			</div>
-			*/}
+			<MaxMSP.Toggle />
+			<MaxMSP.Umenu items={['foo', 'bar']} />
 		</main>
 	)
 }

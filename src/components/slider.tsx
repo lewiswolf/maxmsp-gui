@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from 'react'
 import style from '../scss/slider.module.scss'
 
 const Slider: React.FC<{
-	ariaLabel: string
-	fidelity: number
-	setValue: number
-	width: number
-	onChange: (x: number) => {}
+	ariaLabel?: string
+	fidelity?: number
+	setValue?: number
+	width?: number
+	onChange?: (x: number) => {}
 }> = ({ ariaLabel = 'slider', fidelity = 100, setValue = 0, width = 200, onChange = () => {} }) => {
 	/*
 		[slider]
@@ -59,8 +59,8 @@ const Slider: React.FC<{
 
 	const colourAndValue = (new_value: number, allowCallback: boolean): void => {
 		if (new_value !== 0) {
-			const sliderWidth: number = self.current?.getBoundingClientRect().width! - 10
-			const position: number = ((sliderWidth - 6) * new_value) / fidelity
+			const sliderWidth = self.current?.getBoundingClientRect().width! - 10
+			const position = ((sliderWidth - 6) * new_value) / fidelity
 			setBackground(`linear-gradient(90deg,
                 ${SliderColors.negative}, 
                 ${SliderColors.negative} 0px, 

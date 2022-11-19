@@ -7,24 +7,24 @@ import PauseButtonSVG from '../svg/playbar-pause.svg'
 import PlayButtonSVG from '../svg/playbar-play.svg'
 
 const PlaybarToggle: React.FC<{
-	ariaLabel: string
-	inactive: boolean
-	setPlaying: boolean
-	onPlay: (b: boolean) => any
+	ariaLabel?: string
+	inactive?: boolean
+	setPlaying?: boolean
+	onPlay?: (b: boolean) => any
 }> = ({ ariaLabel, inactive, setPlaying, onPlay }): JSX.Element => {
 	/*
 		The toggle element of the playbar.
 	*/
 	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
-	const [playing, isPlaying] = useState<boolean>(setPlaying)
-	useEffect(() => isPlaying(setPlaying), [setPlaying])
+	const [playing, isPlaying] = useState<boolean>(setPlaying || false)
+	useEffect(() => isPlaying(setPlaying || playing), [setPlaying])
 	// click event with prop
 	const toggle = (): void => {
 		isMouseDown(true)
 		if (!inactive) {
 			isPlaying(!playing)
-			onPlay(!playing) // this shouldn't need a logical not, but I think it is because it is nested
+			onPlay && onPlay(!playing) // this shouldn't need a logical not, but I think it is because it is nested
 		}
 	}
 	// mousedown state

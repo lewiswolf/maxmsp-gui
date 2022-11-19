@@ -76,16 +76,14 @@ export default function App() {
 
             <MaxMSP.TextButton
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
-                ariaPressed={true || false} // default null, for mode 'false' only
+                ariaPressed={true || false} // default null, for button mode only
                 inactive={true || false} // disable user interaction, default false
                 mode={true || false} // true for toggle, false for bang, default false
                 text='What does the textbutton say?'
+                setValue={true || false} // default false, for toggle mode only
                 toggleText='What does the toggled textbutton say?'
-                value={true || false} // default false, for mode 'true' only
-                // mode 0 onClick
                 onClick={() => console.log('bang')}
-                // mode 1 onClick
-                onClick={(b: boolean) => console.log(b)}
+                onClick={(b: boolean) => console.log(b)} // toggle mode only
             />
 
             <MaxMSP.Toggle

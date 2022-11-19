@@ -10,11 +10,11 @@ import style from '../scss/umenu.module.scss'
 import UmenuSVG from '../svg/umenu-arrow.svg'
 
 const Umenu: React.FC<{
-	ariaLabel: string
-	items: string[]
-	width: number
-	setValue: number
-	onChange: (i: number) => {}
+	ariaLabel?: string
+	items?: string[]
+	width?: number
+	setValue?: number
+	onChange?: (i: number) => {}
 }> = ({ ariaLabel = 'umenu', items = [], width = 100, setValue = 0, onChange = () => {} }) => {
 	/*
 		[umenu]
@@ -36,7 +36,6 @@ const Umenu: React.FC<{
 	const [focus, setFocus] = useState<null | number>(null)
 
 	// this useEffect adds a touch event listener used to prevent bubbling.
-	//
 	useEffect(() => {
 		const listTouchStart = (e: TouchEvent) => {
 			if (e.cancelable && self.current) {
@@ -138,7 +137,7 @@ const Umenu: React.FC<{
 				window.removeEventListener('scroll', isNotInViewport)
 			}
 		}
-	}, [])
+	})
 
 	const openDropdown = (focus: number | null): void => {
 		setDropdown(!dropdownVisible)
