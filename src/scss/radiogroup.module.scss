@@ -1,44 +1,46 @@
 @import './main.scss';
 
 .radiogroup {
-    @include main();
-    @include focus();
-    height: fit-content;
-    width: fit-content;
-    max-width: 100%;
-    background: unset;
+	@include main();
+	@include focus();
+	height: fit-content;
+	width: fit-content;
+	max-width: 100%;
+	background: unset;
 
-    > div {
-        @include focus();
-        height: fit-content;
-        width: fit-content;
-        display: flex;
-        float: right;
-        clear: right;
+	> div {
+		@include focus();
+		height: fit-content;
+		width: fit-content;
+		display: flex;
+		float: right;
+		clear: right;
 
-        p {
-            height: inherit;
-            width: fit-content;
-            margin: 0;
-            float: right;
-            text-align: right;
-            vertical-align: middle;
-            font-size: 16px;
-            font-weight: bold;
-            color: black;
-            white-space: nowrap;
-        }
+		p {
+			height: inherit;
+			width: fit-content;
+			margin: 0;
+			float: right;
+			text-align: right;
+			vertical-align: middle;
+			white-space: nowrap;
+			font-size: 16px;
+			font-weight: bold;
+			color: black;
+		}
 
-        div {
-            height: inherit;
-            width: 20px;
-            background: #333333;
-            position: relative;
+		div {
+			height: inherit;
+			width: 20.1px;
+			background: #333333;
+			position: relative;
+			display: grid;
 
-            svg {
-                height: 20px;
-                width: 20px;
-            }
-        }
-    }
+			svg {
+				height: 20px;
+				width: 20px;
+				place-self: center;
+			}
+		}
+	}
 }

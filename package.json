@@ -1,59 +1,52 @@
 {
-    "name": "maxmsp-gui",
-    "version": "1.0.3",
-    "description": "React component library for stylised Max MSP GUI.",
-    "author": "lewiswolf",
-    "license": "n/a",
-    "repository": "lewiswolf/maxmsp-gui",
-    "main": "dist/index.js",
-    "module": "dist/index.modern.js",
-    "source": "src/index.js",
-    "engines": {
-        "node": ">=10"
-    },
-    "keywords": [
-        "max msp",
-        "maxmsp"
-    ],
-    "scripts": {
-        "build": "microbundle-crl --no-compress --format modern,cjs",
-        "start": "microbundle-crl watch --no-compress --format modern,cjs",
-        "prepare": "run-s build",
-        "test": "run-s test:unit test:lint test:build",
-        "test:build": "run-s build",
-        "test:lint": "eslint .",
-        "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-        "test:watch": "react-scripts test --env=jsdom",
-        "predeploy": "cd example && npm run build",
-        "deploy": "gh-pages -d example/build"
-    },
-    "peerDependencies": {
-        "react": "^17.0.1"
-    },
-    "devDependencies": {
-        "babel-eslint": "^10.1.0",
-        "cross-env": "^7.0.3",
-        "eslint": "^7.17.0",
-        "eslint-config-prettier": "^7.1.0",
-        "eslint-config-standard": "^16.0.2",
-        "eslint-config-standard-react": "^11.0.1",
-        "eslint-plugin-import": "^2.18.2",
-        "eslint-plugin-node": "^11.0.0",
-        "eslint-plugin-prettier": "^3.1.1",
-        "eslint-plugin-promise": "^4.2.1",
-        "eslint-plugin-react": "^7.21.4",
-        "gh-pages": "^3.1.0",
-        "iframe-resizer": "^4.2.11",
-        "microbundle-crl": "^0.13.10",
-        "npm-run-all": "^4.1.5",
-        "prettier": "^2.0.4",
-        "prop-types": "^15.7.2",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
-        "react-scripts": "^4.0.1",
-        "sass": "^1.26.10"
-    },
-    "files": [
-        "dist"
-    ]
+	"name": "maxmsp-gui",
+	"version": "2.0.0",
+	"description": "React component library for stylised Max MSP GUI.",
+	"author": "Lewis Wolstanholme",
+	"license": "n/a",
+	"repository": "lewiswolf/maxmsp-gui",
+	"main": "dist/index.js",
+	"module": "dist/index.modern.js",
+	"source": "src/index.js",
+	"engines": {
+		"node": ">=10"
+	},
+	"keywords": [
+		"max msp",
+		"maxmsp"
+	],
+	"peerDependencies": {
+		"react": "^18.2.0"
+	},
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "^23.0.2",
+		"@rollup/plugin-node-resolve": "^15.0.1",
+		"@rollup/plugin-typescript": "^9.0.2",
+		"@svgr/rollup": "^6.5.1",
+		"@types/node": "^18.11.9",
+		"@types/react": "^18.0.25",
+		"@types/react-dom": "^18.0.9",
+		"gh-pages": "^4.0.0",
+		"postcss": "^8.4.19",
+		"prettier": "^2.7.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-scripts": "^5.0.1",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-postcss": "^4.0.2",
+		"sass": "^1.56.1",
+		"typescript": "^4.9.3"
+	},
+	"overrides": {
+		"@svgr/webpack": "^6.5.1"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"start": "rollup -c --watch",
+		"example": "cd example && npm run start",
+		"build": "rollup -c",
+		"lint": "npx prettier --write --config ./.prettierrc ."
+	}
 }

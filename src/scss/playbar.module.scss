@@ -1,97 +1,95 @@
 @import './main.scss';
 
 @mixin thumbStyle {
-    height: 20px;
-    width: 12px;
-    appearance: none;
-    background: none;
-    border: 0;
-    opacity: 0;
+	height: 20px;
+	width: 12px;
+	appearance: none;
+	background: none;
+	border: 0;
+	opacity: 0;
 }
 
 .playbar {
-    @include main();
-    height: 20px;
-    // width set by component
-    max-width: 100%;
-    background: #333333;
+	@include main();
+	height: 20px;
+	// width set by component
+	max-width: 100%;
+	background: #333333;
 
-    div:first-of-type {
-        @include focus();
-        height: 20px;
-        width: 20px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin: 0;
+	> div:first-of-type {
+		@include focus();
+		height: 20px;
+		width: 20px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		margin: 0;
 
-        div {
-            height: inherit;
-            width: inherit;
-            padding: 0;
+		> div {
+			height: inherit;
+			width: inherit;
 
-            svg {
-                height: inherit;
-                width: inherit;
-                pointer-events: none;
-            }
-        }
-    }
+			svg {
+				height: inherit;
+				width: inherit;
+				pointer-events: none;
+			}
+		}
+	}
 
-    > svg {
-        height: 20px;
-        width: 20px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        pointer-events: none;
-    }
+	hr {
+		height: 2px;
+		width: calc(100% - 37px);
+		margin: auto;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 26px;
+		background: #808080;
+		border: 0;
+	}
 
-    hr {
-        height: 2px;
-        width: calc(100% - 37px);
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 26px;
-        margin: auto;
-        background: #808080;
-        outline: 0;
-        border: 0;
-    }
+	> svg {
+		height: 20px;
+		width: 20px;
+		margin: auto;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		pointer-events: none;
+	}
 
-    div:last-of-type {
-        @include focus();
-        z-index: 10;
-        height: 20px;
-        margin: 0;
-        width: calc(100% - 25px);
-        padding: 0 5px 0 0;
-        float: right;
+	> div:last-of-type {
+		@include focus();
+		z-index: 10;
+		height: 20px;
+		margin: 0;
+		width: calc(100% - 25px);
+		padding: 0 5px 0 0;
+		float: right;
 
-        div {
-            height: inherit;
-            width: 100%;
-            position: relative;
-            padding: 0;
+		div {
+			height: inherit;
+			width: 100%;
+			position: relative;
+			padding: 0;
 
-            input {
-                height: 100%;
-                width: 100%;
-                margin: 0;
-                appearance: none;
-                background: inherit;
-                outline: 0;
+			input {
+				height: 100%;
+				width: 100%;
+				margin: 0;
+				appearance: none;
+				background: inherit;
+				outline: 0;
 
-                &::-webkit-slider-thumb {
-                    @include thumbStyle();
-                }
+				&::-webkit-slider-thumb {
+					@include thumbStyle();
+				}
 
-                &::-moz-range-thumb {
-                    @include thumbStyle();
-                }
-            }
-        }
-    }
+				&::-moz-range-thumb {
+					@include thumbStyle();
+				}
+			}
+		}
+	}
 }
