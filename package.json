@@ -47,6 +47,8 @@
 		"start": "rollup -c --watch",
 		"example": "cd example && npm run start",
 		"build": "rollup -c",
-		"lint": "npx prettier --write --config ./.prettierrc ."
+		"lint": "npx prettier --write --config ./.prettierrc .",
+		"predeploy": "cd example && npm run build",
+		"deploy": "gh-pages -d example/build"
 	}
 }
