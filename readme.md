@@ -69,8 +69,8 @@ export default function App() {
             <MaxMSP.Slider
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 fidelity={100} // max output of slider, default 100
-                length={200} // width of the slider in pixels, default 200
-                value={0} // initial/updated state, 0 to this.props.fidelity
+                setValue={0} // initial/updated state, 0 to this.props.fidelity
+                width={200} // width of the slider in pixels, default 200
                 onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - this.props.fidelity
             />
 

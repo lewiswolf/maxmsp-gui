@@ -43,7 +43,7 @@ const App = () => {
 				onPlay={(bool) => setPlaying(bool)}
 			/>
 			<MaxMSP.RadioGroup />
-			<MaxMSP.Slider fidelity={1000} onChange={(x) => console.log(x)} />
+			<MaxMSP.Slider />
 			<MaxMSP.Toggle />
 			<MaxMSP.Umenu items={['foo', 'bar']} />
 
