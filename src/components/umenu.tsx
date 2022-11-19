@@ -12,18 +12,10 @@ import UmenuSVG from '../svg/umenu-arrow.svg'
 const Umenu: React.FC<{
 	ariaLabel: string
 	items: string[]
-	outputSymbol: boolean
 	width: number
 	setValue: number
-	onChange: (val: number | string) => {}
-}> = ({
-	ariaLabel = 'umenu',
-	outputSymbol = false,
-	items = [],
-	width = 100,
-	setValue = 0,
-	onChange = () => {},
-}) => {
+	onChange: (i: number) => {}
+}> = ({ ariaLabel = 'umenu', items = [], width = 100, setValue = 0, onChange = () => {} }) => {
 	/*
 		[umenu]
 	*/
@@ -185,7 +177,7 @@ const Umenu: React.FC<{
 	const changeSelected = (new_index: number, aria: boolean): void => {
 		indexPressed(new_index)
 		setDropdown(false)
-		onChange(outputSymbol ? items[new_index]! : new_index)
+		onChange(new_index)
 		aria && self.current && self.current.focus()
 	}
 
