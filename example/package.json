@@ -14,12 +14,6 @@
 		"react-dom": "file:../node_modules/react-dom",
 		"react-scripts": "file:../node_modules/react-scripts"
 	},
-	"overrides": {
-		"@svgr/webpack": "^6.5.1"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
 	"browserslist": [
 		">0.2%",
 		"not dead",
