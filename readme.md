@@ -68,9 +68,9 @@ export default function App() {
 
             <MaxMSP.Slider
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
-                fidelity={100} // max output of slider, default 100
+                fidelity={100} // max output of slider
                 setValue={0} // initial/updated state, 0 to this.props.fidelity
-                width={200} // width of the slider in pixels, default 200
+                width={200} // width of the slider in pixels
                 onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - this.props.fidelity
             />
 
@@ -95,8 +95,8 @@ export default function App() {
             <MaxMSP.Umenu
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
                 items={['array', 'of', 'items']}
-                setValue={0} // this.props.items[i], default 0
-                width={100} // width of the umenu in pixels, default 100
+                setValue={0} // this.props.items[i]
+                width={100} // width of the umenu in pixels
                 onChange={(i: number) => console.log(`My index is ${i}`)}
             />
 
@@ -116,9 +116,9 @@ All components return a div, and so the css can be accessed/overwritten in the f
 ## Dev
 
 ```bash
-$ npm install --dev
-$ npm start 
-$ npm run example
-$ npm run lint
-$ npm run build
+npm install --dev
+npm start 
+npm run example
+npm run lint
+npm run build
 ```
