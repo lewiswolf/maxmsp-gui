@@ -10,7 +10,7 @@ const Umenu: React.FC<{
 	items?: string[]
 	width?: number
 	setValue?: number
-	onChange?: (i: number) => {}
+	onChange?: (i: number) => any
 }> = ({ ariaLabel = 'umenu', items = [], width = 100, setValue = 0, onChange = () => {} }) => {
 	/*
 		[umenu]

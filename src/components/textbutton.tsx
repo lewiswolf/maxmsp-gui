@@ -12,8 +12,8 @@ const TextButton: React.FC<{
 	setValue?: boolean
 	text?: string
 	toggleText?: string
-	onChange?: (b: boolean) => {}
-	onClick?: () => {}
+	onChange?: (b: boolean) => any
+	onClick?: () => any
 }> = ({
 	ariaLabel = 'textbutton',
 	ariaPressed = null,

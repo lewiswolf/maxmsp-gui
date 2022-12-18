@@ -9,7 +9,7 @@ const Slider: React.FC<{
 	fidelity?: number
 	setValue?: number
 	width?: number
-	onChange?: (x: number) => {}
+	onChange?: (x: number) => any
 }> = ({ ariaLabel = 'slider', fidelity = 100, setValue = 0, width = 200, onChange = () => {} }) => {
 	/*
 		[slider]

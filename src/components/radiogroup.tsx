@@ -10,7 +10,7 @@ const RadioGroup: React.FC<{
 	items?: string[]
 	spacing?: number
 	setValue?: number
-	onClick?: (i: number) => {}
+	onClick?: (i: number) => any
 }> = ({
 	ariaLabel = 'radiogroup',
 	items = ['', ''],
