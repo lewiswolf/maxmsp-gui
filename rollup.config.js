@@ -28,7 +28,7 @@ export default {
 		svgr(),
 		typescript({
 			declaration: true,
-			declarationDir: 'dist',
+			outDir: 'dist',
 		}),
 		postcss(),
 	],
