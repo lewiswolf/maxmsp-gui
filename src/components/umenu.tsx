@@ -242,8 +242,8 @@ const Umenu: React.FC<{
 				tabIndex={-1}
 				style={{
 					display: dropdownVisible && items.length > 0 ? 'block' : 'none',
-					width: dropdownWidth,
-					whiteSpace: dropdownWidth === 'fit-content' ? 'nowrap' : 'normal',
+					width: dropdownWidth || 'fit-content',
+					whiteSpace: dropdownWidth !== 'fit-content' ? 'normal' : 'nowrap',
 				}}
 			>
 				{items.map((item, i) => {
