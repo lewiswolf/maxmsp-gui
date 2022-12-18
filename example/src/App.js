@@ -49,7 +49,12 @@ const App = () => {
 				<MaxMSP.TextButton mode={true} />
 			</div>
 			<MaxMSP.Toggle />
-			<MaxMSP.Umenu items={['foo', 'bar']} />
+			<MaxMSP.Umenu
+				items={[
+					'fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+					'bar',
+				]}
+			/>
 		</main>
 	)
 }
