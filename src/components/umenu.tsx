@@ -1,7 +1,3 @@
-// import React, { Component } from 'react'
-// import ReactDOM from 'react-dom'
-// import propTypes from 'prop-types'
-
 // dependencies
 import { useEffect, useRef, useState } from 'react'
 
@@ -31,7 +27,7 @@ const Umenu: React.FC<{
 	)
 	// is the dropdown displayed
 	const [dropdownVisible, setDropdown] = useState<boolean>(false)
-	const [dropdownWidth, setDropdownWidth] = useState<string>('')
+	const [dropdownWidth, setDropdownWidth] = useState<string>('fit-content')
 	// which index is focused
 	const [focus, setFocus] = useState<null | number>(null)
 
@@ -117,7 +113,7 @@ const Umenu: React.FC<{
 			}
 		}
 
-		if (self.current !== null) {
+		if (self.current) {
 			const toggle = self.current.childNodes[0] as HTMLElement
 			const list = self.current.childNodes[1] as HTMLElement
 			toggle?.addEventListener('touchstart', toggleTouchStart)
@@ -127,7 +123,7 @@ const Umenu: React.FC<{
 			window.addEventListener('scroll', isNotInViewport)
 		}
 		return () => {
-			if (self.current !== null) {
+			if (self.current) {
 				const toggle = self.current.childNodes[0] as HTMLElement
 				const list = self.current.childNodes[1] as HTMLElement
 				toggle?.removeEventListener('touchstart', toggleTouchStart)
@@ -150,7 +146,7 @@ const Umenu: React.FC<{
 	}
 
 	const responsiveDropdown = (): void => {
-		if (dropdownVisible && self.current) {
+		if (self.current) {
 			const maxWidth =
 				(self.current.parentNode as HTMLElement).getBoundingClientRect().right -
 				self.current.getBoundingClientRect().left
