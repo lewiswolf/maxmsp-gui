@@ -118,6 +118,7 @@ All components return a div, and so the css can be accessed/overwritten in the f
 ### Install
 
 ```bash
+git clone ...
 npm install --include=dev
 ```
 
