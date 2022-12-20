@@ -113,12 +113,23 @@ All components return a div, and so the css can be accessed/overwritten in the f
 }
 ```
 
-## Dev
+## Development
+
+### Install
 
 ```bash
-npm install --dev
+npm install --include=dev
+```
+
+### Run
+
+```bash
 npm start 
 npm run example
+```
+
+### Test
+
+```bash
 npm run lint
-npm run build
 ```
