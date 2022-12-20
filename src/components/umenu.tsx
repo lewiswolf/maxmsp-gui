@@ -116,8 +116,8 @@ const Umenu: React.FC<{
 		if (self.current) {
 			const toggle = self.current.childNodes[0] as HTMLElement
 			const list = self.current.childNodes[1] as HTMLElement
-			toggle?.addEventListener('touchstart', toggleTouchStart)
-			list?.addEventListener('touchstart', listTouchStart)
+			toggle?.addEventListener('touchstart', toggleTouchStart, { passive: true })
+			list?.addEventListener('touchstart', listTouchStart, { passive: true })
 			window.addEventListener('resize', responsiveDropdown)
 			window.addEventListener('mousedown', customBlur)
 			window.addEventListener('scroll', isNotInViewport)

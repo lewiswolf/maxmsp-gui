@@ -48,7 +48,7 @@ const Slider: React.FC<{
 			}
 		}
 		if (self.current !== null) {
-			self.current.addEventListener('touchstart', touchstart)
+			self.current.addEventListener('touchstart', touchstart, { passive: true })
 		}
 		return () => {
 			if (self.current !== null) {

@@ -5,9 +5,6 @@ import * as MaxMSP from 'maxmsp-gui'
 const App = () => {
 	// handle iframe styles
 	const iframe = window !== window.top
-	if (iframe) {
-		document.body.style.background = 'transparent'
-	}
 
 	// example playbar animation
 	const [playbar, setPlaybar] = useState(0)

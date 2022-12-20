@@ -107,7 +107,7 @@ const TextButton: React.FC<{
 		}
 
 		if (self.current !== null) {
-			self.current.addEventListener('touchstart', touchstart)
+			self.current.addEventListener('touchstart', touchstart, { passive: true })
 		}
 		window.addEventListener('mousedown', globalMousedown)
 		window.addEventListener('mouseup', globalMouseup)
