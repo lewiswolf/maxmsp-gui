@@ -99,7 +99,7 @@ const TextButton: React.FC<{
 		}
 
 		const touchstart = (e: TouchEvent): void => {
-			if (e.cancelable && !inactive) {
+			if (e.cancelable) {
 				e.preventDefault()
 				setHover(true)
 				setMousedown(true)
@@ -155,7 +155,8 @@ const TextButton: React.FC<{
 			onClick={() => pressButton(mode && !pressed)}
 			onMouseEnter={() => !inactive && setHover(true)}
 			onMouseLeave={() => !inactive && setHover(false)}
-			onTouchEnd={() => {
+			onTouchEnd={(e) => {
+				e.preventDefault()
 				setHover(false)
 				setMousedown(false)
 				pressButton(mode && !pressed)
