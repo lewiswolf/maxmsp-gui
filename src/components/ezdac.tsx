@@ -32,7 +32,7 @@ const Ezdac: React.FC<{
 			}
 		}
 		if (self.current !== null) {
-			self.current.addEventListener('touchstart', touchstart, { passive: true })
+			self.current.addEventListener('touchstart', touchstart)
 		}
 		return () => {
 			if (self.current !== null) {

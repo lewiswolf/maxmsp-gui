@@ -34,7 +34,7 @@ const Message: React.FC<{
 		}
 		if (self.current !== null) {
 			window.addEventListener('mouseup', buttonFreed)
-			self.current.addEventListener('touchstart', touchstart, { passive: true })
+			self.current.addEventListener('touchstart', touchstart)
 		}
 		return () => {
 			if (self.current !== null) {

@@ -41,7 +41,7 @@ const PlaybarToggle: React.FC<{
 		}
 		window.addEventListener('mouseup', mouseup)
 		if (self.current !== null) {
-			self.current.addEventListener('touchstart', touchstart, { passive: true })
+			self.current.addEventListener('touchstart', touchstart)
 		}
 		return () => {
 			window.removeEventListener('mouseup', mouseup)
