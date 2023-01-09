@@ -1,6 +1,6 @@
 {
 	"name": "maxmsp-gui",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "n/a",
@@ -29,7 +29,7 @@
 		"@types/react-dom": "^18.0.10",
 		"gh-pages": "^4.0.0",
 		"postcss": "^8.4.21",
-		"prettier": "^2.8.1",
+		"prettier": "^2.8.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-scripts": "^5.0.1",
