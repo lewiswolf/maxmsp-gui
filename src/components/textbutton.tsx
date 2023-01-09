@@ -59,7 +59,7 @@ const TextButton: React.FC<{
 
 	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(mode && setValue)
-	useEffect(() => pressButton(mode && setValue), [mode, setValue])
+	useEffect(() => isPressed(mode && setValue), [mode, setValue])
 	// button interactions
 	const [hover, setHover] = useState<boolean>(false)
 	const [mousedown, setMousedown] = useState<boolean>(false)
