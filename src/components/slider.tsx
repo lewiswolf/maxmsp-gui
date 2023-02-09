@@ -6,15 +6,15 @@ import style from '../scss/slider.module.scss'
 
 const Slider: React.FC<{
 	ariaLabel?: string
-	fidelity?: number
 	setValue?: number
 	width?: number
 	onChange?: (x: number) => any
-}> = ({ ariaLabel = 'slider', fidelity = 100, setValue = 0, width = 200, onChange = () => {} }) => {
+}> = ({ ariaLabel = 'slider', setValue = 0, width = 200, onChange = () => {} }) => {
 	/*
 		[slider]
 	*/
 
+	const fidelity = 10000
 	const self = useRef<HTMLDivElement>(null)
 
 	// decalre slider colors
@@ -29,10 +29,11 @@ const Slider: React.FC<{
 	}
 
 	// what is the value - state and prop
-	const [value, updateValue] = useState<number>(
-		setValue < fidelity && setValue >= 0 ? setValue : 0,
+	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
+	useEffect(
+		() => colourAndValue(Math.max(Math.min(setValue, 1), 0) * fidelity, false),
+		[setValue],
 	)
-	useEffect(() => colourAndValue(Math.max(Math.min(setValue, fidelity), 0), false), [setValue])
 
 	// background gradient / colour
 	const [background, setBackground] = useState<string>(
@@ -73,13 +74,13 @@ const Slider: React.FC<{
                 ${SliderColors.negative} ${position + 6}px
 			)`)
 			updateValue(new_value)
-			allowCallback && onChange(new_value)
+			allowCallback && onChange(new_value / fidelity)
 		} else {
 			setBackground(
 				`linear-gradient(90deg, ${SliderColors.off}, ${SliderColors.off} 6px, ${SliderColors.negative} 6px)`,
 			)
 			updateValue(0)
-			allowCallback && onChange(new_value)
+			allowCallback && onChange(new_value / fidelity)
 		}
 	}
 

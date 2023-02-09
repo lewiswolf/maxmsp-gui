@@ -18,7 +18,11 @@ const PlaybarToggle: React.FC<{
 	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
 	const [playing, isPlaying] = useState<boolean>(setPlaying || false)
-	useEffect(() => isPlaying(setPlaying || playing), [setPlaying])
+	useEffect(() => {
+		if (setPlaying !== undefined) {
+			isPlaying(setPlaying)
+		}
+	}, [setPlaying])
 	// click event with prop
 	const toggle = (): void => {
 		isMouseDown(true)
@@ -92,21 +96,26 @@ const PlaybarToggle: React.FC<{
 
 const PlaybarSlider: React.FC<{
 	ariaLabel: string
-	fidelity: number
 	inactive: boolean
 	setValue: number
 	width: number
 	onChange: (v: number) => any
-}> = ({ ariaLabel, fidelity, inactive, setValue, width, onChange }): JSX.Element => {
+}> = ({ ariaLabel, inactive, setValue, width, onChange }): JSX.Element => {
 	/*
 		The slider element of the playbar.
 	*/
+	const fidelity = 10000
 	const self = useRef<HTMLDivElement>(null)
 	// mousedown state
 	const [mousedown, isMouseDown] = useState<boolean>(false)
 	// slider value - state and prop
-	const [value, updateValue] = useState<number>(inactive ? 0 : setValue)
-	useEffect(() => updateValue(inactive ? 0 : setValue), [inactive, setValue])
+	const [value, updateValue] = useState<number>(
+		inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity,
+	)
+	useEffect(
+		() => updateValue(inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity),
+		[inactive, setValue],
+	)
 	// dynamic width - state and prop
 	// this maintains that the svg is always positioned within the slider
 	const [stateWidth, updateWidth] = useState<number>(width)
@@ -135,7 +144,7 @@ const PlaybarSlider: React.FC<{
 	// onChange event with prop
 	const changeSlider = (v: number) => {
 		updateValue(v)
-		onChange(v)
+		onChange(v / fidelity)
 	}
 
 	return (
@@ -244,7 +253,6 @@ const PlaybarSlider: React.FC<{
 
 const Playbar: React.FC<{
 	ariaLabel?: string
-	fidelity?: number
 	inactive?: boolean
 	setPlaying?: boolean
 	setValue?: number
@@ -253,7 +261,6 @@ const Playbar: React.FC<{
 	onPlay?: (b: boolean) => any
 }> = ({
 	ariaLabel = 'playbar',
-	fidelity = 100,
 	inactive = false,
 	setPlaying = false,
 	setValue = 0,
@@ -277,7 +284,6 @@ const Playbar: React.FC<{
 			/>
 			<PlaybarSlider
 				ariaLabel={ariaLabel}
-				fidelity={fidelity}
 				inactive={inactive}
 				setValue={setValue}
 				width={width}

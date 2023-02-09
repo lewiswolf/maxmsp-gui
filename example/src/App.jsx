@@ -13,8 +13,8 @@ const App = () => {
 	useEffect(() => {
 		if (playing) {
 			interval.current = window.setInterval(() => {
-				if (playbar <= 99.5) {
-					setPlaybar(playbar + 0.5)
+				if (playbar <= 0.995) {
+					setPlaybar(playbar + 0.005)
 				} else {
 					setPlaybar(0)
 					setPlaying(false)

@@ -49,7 +49,6 @@ export default function App() {
 
             <MaxMSP.Playbar
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
-                fidelity={100} // max output of slider
                 inactive={true || false} // disable user interaction, default false
                 setPlaying={true || false} // set onPlay externally
                 setValue={0} // initial/updated state, 0 to props.fidelity
@@ -68,7 +67,6 @@ export default function App() {
 
             <MaxMSP.Slider
                 ariaLabel='Set the aria-label tag.' // defaults to the object name
-                fidelity={100} // max output of slider
                 setValue={0} // initial/updated state, 0 to props.fidelity
                 width={200} // width of the slider in pixels
                 onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
