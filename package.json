@@ -50,6 +50,6 @@
 		"build": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
 		"lint": "npx prettier --write --config ./.prettierrc .",
 		"predeploy": "cd example && npm run build",
-		"deploy": "gh-pages -d example/build"
+		"deploy": "gh-pages -d example/dist"
 	}
 }
