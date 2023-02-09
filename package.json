@@ -1,13 +1,14 @@
 {
 	"name": "maxmsp-gui",
-	"version": "2.1.1",
+	"version": "2.2.0",
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "n/a",
 	"repository": "lewiswolf/maxmsp-gui",
 	"main": "dist/index.js",
 	"module": "dist/index.modern.js",
-	"source": "src/index.js",
+	"source": "src/index.ts",
+	"type": "module",
 	"engines": {
 		"node": ">=10"
 	},
@@ -16,38 +17,37 @@
 		"maxmsp"
 	],
 	"peerDependencies": {
-		"react": "^18.2.0"
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
-		"@rollup/plugin-commonjs": "^24.0.0",
+		"@rollup/plugin-commonjs": "^24.0.1",
 		"@rollup/plugin-node-resolve": "^15.0.1",
 		"@rollup/plugin-typescript": "^11.0.0",
 		"@svgr/rollup": "^6.5.1",
 		"@svgr/webpack": "^6.5.1",
-		"@types/node": "^18.11.18",
-		"@types/react": "^18.0.26",
+		"@types/node": "^18.13.0",
+		"@types/react": "^18.0.27",
 		"@types/react-dom": "^18.0.10",
-		"gh-pages": "^4.0.0",
+		"@vitejs/plugin-react-swc": "^3.1.0",
+		"gh-pages": "^5.0.0",
 		"postcss": "^8.4.21",
-		"prettier": "^2.8.2",
+		"prettier": "^2.8.4",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-scripts": "^5.0.1",
-		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-postcss": "^4.0.2",
-		"sass": "^1.57.1",
-		"typescript": "^4.9.4"
-	},
-	"overrides": {
-		"@svgr/webpack": "$@svgr/webpack"
+		"sass": "^1.58.0",
+		"tslib": "^2.5.0",
+		"typescript": "^4.9.5",
+		"vite": "^4.1.1"
 	},
 	"files": [
 		"dist"
 	],
 	"scripts": {
-		"start": "rollup -c --watch",
-		"example": "cd example && npm run start",
-		"build": "rollup -c",
+		"start": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript --watch",
+		"example": "cd example && npm run dev",
+		"build": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
 		"lint": "npx prettier --write --config ./.prettierrc .",
 		"predeploy": "cd example && npm run build",
 		"deploy": "gh-pages -d example/build"

@@ -7,7 +7,6 @@ dist
 
 # misc
 .DS_Store
-.eslintcache
 
 # package specific
 .vscode

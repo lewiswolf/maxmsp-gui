@@ -4,20 +4,14 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
-		"build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-		"eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+		"dev": "vite",
+		"build": "vite build"
 	},
 	"dependencies": {
+		"@vitejs/plugin-react-swc": "file:../node_modules/@vitejs/plugin-react-swc",
 		"maxmsp-gui": "file:..",
 		"react": "file:../node_modules/react",
 		"react-dom": "file:../node_modules/react-dom",
-		"react-scripts": "file:../node_modules/react-scripts"
-	},
-	"browserslist": [
-		">0.2%",
-		"not dead",
-		"not ie <= 11",
-		"not op_mini all"
-	]
+		"vite": "file:../node_modules/vite"
+	}
 }

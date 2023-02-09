@@ -1,13 +1,13 @@
 import commonjs from '@rollup/plugin-commonjs'
-import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import resolve from '@rollup/plugin-node-resolve'
 import { default as svgr } from '@svgr/rollup'
 import typescript from '@rollup/plugin-typescript'
 import postcss from 'rollup-plugin-postcss'
 
-import pj from './package.json'
+import pj from './package.json' assert { type: 'json' }
 
 export default {
+	external: Object.keys(pj.peerDependencies),
 	input: './src/index.ts',
 	output: [
 		{
@@ -22,8 +22,9 @@ export default {
 		},
 	],
 	plugins: [
-		peerDepsExternal(),
-		resolve(),
+		resolve({
+			moduleDirectories: ['node_modules'],
+		}),
 		commonjs(),
 		svgr(),
 		typescript({
