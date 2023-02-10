@@ -12,6 +12,7 @@
 		"maxmsp-gui": "file:..",
 		"react": "file:../node_modules/react",
 		"react-dom": "file:../node_modules/react-dom",
-		"vite": "file:../node_modules/vite"
+		"vite": "file:../node_modules/vite",
+		"vite-plugin-gh-pages": "file:../node_modules/vite-plugin-gh-pages"
 	}
 }
