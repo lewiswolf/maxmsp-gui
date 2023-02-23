@@ -220,12 +220,7 @@ const PlaybarSlider: React.FC<{
 					}
 				}}
 			>
-				<div
-					tabIndex={-1}
-					style={{
-						outline: 0,
-					}}
-				>
+				<div style={{ outline: 0 }} tabIndex={-1}>
 					<input
 						aria-label={`${ariaLabel}: slider`}
 						aria-orientation='horizontal'
@@ -247,7 +242,7 @@ const PlaybarSlider: React.FC<{
 							const rect = self.current?.getBoundingClientRect()!
 							const touch = e.targetTouches[0]!
 							const new_val = Math.round(
-								(touch.clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity),
+								(touch.clientX - rect.x) / (rect.width / fidelity),
 							)
 							changeSlider(new_val > fidelity ? fidelity : new_val < 0 ? 0 : new_val)
 						}}
