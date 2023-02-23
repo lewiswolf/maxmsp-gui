@@ -241,9 +241,17 @@ const PlaybarSlider: React.FC<{
 						value={value}
 						onChange={(e) => changeSlider(parseInt(e.target.value))}
 						onMouseDown={() => isMouseDown(true)}
-						onTouchStart={() => isMouseDown(true)}
 						onTouchCancel={() => isMouseDown(false)}
 						onTouchEnd={() => isMouseDown(false)}
+						onTouchMove={(e) => {
+							const rect = self.current?.getBoundingClientRect()!
+							const touch = e.targetTouches[0]!
+							const new_val = Math.round(
+								(touch.clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity),
+							)
+							changeSlider(new_val > fidelity ? fidelity : new_val < 0 ? 0 : new_val)
+						}}
+						onTouchStart={() => isMouseDown(true)}
 					/>
 				</div>
 			</div>
