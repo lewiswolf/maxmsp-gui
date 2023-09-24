@@ -190,6 +190,7 @@ const Umenu: React.FC<{
 				onKeyDown: (e) => {
 					switch (e.key) {
 						case 'Enter':
+						case ' ':
 							e.preventDefault()
 							dropdownVisible
 								? focus !== null
