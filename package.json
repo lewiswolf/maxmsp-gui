@@ -4,7 +4,10 @@
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "n/a",
-	"repository": "lewiswolf/maxmsp-gui",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lewiswolf/maxmsp-gui.git"
+	},
 	"main": "dist/index.js",
 	"module": "dist/index.modern.js",
 	"source": "src/index.ts",
