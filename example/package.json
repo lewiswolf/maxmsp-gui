@@ -5,7 +5,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite --host",
-		"build": "vite build"
+		"build": "vite build",
+		"preview": "vite preview"
 	},
 	"dependencies": {
 		"@vitejs/plugin-react-swc": "file:../node_modules/@vitejs/plugin-react-swc",
