@@ -3,8 +3,8 @@ import { createElement, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/playbar.module.scss'
-import PauseButtonSVG from '../svg/playbar-pause.svg'
-import PlayButtonSVG from '../svg/playbar-play.svg'
+import PauseButtonSVG from '../svg/playbar-pause.svg?react'
+import PlayButtonSVG from '../svg/playbar-play.svg?react'
 
 const PlaybarToggle: React.FC<{
 	ariaLabel?: string
@@ -65,9 +65,7 @@ const PlaybarToggle: React.FC<{
 			role='switch'
 			style={{
 				fill: !inactive ? '#cee5e8' : '#808080',
-				background: mousedown
-					? 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)'
-					: 'inherit',
+				background: mousedown ? 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)' : 'inherit',
 			}}
 			tabIndex={0}
 			onKeyDown={(e) => {
@@ -109,22 +107,15 @@ const PlaybarSlider: React.FC<{
 	// mousedown state
 	const [mousedown, isMouseDown] = useState<boolean>(false)
 	// slider value - state and prop
-	const [value, updateValue] = useState<number>(
-		inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity,
-	)
-	useEffect(
-		() => updateValue(inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity),
-		[inactive, setValue],
-	)
+	const [value, updateValue] = useState<number>(inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity)
+	useEffect(() => updateValue(inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity), [inactive, setValue])
 	// dynamic width - state and prop
 	// this maintains that the svg is always positioned within the slider
 	const [stateWidth, updateWidth] = useState<number>(width)
 	useEffect(() => {
 		const computeWidth = () => {
 			if (self.current !== null && self.current.parentElement !== null) {
-				updateWidth(
-					Math.min(width, self.current.parentElement.getBoundingClientRect().width),
-				)
+				updateWidth(Math.min(width, self.current.parentElement.getBoundingClientRect().width))
 			}
 		}
 		window.addEventListener('resize', computeWidth)
@@ -241,8 +232,7 @@ const PlaybarSlider: React.FC<{
 						onTouchMove={(e) => {
 							const rect = self.current?.getBoundingClientRect()!
 							const touch = e.targetTouches[0]!
-							const new_val =
-								Math.round((touch.clientX - rect.x) / (rect.width / fidelity)) || 0
+							const new_val = Math.round((touch.clientX - rect.x) / (rect.width / fidelity)) || 0
 							changeSlider(new_val > fidelity ? fidelity : new_val < 0 ? 0 : new_val)
 						}}
 						onTouchStart={() => isMouseDown(true)}
@@ -278,12 +268,7 @@ const Playbar: React.FC<{
 
 	return (
 		<div className={style.playbar} style={{ width: width }}>
-			<PlaybarToggle
-				ariaLabel={ariaLabel}
-				inactive={inactive}
-				setPlaying={setPlaying}
-				onPlay={onPlay}
-			/>
+			<PlaybarToggle ariaLabel={ariaLabel} inactive={inactive} setPlaying={setPlaying} onPlay={onPlay} />
 			<PlaybarSlider
 				ariaLabel={ariaLabel}
 				inactive={inactive}

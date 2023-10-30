@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/toggle.module.scss'
-import SVG from '../svg/toggle.svg'
+import SVG from '../svg/toggle.svg?react'
 
 const Toggle: React.FC<{
 	ariaLabel?: string
@@ -64,9 +64,7 @@ const Toggle: React.FC<{
 			<SVG
 				style={{
 					outline: 0,
-					background: pressed
-						? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)'
-						: '#595959',
+					background: pressed ? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)' : '#595959',
 				}}
 				tabIndex={-1}
 			/>

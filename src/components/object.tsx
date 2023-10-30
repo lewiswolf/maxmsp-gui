@@ -1,5 +1,5 @@
 // src
-import SVG from '../svg/inlet.svg'
+import SVG from '../svg/inlet.svg?react'
 import style from '../scss/object.module.scss'
 
 const object: React.FC<{

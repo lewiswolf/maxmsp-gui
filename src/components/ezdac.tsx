@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/ezdac.module.scss'
-import SVG from '../svg/ezdac.svg'
+import SVG from '../svg/ezdac.svg?react'
 
 const Ezdac: React.FC<{
 	ariaLabel?: string
@@ -64,9 +64,7 @@ const Ezdac: React.FC<{
 			<SVG
 				style={{
 					outline: 0,
-					background: pressed
-						? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)'
-						: '#595959',
+					background: pressed ? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)' : '#595959',
 				}}
 				tabIndex={-1}
 			/>

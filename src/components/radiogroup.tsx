@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/radiogroup.module.scss'
-import RadioGroupSVG from '../svg/radiogroup-row.svg'
+import RadioGroupSVG from '../svg/radiogroup-row.svg?react'
 
 const RadioGroup: React.FC<{
 	ariaLabel?: string
@@ -11,13 +11,7 @@ const RadioGroup: React.FC<{
 	spacing?: number
 	setValue?: number
 	onClick?: (i: number) => any
-}> = ({
-	ariaLabel = 'radiogroup',
-	items = ['', ''],
-	spacing = 20,
-	setValue = 0,
-	onClick = () => {},
-}) => {
+}> = ({ ariaLabel = 'radiogroup', items = ['', ''], spacing = 20, setValue = 0, onClick = () => {} }) => {
 	/*
 		[radiogroup]
 	*/
@@ -49,10 +43,7 @@ const RadioGroup: React.FC<{
 				let t: number | null = null
 				for (let i = 0; i < self.current.childNodes.length; i++) {
 					const b = (self.current!.childNodes[i]! as HTMLElement).getBoundingClientRect()
-					if (
-						e.targetTouches[0]!.clientY > b.top &&
-						e.targetTouches[0]!.clientY < b.bottom
-					) {
+					if (e.targetTouches[0]!.clientY > b.top && e.targetTouches[0]!.clientY < b.bottom) {
 						t = i + 1
 						break
 					}

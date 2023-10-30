@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/bang.module.scss'
-import SVG from '../svg/bang.svg'
+import SVG from '../svg/bang.svg?react'
 
 const Bang: React.FC<{
 	ariaLabel?: string

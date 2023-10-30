@@ -1,3 +1,3 @@
-declare module '*.scss'
-declare module '*.svg'
-declare module '*.xml'
+// dependencies
+/// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />

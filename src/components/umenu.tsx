@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/umenu.module.scss'
-import UmenuSVG from '../svg/umenu-arrow.svg'
+import UmenuSVG from '../svg/umenu-arrow.svg?react'
 
 const Umenu: React.FC<{
 	ariaLabel?: string
@@ -18,13 +18,8 @@ const Umenu: React.FC<{
 
 	const self = useRef<HTMLDivElement>(null)
 	// which toggle is pressed - state and prop
-	const [index, indexPressed] = useState<number>(
-		setValue < items.length && setValue >= 0 ? setValue : 0,
-	)
-	useEffect(
-		() => indexPressed(setValue < items.length && setValue >= 0 ? setValue : index),
-		[setValue],
-	)
+	const [index, indexPressed] = useState<number>(setValue < items.length && setValue >= 0 ? setValue : 0)
+	useEffect(() => indexPressed(setValue < items.length && setValue >= 0 ? setValue : index), [setValue])
 	// is the dropdown displayed
 	const [dropdownVisible, setDropdown] = useState<boolean>(false)
 	const [dropdownWidth, setDropdownWidth] = useState<string>('fit-content')
@@ -38,10 +33,7 @@ const Umenu: React.FC<{
 				let t = null
 				self.current.childNodes[1]?.childNodes.forEach((button, i) => {
 					let b = (button as HTMLElement).getBoundingClientRect()
-					if (
-						e.targetTouches[0]!.clientY > b.top &&
-						e.targetTouches[0]!.clientY < b.bottom
-					) {
+					if (e.targetTouches[0]!.clientY > b.top && e.targetTouches[0]!.clientY < b.bottom) {
 						t = i
 					}
 				})
@@ -58,9 +50,7 @@ const Umenu: React.FC<{
 		const isNotInViewport = (): void => {
 			if (dropdownVisible && self.current) {
 				const umenuDim = self.current.getBoundingClientRect()
-				const dropdownDim = (
-					self.current.childNodes[1] as HTMLElement
-				).getBoundingClientRect()
+				const dropdownDim = (self.current.childNodes[1] as HTMLElement).getBoundingClientRect()
 				if (
 					umenuDim.top > window.innerHeight ||
 					dropdownDim.bottom < 0 ||
@@ -76,9 +66,7 @@ const Umenu: React.FC<{
 		const customBlur = (e: MouseEvent): void => {
 			if (self.current) {
 				const umenuDim = self.current.getBoundingClientRect()
-				const dropdownDim = (
-					self.current.childNodes[1] as HTMLElement
-				).getBoundingClientRect()
+				const dropdownDim = (self.current.childNodes[1] as HTMLElement).getBoundingClientRect()
 				if (
 					!dropdownVisible &&
 					e.clientX > umenuDim.left &&
@@ -140,8 +128,7 @@ const Umenu: React.FC<{
 		setFocus(focus)
 		if (dropdownVisible) {
 			responsiveDropdown()
-			focus !== null &&
-				(self.current?.childNodes[1]?.childNodes[focus]! as HTMLElement).focus()
+			focus !== null && (self.current?.childNodes[1]?.childNodes[focus]! as HTMLElement).focus()
 		}
 	}
 
@@ -209,10 +196,7 @@ const Umenu: React.FC<{
 						case 'End':
 							e.preventDefault()
 							setFocus(e.key === 'Home' ? 0 : items.length - 1)
-							focus &&
-								(
-									self.current?.childNodes[1]?.childNodes[focus]! as HTMLElement
-								).focus()
+							focus && (self.current?.childNodes[1]?.childNodes[focus]! as HTMLElement).focus()
 							break
 						case 'Up':
 						case 'ArrowUp':

@@ -30,10 +30,7 @@ const Slider: React.FC<{
 
 	// what is the value - state and prop
 	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
-	useEffect(
-		() => colourAndValue(Math.max(Math.min(setValue, 1), 0) * fidelity, false),
-		[setValue],
-	)
+	useEffect(() => colourAndValue(Math.max(Math.min(setValue, 1), 0) * fidelity, false), [setValue])
 
 	// background gradient / colour
 	const [background, setBackground] = useState<string>(

@@ -1,14 +1,14 @@
 # dependencies
 node_modules
 
-# builds
+# production
 build
 dist
 
 # misc
 .DS_Store
+.vscode
 
 # package specific
-.vscode
 unused
 todo.md
