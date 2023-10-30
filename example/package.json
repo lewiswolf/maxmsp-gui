@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "vite --host",
+		"dev": "vite --host --base /",
 		"build": "vite build",
 		"preview": "vite preview"
 	},
