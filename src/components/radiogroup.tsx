@@ -3,20 +3,22 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/radiogroup.module.scss'
-import RadioGroupSVG from '../svg/radiogroup-row.svg'
+import RadioGroupSVG from '../svg/radiogroup-row.svg?react'
 
 const RadioGroup: React.FC<{
 	ariaLabel?: string
 	items?: string[]
 	spacing?: number
 	setValue?: number
-	onClick?: (i: number) => any
+	onClick?: (i: number) => void
 }> = ({
 	ariaLabel = 'radiogroup',
 	items = ['', ''],
 	spacing = 20,
 	setValue = 0,
-	onClick = () => {},
+	onClick = () => {
+		/**/
+	},
 }) => {
 	/*
 		[radiogroup]
@@ -25,7 +27,9 @@ const RadioGroup: React.FC<{
 	const self = useRef<HTMLDivElement>(null)
 	// which toggle is pressed - state and prop
 	const [index, indexPressed] = useState<number>(setValue)
-	useEffect(() => indexPressed(setValue), [setValue])
+	useEffect(() => {
+		indexPressed(setValue)
+	}, [setValue])
 	// click event with prop
 	const togglePressed = (i: number): void => {
 		i = i === index ? 0 : i
@@ -38,21 +42,19 @@ const RadioGroup: React.FC<{
 	const toggleFocused = (i: number) => {
 		indexFocused(i)
 		if (self.current?.childNodes[i]) {
-			;(self.current!.childNodes[i]! as HTMLElement).focus()
+			const c = self.current.childNodes[i] as HTMLElement
+			c.focus()
 		}
 	}
 	// this useEffect adds a touch event listener used to prevent bubbling.
 	useEffect(() => {
 		const touchstart = (e: TouchEvent): void => {
-			if (e.cancelable && self.current) {
+			if (e.cancelable && self.current && e.targetTouches[0]) {
 				e.preventDefault()
 				let t: number | null = null
 				for (let i = 0; i < self.current.childNodes.length; i++) {
-					const b = (self.current!.childNodes[i]! as HTMLElement).getBoundingClientRect()
-					if (
-						e.targetTouches[0]!.clientY > b.top &&
-						e.targetTouches[0]!.clientY < b.bottom
-					) {
+					const b = (self.current.childNodes[i] as HTMLElement).getBoundingClientRect()
+					if (e.targetTouches[0].clientY > b.top && e.targetTouches[0].clientY < b.bottom) {
 						t = i + 1
 						break
 					}
@@ -62,12 +64,13 @@ const RadioGroup: React.FC<{
 				}
 			}
 		}
-		if (self.current !== null) {
+		if (self.current) {
 			self.current.addEventListener('touchstart', touchstart)
 		}
+		const cleanup_self = self.current
 		return () => {
-			if (self.current !== null) {
-				self.current.removeEventListener('touchstart', touchstart)
+			if (cleanup_self) {
+				cleanup_self.removeEventListener('touchstart', touchstart)
 			}
 		}
 	})
@@ -84,7 +87,9 @@ const RadioGroup: React.FC<{
 						role='radio'
 						style={{ height: spacing > 16 ? `${spacing}px` : '16px' }}
 						tabIndex={i === Math.max(index, 1) ? 0 : -1}
-						onFocus={() => indexFocused(i - 1)}
+						onFocus={() => {
+							indexFocused(i - 1)
+						}}
 						onKeyDown={(e) => {
 							switch (e.key) {
 								case 'Enter':

@@ -3,13 +3,19 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/bang.module.scss'
-import SVG from '../svg/bang.svg'
+import SVG from '../svg/bang.svg?react'
 
 const Bang: React.FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
-	onClick?: () => any
-}> = ({ ariaLabel = 'bang', ariaPressed = null, onClick = () => {} }) => {
+	onClick?: () => void
+}> = ({
+	ariaLabel = 'bang',
+	ariaPressed = null,
+	onClick = () => {
+		/* */
+	},
+}) => {
 	/*
 		[bang]
 	*/
@@ -25,24 +31,28 @@ const Bang: React.FC<{
 	// this useEffect adds a global mouse up to allow for press and hover,
 	// and a touchstart event used to prevent event bubbling.
 	useEffect(() => {
-		const buttonFreed = (): void => isMouseDown(false)
+		const buttonFreed = (): void => {
+			isMouseDown(false)
+		}
 		const touchstart = (e: TouchEvent): void => {
 			if (e.cancelable) {
 				e.preventDefault()
-				buttonPressed()
+				isMouseDown(true)
+				onClick()
 			}
 		}
 		if (self.current !== null) {
 			window.addEventListener('mouseup', buttonFreed)
 			self.current.addEventListener('touchstart', touchstart)
 		}
+		const cleanup_self = self.current
 		return () => {
-			if (self.current !== null) {
-				self.current.removeEventListener('touchstart', touchstart)
+			if (cleanup_self !== null) {
+				cleanup_self.removeEventListener('touchstart', touchstart)
 				window.removeEventListener('mouseup', buttonFreed)
 			}
 		}
-	}, [])
+	}, [onClick])
 
 	return (
 		<div
@@ -71,8 +81,12 @@ const Bang: React.FC<{
 					buttonPressed()
 				}
 			}}
-			onTouchCancel={() => isMouseDown(false)}
-			onTouchEnd={() => isMouseDown(false)}
+			onTouchCancel={() => {
+				isMouseDown(false)
+			}}
+			onTouchEnd={() => {
+				isMouseDown(false)
+			}}
 		>
 			<SVG
 				style={{

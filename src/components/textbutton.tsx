@@ -12,8 +12,8 @@ const TextButton: React.FC<{
 	setValue?: boolean
 	text?: string
 	toggleText?: string
-	onChange?: (b: boolean) => any
-	onClick?: () => any
+	onChange?: (b: boolean) => void
+	onClick?: () => void
 }> = ({
 	ariaLabel = 'textbutton',
 	ariaPressed = null,
@@ -22,8 +22,12 @@ const TextButton: React.FC<{
 	setValue = false,
 	text = 'Button',
 	toggleText = 'Button On',
-	onChange = () => {},
-	onClick = () => {},
+	onChange = () => {
+		/**/
+	},
+	onClick = () => {
+		/**/
+	},
 }) => {
 	/*
 		[textbutton]
@@ -59,7 +63,9 @@ const TextButton: React.FC<{
 
 	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(mode && setValue)
-	useEffect(() => isPressed(mode && setValue), [mode, setValue])
+	useEffect(() => {
+		isPressed(mode && setValue)
+	}, [mode, setValue])
 	// button interactions
 	const [hover, setHover] = useState<boolean>(false)
 	const [mousedown, setMousedown] = useState<boolean>(false)
@@ -106,14 +112,15 @@ const TextButton: React.FC<{
 			}
 		}
 
-		if (self.current !== null) {
+		if (self.current) {
 			self.current.addEventListener('touchstart', touchstart)
 		}
 		window.addEventListener('mousedown', globalMousedown)
 		window.addEventListener('mouseup', globalMouseup)
+		const cleanup_self = self.current
 		return () => {
-			if (self.current !== null) {
-				self.current.removeEventListener('touchstart', touchstart)
+			if (cleanup_self) {
+				cleanup_self.removeEventListener('touchstart', touchstart)
 			}
 			window.removeEventListener('mousedown', globalMousedown)
 			window.removeEventListener('mouseup', globalMouseup)
@@ -152,9 +159,15 @@ const TextButton: React.FC<{
 				role: mode ? 'switch' : 'button',
 				tabIndex: 0,
 			})}
-			onClick={() => pressButton(mode && !pressed)}
-			onMouseEnter={() => !inactive && setHover(true)}
-			onMouseLeave={() => !inactive && setHover(false)}
+			onClick={() => {
+				pressButton(mode && !pressed)
+			}}
+			onMouseEnter={() => {
+				!inactive && setHover(true)
+			}}
+			onMouseLeave={() => {
+				!inactive && setHover(false)
+			}}
 			onTouchEnd={(e) => {
 				e.preventDefault()
 				setHover(false)

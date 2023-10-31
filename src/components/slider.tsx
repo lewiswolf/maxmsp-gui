@@ -1,5 +1,5 @@
 // dependencies
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 // src
 import style from '../scss/slider.module.scss'
@@ -8,8 +8,15 @@ const Slider: React.FC<{
 	ariaLabel?: string
 	setValue?: number
 	width?: number
-	onChange?: (x: number) => any
-}> = ({ ariaLabel = 'slider', setValue = 0, width = 200, onChange = () => {} }) => {
+	onChange?: (x: number) => void
+}> = ({
+	ariaLabel = 'slider',
+	setValue = 0,
+	width = 200,
+	onChange = () => {
+		/**/
+	},
+}) => {
 	/*
 		[slider]
 	*/
@@ -18,22 +25,46 @@ const Slider: React.FC<{
 	const self = useRef<HTMLDivElement>(null)
 
 	// decalre slider colors
-	const SliderColors: {
+	const SliderColors = useMemo<{
 		positive: string
 		negative: string
 		off: string
-	} = {
-		positive: '#cee5e8',
-		negative: '#595959',
-		off: '#818d8f',
-	}
+	}>(() => {
+		return {
+			positive: '#cee5e8',
+			negative: '#595959',
+			off: '#818d8f',
+		}
+	}, [])
 
 	// what is the value - state and prop
 	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
-	useEffect(
-		() => colourAndValue(Math.max(Math.min(setValue, 1), 0) * fidelity, false),
-		[setValue],
-	)
+	useEffect(() => {
+		const new_value = Math.max(Math.min(setValue, 1), 0) * fidelity
+		if (new_value !== 0) {
+			if (self.current) {
+				const sliderWidth = self.current.getBoundingClientRect().width - 10
+				const position = ((sliderWidth - 6) * new_value) / fidelity
+				setBackground(`linear-gradient(90deg,
+					${SliderColors.negative}, 
+					${SliderColors.negative} 0px, 
+					${SliderColors.positive} 0px, 
+					${SliderColors.positive} ${position - 1}px, 
+					${SliderColors.negative} ${position - 1}px,
+					${SliderColors.negative} ${position}px,
+					${SliderColors.positive} ${position}px,
+					${SliderColors.positive} ${position + 6}px,
+					${SliderColors.negative} ${position + 6}px
+					)`)
+				updateValue(new_value)
+			}
+		} else {
+			setBackground(
+				`linear-gradient(90deg, ${SliderColors.off}, ${SliderColors.off} 6px, ${SliderColors.negative} 6px)`,
+			)
+			updateValue(0)
+		}
+	}, [SliderColors, setValue])
 
 	// background gradient / colour
 	const [background, setBackground] = useState<string>(
@@ -48,33 +79,36 @@ const Slider: React.FC<{
 				touchmove(e)
 			}
 		}
-		if (self.current !== null) {
+		if (self.current) {
 			self.current.addEventListener('touchstart', touchstart)
 		}
+		const cleanup_self = self.current
 		return () => {
-			if (self.current !== null) {
-				self.current.removeEventListener('touchstart', touchstart)
+			if (cleanup_self) {
+				cleanup_self.removeEventListener('touchstart', touchstart)
 			}
 		}
 	})
 
 	const colourAndValue = (new_value: number, allowCallback: boolean): void => {
 		if (new_value !== 0) {
-			const sliderWidth = self.current?.getBoundingClientRect().width! - 10
-			const position = ((sliderWidth - 6) * new_value) / fidelity
-			setBackground(`linear-gradient(90deg,
-                ${SliderColors.negative}, 
-                ${SliderColors.negative} 0px, 
-                ${SliderColors.positive} 0px, 
-                ${SliderColors.positive} ${position - 1}px, 
-                ${SliderColors.negative} ${position - 1}px,
-                ${SliderColors.negative} ${position}px,
-                ${SliderColors.positive} ${position}px,
-                ${SliderColors.positive} ${position + 6}px,
-                ${SliderColors.negative} ${position + 6}px
-			)`)
-			updateValue(new_value)
-			allowCallback && onChange(new_value / fidelity)
+			if (self.current) {
+				const sliderWidth = self.current.getBoundingClientRect().width - 10
+				const position = ((sliderWidth - 6) * new_value) / fidelity
+				setBackground(`linear-gradient(90deg,
+					${SliderColors.negative}, 
+					${SliderColors.negative} 0px, 
+					${SliderColors.positive} 0px, 
+					${SliderColors.positive} ${position - 1}px, 
+					${SliderColors.negative} ${position - 1}px,
+					${SliderColors.negative} ${position}px,
+					${SliderColors.positive} ${position}px,
+					${SliderColors.positive} ${position + 6}px,
+					${SliderColors.negative} ${position + 6}px
+					)`)
+				updateValue(new_value)
+				allowCallback && onChange(new_value / fidelity)
+			}
 		} else {
 			setBackground(
 				`linear-gradient(90deg, ${SliderColors.off}, ${SliderColors.off} 6px, ${SliderColors.negative} 6px)`,
@@ -85,10 +119,11 @@ const Slider: React.FC<{
 	}
 
 	const touchmove = (e: React.TouchEvent | TouchEvent) => {
-		const rect = self.current?.getBoundingClientRect()!
-		const touch = e.targetTouches[0]!
-		const new_val = Math.round((touch.clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity))
-		colourAndValue(new_val > fidelity ? fidelity : new_val < 0 ? 0 : new_val, true)
+		if (self.current && e.targetTouches[0]) {
+			const rect = self.current.getBoundingClientRect()
+			const new_val = Math.round((e.targetTouches[0].clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity))
+			colourAndValue(new_val > fidelity ? fidelity : new_val < 0 ? 0 : new_val, true)
+		}
 	}
 
 	return (
@@ -155,8 +190,12 @@ const Slider: React.FC<{
 					min={0}
 					max={fidelity}
 					value={value}
-					onChange={(e) => colourAndValue(parseInt(e.target.value), true)}
-					onTouchMove={(e) => touchmove(e)}
+					onChange={(e) => {
+						colourAndValue(parseInt(e.target.value), true)
+					}}
+					onTouchMove={(e) => {
+						touchmove(e)
+					}}
 					style={{
 						background: background,
 						width: width,

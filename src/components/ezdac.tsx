@@ -3,13 +3,19 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/ezdac.module.scss'
-import SVG from '../svg/ezdac.svg'
+import SVG from '../svg/ezdac.svg?react'
 
 const Ezdac: React.FC<{
 	ariaLabel?: string
 	setValue?: boolean
-	onClick?: (b: boolean) => any
-}> = ({ ariaLabel = 'ezdac', setValue = false, onClick = () => {} }) => {
+	onClick?: (b: boolean) => void
+}> = ({
+	ariaLabel = 'ezdac',
+	setValue = false,
+	onClick = () => {
+		/**/
+	},
+}) => {
 	/*
 		[ezdac]
 	*/
@@ -17,7 +23,9 @@ const Ezdac: React.FC<{
 	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(setValue)
-	useEffect(() => isPressed(setValue), [setValue])
+	useEffect(() => {
+		isPressed(setValue)
+	}, [setValue])
 	// click event with prop
 	const togglePressed = (): void => {
 		isPressed(!pressed)
@@ -31,12 +39,13 @@ const Ezdac: React.FC<{
 				togglePressed()
 			}
 		}
-		if (self.current !== null) {
+		if (self.current) {
 			self.current.addEventListener('touchstart', touchstart)
 		}
+		const cleanup_self = self.current
 		return () => {
-			if (self.current !== null) {
-				self.current.removeEventListener('touchstart', touchstart)
+			if (cleanup_self) {
+				cleanup_self.removeEventListener('touchstart', touchstart)
 			}
 		}
 	})
@@ -64,9 +73,7 @@ const Ezdac: React.FC<{
 			<SVG
 				style={{
 					outline: 0,
-					background: pressed
-						? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)'
-						: '#595959',
+					background: pressed ? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)' : '#595959',
 				}}
 				tabIndex={-1}
 			/>

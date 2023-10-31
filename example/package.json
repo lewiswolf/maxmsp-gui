@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "vite --host",
+		"dev": "vite --host --base /",
 		"build": "vite build",
 		"preview": "vite preview"
 	},
@@ -13,7 +13,6 @@
 		"maxmsp-gui": "file:..",
 		"react": "file:../node_modules/react",
 		"react-dom": "file:../node_modules/react-dom",
-		"vite": "file:../node_modules/vite",
-		"vite-plugin-gh-pages": "file:../node_modules/vite-plugin-gh-pages"
+		"vite": "file:../node_modules/vite"
 	}
 }

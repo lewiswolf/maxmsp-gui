@@ -123,12 +123,14 @@ npm install --include=dev
 ### Run
 
 ```bash
-npm start 
+npm run build
 npm run example
 ```
 
 ### Test
 
 ```bash
+npm run dev
 npm run lint
+npm run test
 ```

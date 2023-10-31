@@ -3,13 +3,19 @@ import { useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/toggle.module.scss'
-import SVG from '../svg/toggle.svg'
+import SVG from '../svg/toggle.svg?react'
 
 const Toggle: React.FC<{
 	ariaLabel?: string
 	setValue?: boolean
-	onClick?: (b: boolean) => any
-}> = ({ ariaLabel = 'toggle', setValue = false, onClick = () => {} }) => {
+	onClick?: (b: boolean) => void
+}> = ({
+	ariaLabel = 'toggle',
+	setValue = false,
+	onClick = () => {
+		/**/
+	},
+}) => {
 	/*
 		[toggle]
 	*/
@@ -17,7 +23,9 @@ const Toggle: React.FC<{
 	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(setValue)
-	useEffect(() => isPressed(setValue), [setValue])
+	useEffect(() => {
+		isPressed(setValue)
+	}, [setValue])
 	// click event with prop
 	const togglePressed = (): void => {
 		isPressed(!pressed)
@@ -31,12 +39,13 @@ const Toggle: React.FC<{
 				togglePressed()
 			}
 		}
-		if (self.current !== null) {
+		if (self.current) {
 			self.current.addEventListener('touchstart', touchstart)
 		}
+		const cleanup_self = self.current
 		return () => {
-			if (self.current !== null) {
-				self.current.removeEventListener('touchstart', touchstart)
+			if (cleanup_self) {
+				cleanup_self.removeEventListener('touchstart', touchstart)
 			}
 		}
 	})
@@ -64,9 +73,7 @@ const Toggle: React.FC<{
 			<SVG
 				style={{
 					outline: 0,
-					background: pressed
-						? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)'
-						: '#595959',
+					background: pressed ? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)' : '#595959',
 				}}
 				tabIndex={-1}
 			/>
