@@ -10,14 +10,14 @@ const PlaybarToggle: React.FC<{
 	ariaLabel?: string
 	inactive?: boolean
 	setPlaying?: boolean
-	onPlay?: (b: boolean) => any
+	onPlay?: (b: boolean) => void
 }> = ({ ariaLabel, inactive, setPlaying, onPlay }): JSX.Element => {
 	/*
 		The toggle element of the playbar.
 	*/
 	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
-	const [playing, isPlaying] = useState<boolean>(setPlaying || false)
+	const [playing, isPlaying] = useState<boolean>(setPlaying ?? false)
 	useEffect(() => {
 		if (setPlaying !== undefined) {
 			isPlaying(setPlaying)
@@ -36,7 +36,9 @@ const PlaybarToggle: React.FC<{
 	// this useEffect adds a global mouse up to allow for press and hover,
 	// and a touchstart event used to prevent event bubbling.
 	useEffect(() => {
-		const mouseup = (): void => isMouseDown(false)
+		const mouseup = (): void => {
+			isMouseDown(false)
+		}
 		const touchstart = (e: TouchEvent): void => {
 			if (e.cancelable) {
 				e.preventDefault()
@@ -44,13 +46,14 @@ const PlaybarToggle: React.FC<{
 			}
 		}
 		window.addEventListener('mouseup', mouseup)
-		if (self.current !== null) {
+		if (self.current) {
 			self.current.addEventListener('touchstart', touchstart)
 		}
+		const cleanup_self = self.current
 		return () => {
 			window.removeEventListener('mouseup', mouseup)
-			if (self.current !== null) {
-				self.current.removeEventListener('touchstart', touchstart)
+			if (cleanup_self) {
+				cleanup_self.removeEventListener('touchstart', touchstart)
 			}
 		}
 	})
@@ -74,14 +77,20 @@ const PlaybarToggle: React.FC<{
 					toggle()
 				}
 			}}
-			onKeyUp={() => isMouseDown(false)}
+			onKeyUp={() => {
+				isMouseDown(false)
+			}}
 			onMouseDown={(e) => {
 				if (e.button === 0) {
 					toggle()
 				}
 			}}
-			onTouchCancel={() => isMouseDown(false)}
-			onTouchEnd={() => isMouseDown(false)}
+			onTouchCancel={() => {
+				isMouseDown(false)
+			}}
+			onTouchEnd={() => {
+				isMouseDown(false)
+			}}
 		>
 			<div style={{ outline: 0 }} tabIndex={-1}>
 				{createElement(!inactive && playing ? PauseButtonSVG : PlayButtonSVG, {
@@ -97,7 +106,7 @@ const PlaybarSlider: React.FC<{
 	inactive: boolean
 	setValue: number
 	width: number
-	onChange: (v: number) => any
+	onChange: (v: number) => void
 }> = ({ ariaLabel, inactive, setValue, width, onChange }): JSX.Element => {
 	/*
 		The slider element of the playbar.
@@ -108,13 +117,15 @@ const PlaybarSlider: React.FC<{
 	const [mousedown, isMouseDown] = useState<boolean>(false)
 	// slider value - state and prop
 	const [value, updateValue] = useState<number>(inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity)
-	useEffect(() => updateValue(inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity), [inactive, setValue])
+	useEffect(() => {
+		updateValue(inactive ? 0 : Math.max(Math.min(setValue, 1), 0) * fidelity)
+	}, [inactive, setValue])
 	// dynamic width - state and prop
 	// this maintains that the svg is always positioned within the slider
 	const [stateWidth, updateWidth] = useState<number>(width)
 	useEffect(() => {
 		const computeWidth = () => {
-			if (self.current !== null && self.current.parentElement !== null) {
+			if (self.current?.parentElement) {
 				updateWidth(Math.min(width, self.current.parentElement.getBoundingClientRect().width))
 			}
 		}
@@ -126,7 +137,9 @@ const PlaybarSlider: React.FC<{
 	}, [width])
 	// this useEffect adds a global mouse up to allow for press and hover,
 	useEffect(() => {
-		const mouseup = (): void => isMouseDown(false)
+		const mouseup = (): void => {
+			isMouseDown(false)
+		}
 		window.addEventListener('mouseup', mouseup)
 		return () => {
 			window.removeEventListener('mouseup', mouseup)
@@ -225,17 +238,30 @@ const PlaybarSlider: React.FC<{
 						tabIndex={-1}
 						type='range'
 						value={value}
-						onChange={(e) => changeSlider(parseInt(e.target.value))}
-						onMouseDown={() => isMouseDown(true)}
-						onTouchCancel={() => isMouseDown(false)}
-						onTouchEnd={() => isMouseDown(false)}
-						onTouchMove={(e) => {
-							const rect = self.current?.getBoundingClientRect()!
-							const touch = e.targetTouches[0]!
-							const new_val = Math.round((touch.clientX - rect.x) / (rect.width / fidelity)) || 0
-							changeSlider(new_val > fidelity ? fidelity : new_val < 0 ? 0 : new_val)
+						onChange={(e) => {
+							changeSlider(parseInt(e.target.value))
 						}}
-						onTouchStart={() => isMouseDown(true)}
+						onMouseDown={() => {
+							isMouseDown(true)
+						}}
+						onTouchCancel={() => {
+							isMouseDown(false)
+						}}
+						onTouchEnd={() => {
+							isMouseDown(false)
+						}}
+						onTouchMove={(e) => {
+							if (self.current && e.targetTouches[0]) {
+								const rect = self.current.getBoundingClientRect()
+								const new_val = Math.round(
+									(e.targetTouches[0].clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity),
+								)
+								changeSlider(new_val > fidelity ? fidelity : new_val < 0 ? 0 : new_val)
+							}
+						}}
+						onTouchStart={() => {
+							isMouseDown(true)
+						}}
 					/>
 				</div>
 			</div>
@@ -249,16 +275,20 @@ const Playbar: React.FC<{
 	setPlaying?: boolean
 	setValue?: number
 	width?: number
-	onChange?: (v: number) => any
-	onPlay?: (b: boolean) => any
+	onChange?: (v: number) => void
+	onPlay?: (b: boolean) => void
 }> = ({
 	ariaLabel = 'playbar',
 	inactive = false,
 	setPlaying = false,
 	setValue = 0,
 	width = 200,
-	onChange = () => {},
-	onPlay = () => {},
+	onChange = () => {
+		/**/
+	},
+	onPlay = () => {
+		/**/
+	},
 }): JSX.Element => {
 	/*
 		[playbar]
