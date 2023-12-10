@@ -191,7 +191,7 @@ const Slider: React.FC<{
 					max={fidelity}
 					value={value}
 					onChange={(e) => {
-						colourAndValue(parseInt(e.target.value), true)
+						colourAndValue(+e.target.value, true)
 					}}
 					onTouchMove={(e) => {
 						touchmove(e)

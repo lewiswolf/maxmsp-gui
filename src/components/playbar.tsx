@@ -239,7 +239,7 @@ const PlaybarSlider: React.FC<{
 						type='range'
 						value={value}
 						onChange={(e) => {
-							changeSlider(parseInt(e.target.value))
+							changeSlider(+e.target.value)
 						}}
 						onMouseDown={() => {
 							isMouseDown(true)
