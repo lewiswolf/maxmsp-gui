@@ -199,15 +199,15 @@ const TextButton: React.FC<{
 									: TextColours.clicked
 								: TextColours.clicked
 							: pressed
-							? TextColours.neutral
-							: mode
-							? TextColours.toggleOff
-							: TextColours.neutral
+								? TextColours.neutral
+								: mode
+									? TextColours.toggleOff
+									: TextColours.neutral
 						: pressed
-						? TextColours.inactive
-						: mode
-						? TextColours.toggleOffInactive
-						: TextColours.inactive,
+							? TextColours.inactive
+							: mode
+								? TextColours.toggleOffInactive
+								: TextColours.inactive,
 				}}
 			>
 				{mode
@@ -216,8 +216,8 @@ const TextButton: React.FC<{
 							? text
 							: toggleText
 						: mousedown && hover
-						? toggleText
-						: text
+							? toggleText
+							: text
 					: text}
 			</p>
 		</div>

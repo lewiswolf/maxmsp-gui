@@ -24,22 +24,22 @@
 		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
-		"@types/node": "^20.10.4",
-		"@types/react": "^18.2.43",
-		"@types/react-dom": "^18.2.17",
-		"@typescript-eslint/eslint-plugin": "^6.13.2",
-		"@typescript-eslint/parser": "^6.13.2",
+		"@types/node": "^20.10.5",
+		"@types/react": "^18.2.45",
+		"@types/react-dom": "^18.2.18",
+		"@typescript-eslint/eslint-plugin": "^6.15.0",
+		"@typescript-eslint/parser": "^6.15.0",
 		"@vitejs/plugin-react-swc": "^3.5.0",
-		"eslint": "^8.55.0",
+		"eslint": "^8.56.0",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.5",
 		"gh-pages": "^6.1.0",
-		"prettier": "^3.1.0",
+		"prettier": "^3.1.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"sass": "^1.69.5",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.7",
+		"vite": "^5.0.10",
 		"vite-plugin-css-injected-by-js": "^3.3.0",
 		"vite-plugin-dts": "^3.6.4",
 		"vite-plugin-svgr": "^4.2.0"
@@ -53,7 +53,59 @@
 		"example": "cd example && npm run dev",
 		"predeploy": "npm run build && cd example && npm run build",
 		"deploy": "gh-pages -d example/dist",
-		"lint": "npx prettier --write --config ./.prettierrc . ",
+		"lint": "npx prettier --write . ",
 		"test": "tsc && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+	},
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"browser": true,
+			"es2020": true
+		},
+		"extends": [
+			"eslint:recommended",
+			"plugin:@typescript-eslint/strict-type-checked",
+			"plugin:@typescript-eslint/stylistic-type-checked",
+			"plugin:react-hooks/recommended"
+		],
+		"ignorePatterns": [
+			"dist"
+		],
+		"parser": "@typescript-eslint/parser",
+		"parserOptions": {
+			"ecmaVersion": "latest",
+			"sourceType": "module",
+			"project": [
+				"./tsconfig.json",
+				"./tsconfig.node.json"
+			],
+			"tsconfigRootDir": "."
+		},
+		"plugins": [
+			"react-refresh"
+		],
+		"rules": {
+			"react-refresh/only-export-components": [
+				"warn",
+				{
+					"allowConstantExport": true
+				}
+			]
+		}
+	},
+	"prettier": {
+		"arrowParens": "always",
+		"bracketSpacing": true,
+		"bracketSameLine": false,
+		"endOfLine": "lf",
+		"htmlWhitespaceSensitivity": "strict",
+		"jsxSingleQuote": true,
+		"printWidth": 120,
+		"quoteProps": "as-needed",
+		"semi": false,
+		"singleQuote": true,
+		"tabWidth": 4,
+		"trailingComma": "all",
+		"useTabs": true
 	}
 }
