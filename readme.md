@@ -20,86 +20,84 @@ npm i maxmsp-gui
 import * as MaxMSP from 'maxmsp-gui'
 
 export default function App() {
-    return (
-        <>
+	return (
+		<>
+			<MaxMSP.Bang
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				ariaPressed={true || false} // default null
+				onClick={() => console.log('bang')}
+			/>
 
-            <MaxMSP.Bang 
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                ariaPressed={true || false} // default null
-                onClick={() => console.log('bang')} 
-            />
+			<MaxMSP.Ezdac
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				setValue={true || false} // set the current state
+				onClick={(b: boolean) => console.log(b)}
+			/>
 
-            <MaxMSP.Ezdac
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                setValue={true || false} // set the current state
-                onClick={(b: boolean) => console.log(b)}
-            />
+			<MaxMSP.Message
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				ariaPressed={true || false} // default null
+				text='What does the message say?'
+				onClick={() => console.log('bang')}
+			/>
 
-            <MaxMSP.Message
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                ariaPressed={true || false} // default null
-                text='What does the message say?'
-                onClick={() => console.log('bang')}
-            />
+			<MaxMSP.Object
+				inactive={true || false} // default false
+				text='What is the object called?'
+			/>
 
-            <MaxMSP.Object
-                inactive={true || false} // default false
-                text='What is the object called?'
-            />
+			<MaxMSP.Playbar
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				inactive={true || false} // disable user interaction, default false
+				setPlaying={true || false} // set onPlay externally
+				setValue={0} // initial/updated state, 0 to props.fidelity
+				width={200} // width of the slider in pixels
+				onPlay={(b: boolean) => console.log(b)}
+				onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
+			/>
 
-            <MaxMSP.Playbar
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                inactive={true || false} // disable user interaction, default false
-                setPlaying={true || false} // set onPlay externally
-                setValue={0} // initial/updated state, 0 to props.fidelity
-                width={200} // width of the slider in pixels
-                onPlay={(b: boolean) => console.log(b)}
-                onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
-            />
+			<MaxMSP.RadioGroup
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				items={['array', 'of', 'items']} // this sets the amount of radiobuttons, strings create text alongside each button
+				spacing={24} // the height of each button in pixels
+				setValue={0} // props.items[i]
+				onClick={(i: number) => console.log(`My index is ${i}`)}
+			/>
 
-            <MaxMSP.RadioGroup
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                items={['array', 'of', 'items']} // this sets the amount of radiobuttons, strings create text alongside each button
-                spacing={24} // the height of each button in pixels
-                setValue={0} // props.items[i]
-                onClick={(i: number) => console.log(`My index is ${i}`)}
-            />
+			<MaxMSP.Slider
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				setValue={0} // initial/updated state, 0 to props.fidelity
+				width={200} // width of the slider in pixels
+				onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
+			/>
 
-            <MaxMSP.Slider
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                setValue={0} // initial/updated state, 0 to props.fidelity
-                width={200} // width of the slider in pixels
-                onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
-            />
+			<MaxMSP.TextButton
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				ariaPressed={true || false} // default null, for button mode only
+				inactive={true || false} // disable user interaction, default false
+				mode={true || false} // true for toggle, false for bang, default false
+				setValue={true || false} // default false, for toggle mode only
+				text='What does the textbutton say?'
+				toggleText='What does the toggled textbutton say?'
+				onChange={(b: boolean) => console.log(b)} // toggle mode only
+				onClick={() => console.log('bang')}
+			/>
 
-            <MaxMSP.TextButton
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                ariaPressed={true || false} // default null, for button mode only
-                inactive={true || false} // disable user interaction, default false
-                mode={true || false} // true for toggle, false for bang, default false
-                setValue={true || false} // default false, for toggle mode only
-                text='What does the textbutton say?'
-                toggleText='What does the toggled textbutton say?'
-                onChange={(b: boolean) => console.log(b)} // toggle mode only
-                onClick={() => console.log('bang')}
-            />
+			<MaxMSP.Toggle
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				setValue={true || false} // set the current state
+				onClick={(b: boolean) => console.log(b)}
+			/>
 
-            <MaxMSP.Toggle
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                setValue={true || false} // set the current state
-                onClick={(b: boolean) => console.log(b)}
-            />
-
-            <MaxMSP.Umenu
-                ariaLabel='Set the aria-label tag.' // defaults to the object name
-                items={['array', 'of', 'items']}
-                setValue={0} // props.items[i]
-                width={100} // width of the umenu in pixels
-                onChange={(i: number) => console.log(`My index is ${i}`)}
-            />
-
-        </>
-    )
+			<MaxMSP.Umenu
+				ariaLabel='Set the aria-label tag.' // defaults to the object name
+				items={['array', 'of', 'items']}
+				setValue={0} // props.items[i]
+				width={100} // width of the umenu in pixels
+				onChange={(i: number) => console.log(`My index is ${i}`)}
+			/>
+		</>
+	)
 }
 ```
 
