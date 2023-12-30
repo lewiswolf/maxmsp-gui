@@ -23,10 +23,13 @@ jobs:
             - name: Install node modules
               run: npm install --include=dev
 
-            - name: Lint project
+            - name: Format project
               run: npx prettier --check .
 
             - name: Assert types
+              run: npx tsc
+
+            - name: Lint project
               run: |
-                  npx tsc
                   npx eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0
+                  npx stylelint **/*.scss

@@ -1,6 +1,6 @@
 {
 	"name": "maxmsp-gui",
-	"version": "2.3.2",
+	"version": "2.3.3",
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "n/a",
@@ -38,6 +38,8 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"sass": "^1.69.6",
+		"stylelint": "^16.1.0",
+		"stylelint-config-standard-scss": "^12.0.0",
 		"typescript": "^5.3.3",
 		"vite": "^5.0.10",
 		"vite-plugin-css-injected-by-js": "^3.3.1",
@@ -48,13 +50,13 @@
 		"dist"
 	],
 	"scripts": {
-		"dev": "vite build --watch",
 		"build": "tsc && vite build",
-		"example": "cd example && npm run dev",
+		"dev": "vite build --watch",
 		"predeploy": "npm run build && cd example && npm run build",
 		"deploy": "gh-pages -d example/dist",
-		"lint": "prettier --write . ",
-		"test": "tsc && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+		"example": "cd example && npm run dev",
+		"format": "prettier --write . ",
+		"test": "tsc && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && stylelint **/*.scss"
 	},
 	"eslintConfig": {
 		"root": true,
@@ -107,5 +109,14 @@
 		"tabWidth": 4,
 		"trailingComma": "all",
 		"useTabs": true
+	},
+	"stylelint": {
+		"extends": "stylelint-config-standard-scss",
+		"rules": {
+			"declaration-empty-line-before": null,
+			"no-descending-specificity": null,
+			"no-invalid-position-at-import-rule": null,
+			"scss/double-slash-comment-empty-line-before": null
+		}
 	}
 }

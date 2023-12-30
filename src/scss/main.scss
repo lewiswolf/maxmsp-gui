@@ -1,13 +1,12 @@
 @mixin main() {
-	cursor: default;
-	user-select: none;
-	font-family: Arial;
-	word-break: break-word;
-	-webkit-text-size-adjust: 100%;
-	-webkit-tap-highlight-color: transparent;
-	-webkit-user-select: none;
 	position: relative;
+	font-family: Arial, sans-serif;
+	text-size-adjust: 100%;
+	word-break: break-word;
 	touch-action: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	cursor: default;
 }
 
 @mixin focus() {

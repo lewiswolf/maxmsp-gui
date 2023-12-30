@@ -1,6 +1,6 @@
-@import './main.scss';
+@import './main';
 
-@mixin thumbStyle {
+@mixin thumb-style {
 	height: 20px;
 	width: 12px;
 	appearance: none;
@@ -10,32 +10,11 @@
 }
 
 .playbar {
-	@include main();
+	@include main;
 	height: 20px;
 	// width set by component
 	max-width: 100%;
-	background: #333333;
-
-	> div:first-of-type {
-		@include focus();
-		height: 20px;
-		width: 20px;
-		position: absolute;
-		top: 0;
-		left: 0;
-		margin: 0;
-
-		> div {
-			height: inherit;
-			width: inherit;
-
-			svg {
-				height: inherit;
-				width: inherit;
-				pointer-events: none;
-			}
-		}
-	}
+	background: #333;
 
 	hr {
 		height: 2px;
@@ -59,8 +38,29 @@
 		pointer-events: none;
 	}
 
+	> div:first-of-type {
+		@include focus;
+		height: 20px;
+		width: 20px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		margin: 0;
+
+		> div {
+			height: inherit;
+			width: inherit;
+
+			svg {
+				height: inherit;
+				width: inherit;
+				pointer-events: none;
+			}
+		}
+	}
+
 	> div:last-of-type {
-		@include focus();
+		@include focus;
 		z-index: 10;
 		height: 20px;
 		margin: 0;
@@ -83,11 +83,11 @@
 				outline: 0;
 
 				&::-webkit-slider-thumb {
-					@include thumbStyle();
+					@include thumb-style;
 				}
 
 				&::-moz-range-thumb {
-					@include thumbStyle();
+					@include thumb-style;
 				}
 			}
 		}

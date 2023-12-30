@@ -1,8 +1,8 @@
-@import './main.scss';
+@import './main';
 
 .ezdac {
-	@include main();
-	@include focus();
+	@include main;
+	@include focus;
 	height: 45px;
 	width: 45px;
 }
