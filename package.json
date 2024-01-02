@@ -115,6 +115,7 @@
 		"rules": {
 			"declaration-empty-line-before": null,
 			"no-descending-specificity": null,
+			"property-no-vendor-prefix": null,
 			"scss/double-slash-comment-empty-line-before": null
 		}
 	}
