@@ -19,5 +19,6 @@ export default defineConfig({
 			external: ['react', 'react/jsx-runtime'],
 			output: { entryFileNames: '[name].js', manualChunks: undefined },
 		},
+		target: 'ESNext',
 	},
 })

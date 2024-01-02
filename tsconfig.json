@@ -21,7 +21,7 @@
 		"strictPropertyInitialization": true,
 		"useUnknownInCatchVariables": true,
 		// modules
-		"module": "esnext",
+		"module": "ESNext",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		// emit
@@ -35,8 +35,8 @@
 		"isolatedModules": true,
 		// language and environment
 		"jsx": "react-jsx",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"target": "es6",
+		"lib": ["dom", "dom.iterable", "ESNext"],
+		"target": "ESNext",
 		// completeness
 		"skipLibCheck": true
 	},
