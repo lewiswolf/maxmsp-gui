@@ -56,7 +56,7 @@
 		"deploy": "gh-pages -d example/dist",
 		"example": "cd example && npm run dev",
 		"format": "prettier --write . ",
-		"test": "tsc && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && stylelint **/*.scss"
+		"test": "tsc && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && stylelint **/*.scss **/*.css"
 	},
 	"eslintConfig": {
 		"root": true,

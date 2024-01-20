@@ -18,11 +18,15 @@ const App = () => {
 				} else {
 					setPlaybar(0)
 					setPlaying(false)
-					return () => window.clearInterval(interval.current)
+					return () => {
+						window.clearInterval(interval.current)
+					}
 				}
 			}, 10)
 		}
-		return () => window.clearInterval(interval.current)
+		return () => {
+			window.clearInterval(interval.current)
+		}
 	}, [playing, playbar])
 
 	// render page
@@ -36,8 +40,12 @@ const App = () => {
 			<MaxMSP.Playbar
 				setPlaying={playing}
 				setValue={playbar}
-				onChange={(i) => setPlaybar(i)}
-				onPlay={(bool) => setPlaying(bool)}
+				onChange={(i) => {
+					setPlaybar(i)
+				}}
+				onPlay={(bool) => {
+					setPlaying(bool)
+				}}
 			/>
 			<MaxMSP.RadioGroup />
 			<MaxMSP.Slider />
