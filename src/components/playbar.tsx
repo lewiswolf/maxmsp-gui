@@ -7,28 +7,26 @@ import PauseButtonSVG from '../svg/playbar-pause.svg?react'
 import PlayButtonSVG from '../svg/playbar-play.svg?react'
 
 const PlaybarToggle: React.FC<{
-	ariaLabel?: string
-	inactive?: boolean
-	setPlaying?: boolean
-	onPlay?: (b: boolean) => void
+	ariaLabel: string
+	inactive: boolean
+	setPlaying: boolean
+	onPlay: (b: boolean) => void
 }> = ({ ariaLabel, inactive, setPlaying, onPlay }): JSX.Element => {
 	/*
 		The toggle element of the playbar.
 	*/
 	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
-	const [playing, isPlaying] = useState<boolean>(setPlaying ?? false)
+	const [playing, isPlaying] = useState<boolean>(setPlaying)
 	useEffect(() => {
-		if (setPlaying !== undefined) {
-			isPlaying(setPlaying)
-		}
+		isPlaying(setPlaying)
 	}, [setPlaying])
 	// click event with prop
 	const toggle = (): void => {
 		isMouseDown(true)
 		if (!inactive) {
 			isPlaying(!playing)
-			onPlay && onPlay(!playing) // this shouldn't need a logical not, but I think it is because it is nested
+			onPlay(!playing)
 		}
 	}
 	// mousedown state
@@ -156,7 +154,7 @@ const PlaybarSlider: React.FC<{
 			<hr />
 			<svg
 				style={{
-					left: `${(stateWidth - 37) * (value / fidelity) + 16}px`,
+					left: ((stateWidth - 37) * (value / fidelity) + 16).toString() + 'px',
 				}}
 				version='1.1'
 				viewBox='0 0 84 84'

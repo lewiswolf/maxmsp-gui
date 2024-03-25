@@ -157,7 +157,7 @@ const Umenu: React.FC<{
 				self.current.getBoundingClientRect().left
 			setDropdownWidth('fit-content')
 			if (maxWidth < (self.current.childNodes[1] as HTMLElement).offsetWidth) {
-				setDropdownWidth(`${maxWidth - 2}px`)
+				setDropdownWidth((maxWidth - 2).toString() + 'px')
 			}
 		}
 	}
@@ -190,9 +190,9 @@ const Umenu: React.FC<{
 		<div
 			className={style.umenu}
 			ref={self}
-			style={{ width: `${Math.max(50, width)}px` }}
+			style={{ width: Math.max(50, width).toString() + 'px' }}
 			{...(items.length > 0 && {
-				'aria-label': `${ariaLabel}: ${items[index]} selected`,
+				'aria-label': `${ariaLabel}: ${items[index] ?? 'nothing'} selected`,
 				'aria-expanded': dropdownVisible,
 				'aria-haspopup': 'listbox',
 				role: 'button',
@@ -253,7 +253,7 @@ const Umenu: React.FC<{
 				<UmenuSVG />
 			</div>
 			<ul
-				aria-label={`${ariaLabel}: ${items[index]} selected`}
+				aria-label={`${ariaLabel}: ${items[index] ?? 'nothing'} selected`}
 				role='listbox'
 				tabIndex={-1}
 				style={{

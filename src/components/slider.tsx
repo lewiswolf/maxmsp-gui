@@ -49,12 +49,12 @@ const Slider: React.FC<{
 					${SliderColors.negative}, 
 					${SliderColors.negative} 0px, 
 					${SliderColors.positive} 0px, 
-					${SliderColors.positive} ${position - 1}px, 
-					${SliderColors.negative} ${position - 1}px,
-					${SliderColors.negative} ${position}px,
-					${SliderColors.positive} ${position}px,
-					${SliderColors.positive} ${position + 6}px,
-					${SliderColors.negative} ${position + 6}px
+					${SliderColors.positive} ${(position - 1).toString()}px, 
+					${SliderColors.negative} ${(position - 1).toString()}px,
+					${SliderColors.negative} ${position.toString()}px,
+					${SliderColors.positive} ${position.toString()}px,
+					${SliderColors.positive} ${(position + 6).toString()}px,
+					${SliderColors.negative} ${(position + 6).toString()}px
 					)`)
 				updateValue(new_value)
 			}
@@ -99,12 +99,12 @@ const Slider: React.FC<{
 					${SliderColors.negative}, 
 					${SliderColors.negative} 0px, 
 					${SliderColors.positive} 0px, 
-					${SliderColors.positive} ${position - 1}px, 
-					${SliderColors.negative} ${position - 1}px,
-					${SliderColors.negative} ${position}px,
-					${SliderColors.positive} ${position}px,
-					${SliderColors.positive} ${position + 6}px,
-					${SliderColors.negative} ${position + 6}px
+					${SliderColors.positive} ${(position - 1).toString()}px, 
+					${SliderColors.negative} ${(position - 1).toString()}px,
+					${SliderColors.negative} ${position.toString()}px,
+					${SliderColors.positive} ${position.toString()}px,
+					${SliderColors.positive} ${(position + 6).toString()}px,
+					${SliderColors.negative} ${(position + 6).toString()}px
 					)`)
 				updateValue(new_value)
 				allowCallback && onChange(new_value / fidelity)

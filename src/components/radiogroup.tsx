@@ -82,10 +82,10 @@ const RadioGroup: React.FC<{
 				return (
 					<div
 						aria-checked={i === index}
-						aria-label={item ? item : `${ariaLabel} button ${i}`}
+						aria-label={item ? item : `${ariaLabel} button ${i.toString()}`}
 						key={i}
 						role='radio'
-						style={{ height: spacing > 16 ? `${spacing}px` : '16px' }}
+						style={{ height: spacing > 16 ? spacing.toString() + 'px' : '16px' }}
 						tabIndex={i === Math.max(index, 1) ? 0 : -1}
 						onFocus={() => {
 							indexFocused(i - 1)
@@ -121,7 +121,7 @@ const RadioGroup: React.FC<{
 							<p
 								tabIndex={-1}
 								style={{
-									lineHeight: spacing > 16 ? `${spacing}px` : '16px',
+									lineHeight: spacing > 16 ? spacing.toString() + 'px' : '16px',
 									paddingRight: item ? '10px' : 0,
 									outline: 0,
 								}}
