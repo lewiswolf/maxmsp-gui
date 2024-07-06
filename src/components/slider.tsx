@@ -38,8 +38,8 @@ const Slider: React.FC<{
 	}, [])
 
 	// declare slider colour update function
-	const colourAndValue = useCallback(
-		(new_value: number, allowCallback = false): void => {
+	const colourAndState = useCallback(
+		(new_value: number): void => {
 			if (new_value !== 0) {
 				if (self.current) {
 					const sliderWidth = self.current.getBoundingClientRect().width - 10
@@ -56,24 +56,22 @@ const Slider: React.FC<{
 					${SliderColors.negative} ${(position + 6).toString()}px
 					)`)
 					updateValue(new_value)
-					allowCallback && onChange(new_value / fidelity)
 				}
 			} else {
 				setBackground(
 					`linear-gradient(90deg, ${SliderColors.off}, ${SliderColors.off} 6px, ${SliderColors.negative} 6px)`,
 				)
 				updateValue(0)
-				allowCallback && onChange(new_value / fidelity)
 			}
 		},
-		[SliderColors, fidelity, onChange],
+		[SliderColors, fidelity],
 	)
 
 	// what is the value - state and prop
 	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
 	useEffect(() => {
-		colourAndValue(Math.max(Math.min(setValue, 1), 0) * fidelity)
-	}, [setValue, colourAndValue])
+		colourAndState(Math.max(Math.min(setValue, 1), 0) * fidelity)
+	}, [setValue, colourAndState])
 
 	// background gradient / colour
 	const [background, setBackground] = useState<string>(
@@ -98,16 +96,15 @@ const Slider: React.FC<{
 	const touchmove = (e: React.TouchEvent | TouchEvent) => {
 		if (self.current && e.targetTouches[0]) {
 			const rect = self.current.getBoundingClientRect()
-			colourAndValue(
-				Math.max(
-					Math.min(
-						Math.round((e.targetTouches[0].clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity)),
-						fidelity,
-					),
-					0,
+			const new_val = Math.max(
+				Math.min(
+					Math.round((e.targetTouches[0].clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity)),
+					fidelity,
 				),
-				true,
+				0,
 			)
+			colourAndState(new_val)
+			onChange(new_val / fidelity)
 		}
 	}
 
@@ -123,28 +120,37 @@ const Slider: React.FC<{
 			role='slider'
 			tabIndex={0}
 			onKeyDown={(e) => {
+				let new_val
 				switch (e.key) {
 					case 'Up':
 					case 'ArrowUp':
 					case 'Right':
 					case 'ArrowRight':
 						e.preventDefault()
-						colourAndValue(Math.min(Math.round(value + fidelity / 100), fidelity), true)
+						new_val = Math.min(Math.round(value + fidelity / 100), fidelity)
+						colourAndState(new_val)
+						onChange(new_val / fidelity)
 						break
 					case 'Down':
 					case 'ArrowDown':
 					case 'Left':
 					case 'ArrowLeft':
 						e.preventDefault()
-						colourAndValue(Math.max(Math.round(value - fidelity / 100), 0), true)
+						new_val = Math.max(Math.round(value - fidelity / 100), 0)
+						colourAndState(new_val)
+						onChange(new_val / fidelity)
 						break
 					case 'PageUp':
 						e.preventDefault()
-						colourAndValue(Math.min(Math.round(value + fidelity / 10), fidelity), true)
+						new_val = Math.min(Math.round(value + fidelity / 10), fidelity)
+						colourAndState(new_val)
+						onChange(new_val / fidelity)
 						break
 					case 'PageDown':
 						e.preventDefault()
-						colourAndValue(Math.max(Math.round(value - fidelity / 10), 0), true)
+						new_val = Math.max(Math.round(value - fidelity / 10), 0)
+						colourAndState(new_val)
+						onChange(new_val / fidelity)
 						break
 					default:
 						break
@@ -166,7 +172,9 @@ const Slider: React.FC<{
 					type='range'
 					value={value}
 					onChange={(e) => {
-						colourAndValue(+e.target.value, true)
+						const new_val = +e.target.value
+						colourAndState(new_val)
+						onChange(new_val / fidelity)
 					}}
 					onTouchMove={(e) => {
 						touchmove(e)
