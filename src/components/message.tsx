@@ -10,8 +10,8 @@ const Message: React.FC<{
 	text?: string
 	onClick?: () => void
 }> = ({
-	ariaPressed = null,
 	ariaLabel = 'message',
+	ariaPressed = null,
 	text = '',
 	onClick = () => {
 		/**/
@@ -66,9 +66,7 @@ const Message: React.FC<{
 			role='button'
 			tabIndex={0}
 			onMouseDown={(e) => {
-				if (e.button === 0) {
-					buttonPressed()
-				}
+				e.button === 0 && buttonPressed()
 			}}
 			onKeyDown={(e) => {
 				if (e.key === 'Enter' || e.key === ' ') {
@@ -91,7 +89,6 @@ const Message: React.FC<{
 		>
 			<p
 				style={{
-					outline: 0,
 					padding: mousedown ? '6px 4px 4px 6px' : '5px 5px',
 				}}
 				tabIndex={-1}

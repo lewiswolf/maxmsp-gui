@@ -41,13 +41,13 @@ const Bang: React.FC<{
 				onClick()
 			}
 		}
-		if (self.current !== null) {
+		if (self.current) {
 			window.addEventListener('mouseup', buttonFreed)
 			self.current.addEventListener('touchstart', touchstart)
 		}
 		const cleanup_self = self.current
 		return () => {
-			if (cleanup_self !== null) {
+			if (cleanup_self) {
 				cleanup_self.removeEventListener('touchstart', touchstart)
 				window.removeEventListener('mouseup', buttonFreed)
 			}
@@ -77,9 +77,7 @@ const Bang: React.FC<{
 				}
 			}}
 			onMouseDown={(e) => {
-				if (e.button === 0) {
-					buttonPressed()
-				}
+				e.button === 0 && buttonPressed()
 			}}
 			onTouchCancel={() => {
 				isMouseDown(false)
@@ -90,7 +88,6 @@ const Bang: React.FC<{
 		>
 			<SVG
 				style={{
-					outline: 0,
 					background: mousedown
 						? 'radial-gradient(10px circle at center, #cee5e8 50%, #333333 50%)'
 						: '#333333',

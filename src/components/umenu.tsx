@@ -116,10 +116,9 @@ const Umenu: React.FC<{
 		}
 
 		if (self.current) {
-			const toggle = self.current.childNodes[0] as HTMLElement
-			const list = self.current.childNodes[1] as HTMLElement
-			toggle.addEventListener('touchstart', toggleTouchStart)
-			list.addEventListener('touchstart', listTouchStart)
+			// prettier-ignore
+			{(self.current.childNodes[0] as HTMLElement).addEventListener('touchstart', toggleTouchStart)
+			;(self.current.childNodes[1] as HTMLElement).addEventListener('touchstart', listTouchStart)}
 			window.addEventListener('resize', responsiveDropdown)
 			window.addEventListener('mousedown', customBlur)
 			window.addEventListener('scroll', isNotInViewport)
@@ -127,10 +126,9 @@ const Umenu: React.FC<{
 		const cleanup_self = self.current
 		return () => {
 			if (cleanup_self) {
-				const toggle = cleanup_self.childNodes[0] as HTMLElement
-				const list = cleanup_self.childNodes[1] as HTMLElement
-				toggle.removeEventListener('touchstart', toggleTouchStart)
-				list.removeEventListener('touchstart', listTouchStart)
+				// prettier-ignore
+				{(cleanup_self.childNodes[0] as HTMLElement).removeEventListener('touchstart', toggleTouchStart)
+				;(cleanup_self.childNodes[1] as HTMLElement).removeEventListener('touchstart', listTouchStart)}
 				window.removeEventListener('mousedown', customBlur)
 				window.removeEventListener('resize', responsiveDropdown)
 				window.removeEventListener('scroll', isNotInViewport)
@@ -143,10 +141,9 @@ const Umenu: React.FC<{
 		setFocus(focus)
 		if (dropdownVisible) {
 			responsiveDropdown()
-			if (focus !== null && self.current?.childNodes[1]?.childNodes[focus]) {
-				const c = self.current.childNodes[1].childNodes[focus] as HTMLElement
-				c.focus()
-			}
+			focus !== null &&
+				self.current?.childNodes[1]?.childNodes[focus] &&
+				(self.current.childNodes[1].childNodes[focus] as HTMLElement).focus()
 		}
 	}
 
@@ -156,26 +153,21 @@ const Umenu: React.FC<{
 				(self.current.parentNode as HTMLElement).getBoundingClientRect().right -
 				self.current.getBoundingClientRect().left
 			setDropdownWidth('fit-content')
-			if (maxWidth < (self.current.childNodes[1] as HTMLElement).offsetWidth) {
+			maxWidth < (self.current.childNodes[1] as HTMLElement).offsetWidth &&
 				setDropdownWidth((maxWidth - 2).toString() + 'px')
-			}
 		}
 	}
 
 	const arrowKeys = (value: 1 | -1): void => {
 		if (focus !== null) {
 			setFocus((focus + items.length + value) % items.length)
-			if (self.current?.childNodes[1]?.childNodes[focus]) {
-				const c = self.current.childNodes[1].childNodes[focus] as HTMLElement
-				c.focus()
-			}
+			self.current?.childNodes[1]?.childNodes[focus] &&
+				(self.current.childNodes[1].childNodes[focus] as HTMLElement).focus()
 		} else {
 			const f = value === -1 ? items.length - 1 : 0
 			setFocus(f)
-			if (self.current?.childNodes[1]?.childNodes[f]) {
-				const c = self.current.childNodes[1].childNodes[f] as HTMLElement
-				c.focus()
-			}
+			self.current?.childNodes[1]?.childNodes[f] &&
+				(self.current.childNodes[1].childNodes[f] as HTMLElement).focus()
 		}
 	}
 
@@ -192,9 +184,9 @@ const Umenu: React.FC<{
 			ref={self}
 			style={{ width: Math.max(50, width).toString() + 'px' }}
 			{...(items.length > 0 && {
-				'aria-label': `${ariaLabel}: ${items[index] ?? 'nothing'} selected`,
 				'aria-expanded': dropdownVisible,
 				'aria-haspopup': 'listbox',
+				'aria-label': `${ariaLabel}: ${items[index] ?? 'nothing'} selected`,
 				role: 'button',
 				tabIndex: 0,
 				onKeyDown: (e) => {
@@ -213,16 +205,15 @@ const Umenu: React.FC<{
 							e.preventDefault()
 							setDropdown(false)
 							setFocus(null)
-							self.current && self.current.focus()
+							self.current?.focus()
 							break
 						case 'Home':
 						case 'End':
 							e.preventDefault()
 							setFocus(e.key === 'Home' ? 0 : items.length - 1)
-							if (focus !== null && self.current?.childNodes[1]?.childNodes[focus]) {
-								const c = self.current.childNodes[1].childNodes[focus] as HTMLElement
-								c.focus()
-							}
+							focus !== null &&
+								self.current?.childNodes[1]?.childNodes[focus] &&
+								(self.current.childNodes[1].childNodes[focus] as HTMLElement).focus()
 							break
 						case 'Up':
 						case 'ArrowUp':
@@ -265,9 +256,12 @@ const Umenu: React.FC<{
 				{items.map((item, i) => {
 					return (
 						<li
-							key={i}
 							{...(i === index && { 'aria-selected': true })}
+							key={i}
 							role='option'
+							style={{
+								background: focus === i ? '#4c4c4c' : 'inherit',
+							}}
 							tabIndex={-1}
 							onMouseEnter={() => {
 								setFocus(i)
@@ -280,10 +274,6 @@ const Umenu: React.FC<{
 							}}
 							onTouchEnd={() => {
 								setFocus(null)
-							}}
-							style={{
-								background: focus === i ? '#4c4c4c' : 'inherit',
-								outline: 0,
 							}}
 						>
 							{item}

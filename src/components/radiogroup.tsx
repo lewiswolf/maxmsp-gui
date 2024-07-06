@@ -41,10 +41,7 @@ const RadioGroup: React.FC<{
 	// focus method
 	const toggleFocused = (i: number) => {
 		indexFocused(i)
-		if (self.current?.childNodes[i]) {
-			const c = self.current.childNodes[i] as HTMLElement
-			c.focus()
-		}
+		self.current?.childNodes[i] && (self.current.childNodes[i] as HTMLElement).focus()
 	}
 	// this useEffect adds a touch event listener used to prevent bubbling.
 	useEffect(() => {
@@ -59,19 +56,13 @@ const RadioGroup: React.FC<{
 						break
 					}
 				}
-				if (t !== null) {
-					togglePressed(t)
-				}
+				t !== null && togglePressed(t)
 			}
 		}
-		if (self.current) {
-			self.current.addEventListener('touchstart', touchstart)
-		}
+		self.current && self.current.addEventListener('touchstart', touchstart)
 		const cleanup_self = self.current
 		return () => {
-			if (cleanup_self) {
-				cleanup_self.removeEventListener('touchstart', touchstart)
-			}
+			cleanup_self && cleanup_self.removeEventListener('touchstart', touchstart)
 		}
 	})
 
@@ -112,19 +103,16 @@ const RadioGroup: React.FC<{
 							}
 						}}
 						onMouseDown={(e) => {
-							if (e.button === 0) {
-								togglePressed(i)
-							}
+							e.button === 0 && togglePressed(i)
 						}}
 					>
 						{item && (
 							<p
-								tabIndex={-1}
 								style={{
 									lineHeight: spacing > 16 ? spacing.toString() + 'px' : '16px',
 									paddingRight: item ? '10px' : 0,
-									outline: 0,
 								}}
+								tabIndex={-1}
 							>
 								{item}
 							</p>
@@ -135,7 +123,6 @@ const RadioGroup: React.FC<{
 									i === index
 										? 'radial-gradient(18px circle at center,#cee5e8 50%,#333333 50%)'
 										: 'radial-gradient(18px circle at center,#595959 50%,#333333 50%)',
-								outline: 0,
 							}}
 							tabIndex={-1}
 						>

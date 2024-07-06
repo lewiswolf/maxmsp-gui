@@ -31,7 +31,7 @@ const App = () => {
 
 	// render page
 	return (
-		<main>
+		<>
 			{!iframe && <h2>React component library for stylised Max MSP GUI</h2>}
 			<MaxMSP.Bang />
 			<MaxMSP.Ezdac />
@@ -55,7 +55,7 @@ const App = () => {
 			</div>
 			<MaxMSP.Toggle />
 			<MaxMSP.Umenu items={['foo', 'bar']} />
-		</main>
+		</>
 	)
 }
 

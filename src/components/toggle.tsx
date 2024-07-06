@@ -39,14 +39,10 @@ const Toggle: React.FC<{
 				togglePressed()
 			}
 		}
-		if (self.current) {
-			self.current.addEventListener('touchstart', touchstart)
-		}
+		self.current && self.current.addEventListener('touchstart', touchstart)
 		const cleanup_self = self.current
 		return () => {
-			if (cleanup_self) {
-				cleanup_self.removeEventListener('touchstart', touchstart)
-			}
+			cleanup_self && cleanup_self.removeEventListener('touchstart', touchstart)
 		}
 	})
 
@@ -65,14 +61,11 @@ const Toggle: React.FC<{
 				}
 			}}
 			onMouseDown={(e) => {
-				if (e.button === 0) {
-					togglePressed()
-				}
+				e.button === 0 && togglePressed()
 			}}
 		>
 			<SVG
 				style={{
-					outline: 0,
 					background: pressed ? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)' : '#595959',
 				}}
 				tabIndex={-1}

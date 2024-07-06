@@ -98,12 +98,10 @@ const TextButton: React.FC<{
 				}
 			}
 		}
-
 		const globalMouseup = () => {
 			setExternalMousedown(false)
 			setMousedown(false)
 		}
-
 		const touchstart = (e: TouchEvent): void => {
 			if (e.cancelable) {
 				e.preventDefault()
@@ -111,35 +109,36 @@ const TextButton: React.FC<{
 				setMousedown(true)
 			}
 		}
-
 		if (self.current) {
+			window.addEventListener('mousedown', globalMousedown)
+			window.addEventListener('mouseup', globalMouseup)
 			self.current.addEventListener('touchstart', touchstart)
 		}
-		window.addEventListener('mousedown', globalMousedown)
-		window.addEventListener('mouseup', globalMouseup)
 		const cleanup_self = self.current
 		return () => {
 			if (cleanup_self) {
+				window.removeEventListener('mousedown', globalMousedown)
+				window.removeEventListener('mouseup', globalMouseup)
 				cleanup_self.removeEventListener('touchstart', touchstart)
 			}
-			window.removeEventListener('mousedown', globalMousedown)
-			window.removeEventListener('mouseup', globalMouseup)
 		}
 	})
 
 	return (
 		<div
-			className={style.textbutton}
+			{...(mode &&
+				!inactive && {
+					'aria-checked': pressed,
+				})}
 			{...(!mode &&
 				!inactive &&
 				ariaPressed !== null && {
 					'aria-pressed': ariaPressed,
 				})}
-			{...(mode &&
-				!inactive && {
-					'aria-checked': pressed,
-				})}
 			{...(!inactive && {
+				'aria-label': ariaLabel,
+				role: mode ? 'switch' : 'button',
+				tabIndex: 0,
 				onKeyDown: (e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
 						e.preventDefault()
@@ -155,10 +154,16 @@ const TextButton: React.FC<{
 						pressButton(mode && !pressed)
 					}
 				},
-				'aria-label': ariaLabel,
-				role: mode ? 'switch' : 'button',
-				tabIndex: 0,
 			})}
+			className={style.textbutton}
+			ref={self}
+			style={{
+				background: !inactive
+					? hover && !externalMousedown
+						? BackgroundGradients.hover
+						: BackgroundGradients.neutral
+					: BackgroundGradients.inactive,
+			}}
 			onClick={() => {
 				pressButton(mode && !pressed)
 			}}
@@ -178,19 +183,9 @@ const TextButton: React.FC<{
 				setHover(false)
 				setMousedown(false)
 			}}
-			ref={self}
-			style={{
-				background: !inactive
-					? hover && !externalMousedown
-						? BackgroundGradients.hover
-						: BackgroundGradients.neutral
-					: BackgroundGradients.inactive,
-			}}
 		>
 			<p
-				tabIndex={-1}
 				style={{
-					outline: 0,
 					color: !inactive
 						? mousedown && hover
 							? pressed
@@ -209,6 +204,7 @@ const TextButton: React.FC<{
 								? TextColours.toggleOffInactive
 								: TextColours.inactive,
 				}}
+				tabIndex={-1}
 			>
 				{mode
 					? pressed

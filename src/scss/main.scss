@@ -13,5 +13,6 @@
 @mixin focus() {
 	&:focus {
 		outline: #b4b4b4 solid 3px;
+		z-index: 10;
 	}
 }

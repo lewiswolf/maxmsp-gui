@@ -5,4 +5,8 @@
 	@include focus;
 	height: 24px;
 	width: 24px;
+
+	svg {
+		outline: 0;
+	}
 }
