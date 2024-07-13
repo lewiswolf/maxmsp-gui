@@ -43,11 +43,7 @@ const Umenu: FC<{
 				let t: number | null = null
 				self.current.childNodes[1]?.childNodes.forEach((button, i) => {
 					const b = (button as HTMLElement).getBoundingClientRect()
-					if (
-						e.targetTouches[0] &&
-						e.targetTouches[0].clientY > b.top &&
-						e.targetTouches[0].clientY < b.bottom
-					) {
+					if (e.targetTouches[0] && e.targetTouches[0].clientY > b.top && e.targetTouches[0].clientY < b.bottom) {
 						t = i
 					}
 				})
@@ -151,8 +147,7 @@ const Umenu: FC<{
 		} else {
 			const f = value === -1 ? items.length - 1 : 0
 			setFocus(f)
-			self.current?.childNodes[1]?.childNodes[f] &&
-				(self.current.childNodes[1].childNodes[f] as HTMLElement).focus()
+			;(self.current?.childNodes[1]?.childNodes[f] as HTMLElement).focus()
 		}
 	}
 
