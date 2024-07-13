@@ -14,6 +14,7 @@
 		"maxmsp-gui": "file:..",
 		"react": "file:../node_modules/react",
 		"react-dom": "file:../node_modules/react-dom",
-		"vite": "file:../node_modules/vite"
+		"vite": "file:../node_modules/vite",
+		"vite-plugin-compression2": "file:../node_modules/vite-plugin-compression2"
 	}
 }
