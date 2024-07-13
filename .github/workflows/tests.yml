@@ -12,7 +12,7 @@ jobs:
         strategy:
             matrix:
                 os: [macos-latest]
-                node: [21.x]
+                node: [21.x, 22.x]
 
         steps:
             - uses: actions/checkout@master
@@ -24,12 +24,15 @@ jobs:
               run: npm install --include=dev
 
             - name: Format project
-              run: npx prettier --check .
+              run: |
+                  npx @biomejs/biome format
+                  npx prettier --check ./src/scss
+                  npx prettier --check ./src/svg
 
             - name: Assert types
               run: npx tsc
 
             - name: Lint project
               run: |
-                  npx eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0
-                  npx stylelint **/*.scss
+                  npx @biomejs/biome lint
+                  npx stylelint **/*.css **/*.scss

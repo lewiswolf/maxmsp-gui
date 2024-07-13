@@ -1,11 +1,11 @@
 // dependencies
-import { useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/toggle.module.scss'
 import SVG from '../svg/toggle.svg?react'
 
-const Toggle: React.FC<{
+const Toggle: FC<{
 	ariaLabel?: string
 	setValue?: boolean
 	onClick?: (b: boolean) => void
@@ -39,10 +39,10 @@ const Toggle: React.FC<{
 				togglePressed()
 			}
 		}
-		self.current && self.current.addEventListener('touchstart', touchstart)
+		self.current?.addEventListener('touchstart', touchstart)
 		const cleanup_self = self.current
 		return () => {
-			cleanup_self && cleanup_self.removeEventListener('touchstart', touchstart)
+			cleanup_self?.removeEventListener('touchstart', touchstart)
 		}
 	})
 

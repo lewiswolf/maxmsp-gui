@@ -1,11 +1,11 @@
 // dependencies
-import { useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/radiogroup.module.scss'
 import RadioGroupSVG from '../svg/radiogroup-row.svg?react'
 
-const RadioGroup: React.FC<{
+const RadioGroup: FC<{
 	ariaLabel?: string
 	items?: string[]
 	spacing?: number
@@ -41,7 +41,7 @@ const RadioGroup: React.FC<{
 	// focus method
 	const toggleFocused = (i: number) => {
 		indexFocused(i)
-		self.current?.childNodes[i] && (self.current.childNodes[i] as HTMLElement).focus()
+		;(self.current?.childNodes[i] as HTMLElement).focus()
 	}
 	// this useEffect adds a touch event listener used to prevent bubbling.
 	useEffect(() => {
@@ -59,10 +59,10 @@ const RadioGroup: React.FC<{
 				t !== null && togglePressed(t)
 			}
 		}
-		self.current && self.current.addEventListener('touchstart', touchstart)
+		self.current?.addEventListener('touchstart', touchstart)
 		const cleanup_self = self.current
 		return () => {
-			cleanup_self && cleanup_self.removeEventListener('touchstart', touchstart)
+			cleanup_self?.removeEventListener('touchstart', touchstart)
 		}
 	})
 
@@ -74,9 +74,9 @@ const RadioGroup: React.FC<{
 					<div
 						aria-checked={i === index}
 						aria-label={item ? item : `${ariaLabel} button ${i.toString()}`}
-						key={i}
+						key={i.toString()}
 						role='radio'
-						style={{ height: spacing > 16 ? spacing.toString() + 'px' : '16px' }}
+						style={{ height: spacing > 16 ? `${spacing.toString()}px` : '16px' }}
 						tabIndex={i === Math.max(index, 1) ? 0 : -1}
 						onFocus={() => {
 							indexFocused(i - 1)
@@ -84,20 +84,23 @@ const RadioGroup: React.FC<{
 						onKeyDown={(e) => {
 							switch (e.key) {
 								case 'Enter':
-								case ' ':
+								case ' ': {
 									e.preventDefault()
 									togglePressed(i)
 									break
+								}
 								case 'Up':
-								case 'ArrowUp':
+								case 'ArrowUp': {
 									e.preventDefault()
 									toggleFocused(focus < 1 ? items.length - 1 : focus - 1)
 									break
+								}
 								case 'Down':
-								case 'ArrowDown':
+								case 'ArrowDown': {
 									e.preventDefault()
 									toggleFocused((focus + 1) % items.length)
 									break
+								}
 								default:
 									break
 							}
@@ -109,7 +112,7 @@ const RadioGroup: React.FC<{
 						{item && (
 							<p
 								style={{
-									lineHeight: spacing > 16 ? spacing.toString() + 'px' : '16px',
+									lineHeight: spacing > 16 ? `${spacing.toString()}px` : '16px',
 									paddingRight: item ? '10px' : 0,
 								}}
 								tabIndex={-1}

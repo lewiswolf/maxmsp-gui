@@ -1,10 +1,10 @@
 // dependencies
-import { useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/textbutton.module.scss'
 
-const TextButton: React.FC<{
+const TextButton: FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
 	inactive?: boolean
@@ -86,12 +86,7 @@ const TextButton: React.FC<{
 		const globalMousedown = (e: MouseEvent) => {
 			if (!inactive && self.current) {
 				const rect = self.current.getBoundingClientRect()
-				if (
-					e.clientX > rect.left &&
-					e.clientX < rect.right &&
-					e.clientY > rect.top &&
-					e.clientY < rect.bottom
-				) {
+				if (e.clientX > rect.left && e.clientX < rect.right && e.clientY > rect.top && e.clientY < rect.bottom) {
 					setMousedown(true)
 				} else {
 					setExternalMousedown(true)
@@ -130,8 +125,7 @@ const TextButton: React.FC<{
 				!inactive && {
 					'aria-checked': pressed,
 				})}
-			{...(!mode &&
-				!inactive &&
+			{...(!(mode || inactive) &&
 				ariaPressed !== null && {
 					'aria-pressed': ariaPressed,
 				})}
@@ -158,11 +152,11 @@ const TextButton: React.FC<{
 			className={style.textbutton}
 			ref={self}
 			style={{
-				background: !inactive
-					? hover && !externalMousedown
+				background: inactive
+					? BackgroundGradients.inactive
+					: hover && !externalMousedown
 						? BackgroundGradients.hover
-						: BackgroundGradients.neutral
-					: BackgroundGradients.inactive,
+						: BackgroundGradients.neutral,
 			}}
 			onClick={() => {
 				pressButton(mode && !pressed)
@@ -186,8 +180,13 @@ const TextButton: React.FC<{
 		>
 			<p
 				style={{
-					color: !inactive
-						? mousedown && hover
+					color: inactive
+						? pressed
+							? TextColours.inactive
+							: mode
+								? TextColours.toggleOffInactive
+								: TextColours.inactive
+						: mousedown && hover
 							? pressed
 								? mode
 									? TextColours.toggleOffClicked
@@ -197,24 +196,11 @@ const TextButton: React.FC<{
 								? TextColours.neutral
 								: mode
 									? TextColours.toggleOff
-									: TextColours.neutral
-						: pressed
-							? TextColours.inactive
-							: mode
-								? TextColours.toggleOffInactive
-								: TextColours.inactive,
+									: TextColours.neutral,
 				}}
 				tabIndex={-1}
 			>
-				{mode
-					? pressed
-						? mousedown && hover
-							? text
-							: toggleText
-						: mousedown && hover
-							? toggleText
-							: text
-					: text}
+				{mode ? (pressed ? (mousedown && hover ? text : toggleText) : mousedown && hover ? toggleText : text) : text}
 			</p>
 		</div>
 	)

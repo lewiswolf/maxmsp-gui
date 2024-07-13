@@ -1,10 +1,10 @@
 // dependencies
-import { useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/message.module.scss'
 
-const Message: React.FC<{
+const Message: FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
 	text?: string

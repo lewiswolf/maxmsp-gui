@@ -1,6 +1,6 @@
 {
 	"name": "maxmsp-gui",
-	"version": "2.4.1",
+	"version": "2.4.2",
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "Creative Commons SA",
@@ -15,31 +15,24 @@
 	"engines": {
 		"node": ">=10"
 	},
-	"keywords": [
-		"cycling74",
-		"max msp",
-		"maxmsp"
-	],
+	"keywords": ["cycling74", "max msp", "maxmsp"],
 	"peerDependencies": {
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"@prettier/plugin-xml": "^3.4.1",
 		"@types/node": "^20.14.10",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
-		"@typescript-eslint/eslint-plugin": "^7.15.0",
-		"@typescript-eslint/parser": "^7.15.0",
 		"@vitejs/plugin-react-swc": "^3.7.0",
-		"eslint": "^8.57.0",
-		"eslint-plugin-react-hooks": "^4.6.2",
-		"eslint-plugin-react-refresh": "^0.4.7",
 		"gh-pages": "^6.1.1",
-		"prettier": "^3.3.2",
+		"prettier": "^3.3.3",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
-		"sass": "^1.77.6",
-		"stylelint": "^16.6.1",
+		"sass": "^1.77.8",
+		"stylelint": "^16.7.0",
 		"stylelint-config-standard-scss": "^13.1.0",
 		"typescript": "^5.5.3",
 		"vite": "^5.3.3",
@@ -47,47 +40,15 @@
 		"vite-plugin-dts": "^3.9.1",
 		"vite-plugin-svgr": "^4.2.0"
 	},
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
 		"build": "tsc && vite build",
 		"dev": "vite build --watch",
 		"predeploy": "npm run build && cd example && npm run build",
 		"deploy": "gh-pages -d example/dist",
 		"example": "cd example && npm run dev",
-		"format": "prettier --write . ",
-		"test": "tsc && eslint . --ext ts,tsx && stylelint **/*.scss **/*.css"
-	},
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"browser": true,
-			"es2020": true
-		},
-		"extends": [
-			"eslint:recommended",
-			"plugin:@typescript-eslint/strict-type-checked",
-			"plugin:@typescript-eslint/stylistic-type-checked",
-			"plugin:react-hooks/recommended"
-		],
-		"ignorePatterns": [
-			"dist",
-			"unused"
-		],
-		"parser": "@typescript-eslint/parser",
-		"parserOptions": {
-			"ecmaVersion": "latest",
-			"sourceType": "module",
-			"project": [
-				"./tsconfig.json",
-				"./tsconfig.node.json"
-			],
-			"tsconfigRootDir": "."
-		},
-		"plugins": [
-			"react-refresh"
-		]
+		"format": "biome format --write && prettier --write ./src/scss && prettier --write ./src/svg",
+		"test": "tsc && biome lint && stylelint **/*.css **/*.scss"
 	},
 	"prettier": {
 		"arrowParens": "always",
@@ -96,13 +57,17 @@
 		"endOfLine": "lf",
 		"htmlWhitespaceSensitivity": "strict",
 		"jsxSingleQuote": true,
+		"plugins": ["@prettier/plugin-xml"],
 		"printWidth": 120,
 		"quoteProps": "as-needed",
 		"semi": false,
 		"singleQuote": true,
 		"tabWidth": 4,
 		"trailingComma": "all",
-		"useTabs": true
+		"useTabs": true,
+		"xmlQuoteAttributes": "single",
+		"xmlSortAttributesByKey": true,
+		"xmlWhitespaceSensitivity": "preserve"
 	},
 	"stylelint": {
 		"extends": "stylelint-config-standard-scss",

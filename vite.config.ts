@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react-swc'
-import { resolve } from 'path'
+// biome-ignore lint/correctness/noNodejsModules: This script is ran by NodeJS.
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import dts from 'vite-plugin-dts'
@@ -7,7 +8,6 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [cssInjectedByJsPlugin(), dts({ include: ['src'] }), react(), svgr()],
 	build: {
 		copyPublicDir: false,
 		lib: {
@@ -21,4 +21,6 @@ export default defineConfig({
 		},
 		target: 'ESNext',
 	},
+	esbuild: { legalComments: 'none' },
+	plugins: [cssInjectedByJsPlugin(), dts({ include: ['src'] }), react(), svgr()],
 })

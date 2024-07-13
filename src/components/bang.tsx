@@ -1,11 +1,11 @@
 // dependencies
-import { useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/bang.module.scss'
 import SVG from '../svg/bang.svg?react'
 
-const Bang: React.FC<{
+const Bang: FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
 	onClick?: () => void
@@ -88,9 +88,7 @@ const Bang: React.FC<{
 		>
 			<SVG
 				style={{
-					background: mousedown
-						? 'radial-gradient(10px circle at center, #cee5e8 50%, #333333 50%)'
-						: '#333333',
+					background: mousedown ? 'radial-gradient(10px circle at center, #cee5e8 50%, #333333 50%)' : '#333333',
 				}}
 				tabIndex={-1}
 			/>

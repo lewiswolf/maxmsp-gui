@@ -1,12 +1,12 @@
 // dependencies
-import { createElement, useEffect, useRef, useState } from 'react'
+import { type FC, type JSX, createElement, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/playbar.module.scss'
 import PauseButtonSVG from '../svg/playbar-pause.svg?react'
 import PlayButtonSVG from '../svg/playbar-play.svg?react'
 
-const PlaybarToggle: React.FC<{
+const PlaybarToggle: FC<{
 	ariaLabel: string
 	inactive: boolean
 	setPlaying: boolean
@@ -65,12 +65,12 @@ const PlaybarToggle: React.FC<{
 			ref={self}
 			role='switch'
 			style={{
-				fill: !inactive ? '#cee5e8' : '#808080',
+				fill: inactive ? '#808080' : '#cee5e8',
 				background: mousedown ? 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)' : 'inherit',
 			}}
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if (e.key == ' ' || e.key == 'Enter') {
+				if (e.key === ' ' || e.key === 'Enter') {
 					e.preventDefault()
 					toggle()
 				}
@@ -97,7 +97,7 @@ const PlaybarToggle: React.FC<{
 	)
 }
 
-const PlaybarSlider: React.FC<{
+const PlaybarSlider: FC<{
 	ariaLabel: string
 	inactive: boolean
 	setValue: number
@@ -151,7 +151,7 @@ const PlaybarSlider: React.FC<{
 			<hr />
 			<svg
 				style={{
-					left: ((stateWidth - 37) * (value / fidelity) + 16).toString() + 'px',
+					left: `${((stateWidth - 37) * (value / fidelity) + 16).toString()}px`,
 				}}
 				version='1.1'
 				viewBox='0 0 84 84'
@@ -163,13 +163,13 @@ const PlaybarSlider: React.FC<{
 					<path
 						d='M42.13,67.02C28.24,67.05,16.97,55.8,16.98,41.93C17,28.19,28.21,16.98,41.98,16.94 c13.89-0.03,25.17,11.22,25.15,25.08C67.1,55.78,55.89,66.99,42.13,67.02z M42.14,25.02c-9.35-0.03-17.07,7.62-17.07,16.94 c-0.01,9.23,7.57,16.91,16.77,16.99c9.37,0.08,17.14-7.51,17.2-16.81C59.1,32.78,51.47,25.05,42.14,25.02z'
 						style={{
-							fill: !inactive ? '#cee5e8' : '#808080',
+							fill: inactive ? '#808080' : '#cee5e8',
 						}}
 					/>
 					<path
 						d='M42.14,25.02c9.33,0.03,16.96,7.76,16.9,17.11c-0.06,9.3-7.83,16.9-17.2,16.81c-9.2-0.08-16.78-7.76-16.77-16.99 C25.08,32.64,32.8,24.98,42.14,25.02z'
 						style={{
-							fill: mousedown ? (!inactive ? '#cee5e8' : '#808080') : 'none',
+							fill: mousedown ? (inactive ? '#808080' : '#cee5e8') : 'none',
 							opacity: 0.4,
 						}}
 					/>
@@ -190,25 +190,30 @@ const PlaybarSlider: React.FC<{
 						case 'Up':
 						case 'ArrowUp':
 						case 'Right':
-						case 'ArrowRight':
+						case 'ArrowRight': {
 							e.preventDefault()
 							changeSlider(Math.min(Math.round(value + fidelity / 100), fidelity))
 							break
+						}
 						case 'Down':
 						case 'ArrowDown':
 						case 'Left':
 						case 'ArrowLeft':
-							e.preventDefault()
-							changeSlider(Math.max(Math.round(value - fidelity / 100), 0))
+							{
+								e.preventDefault()
+								changeSlider(Math.max(Math.round(value - fidelity / 100), 0))
+							}
 							break
-						case 'PageUp':
+						case 'PageUp': {
 							e.preventDefault()
 							changeSlider(Math.min(Math.round(value + fidelity / 10), fidelity))
 							break
-						case 'PageDown':
+						}
+						case 'PageDown': {
 							e.preventDefault()
 							changeSlider(Math.max(Math.round(value - fidelity / 10), 0))
 							break
+						}
 						default:
 							break
 					}
@@ -247,8 +252,7 @@ const PlaybarSlider: React.FC<{
 									Math.max(
 										Math.min(
 											Math.round(
-												(e.targetTouches[0].clientX - (rect.x + 5)) /
-													((rect.width - 10) / fidelity),
+												(e.targetTouches[0].clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity),
 											),
 											fidelity,
 										),
@@ -267,7 +271,7 @@ const PlaybarSlider: React.FC<{
 	)
 }
 
-const Playbar: React.FC<{
+const Playbar: FC<{
 	ariaLabel?: string
 	inactive?: boolean
 	setPlaying?: boolean
@@ -297,13 +301,7 @@ const Playbar: React.FC<{
 	return (
 		<div className={style.playbar} style={{ width }}>
 			<PlaybarToggle ariaLabel={ariaLabel} inactive={inactive} setPlaying={setPlaying} onPlay={onPlay} />
-			<PlaybarSlider
-				ariaLabel={ariaLabel}
-				inactive={inactive}
-				setValue={setValue}
-				width={width}
-				onChange={onChange}
-			/>
+			<PlaybarSlider ariaLabel={ariaLabel} inactive={inactive} setValue={setValue} width={width} onChange={onChange} />
 		</div>
 	)
 }

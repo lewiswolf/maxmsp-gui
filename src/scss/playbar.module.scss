@@ -39,13 +39,14 @@
 	}
 
 	> div:first-of-type {
-		@include focus;
 		height: 20px;
 		width: 20px;
 		position: absolute;
 		top: 0;
 		left: 0;
 		margin: 0;
+
+		@include focus;
 
 		> div {
 			height: inherit;
@@ -61,13 +62,14 @@
 	}
 
 	> div:last-of-type {
-		@include focus;
 		z-index: 10;
 		height: 20px;
 		margin: 0;
 		width: calc(100% - 25px);
 		padding: 0 5px 0 0;
 		float: right;
+
+		@include focus;
 
 		div {
 			height: inherit;

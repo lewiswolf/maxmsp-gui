@@ -1,11 +1,11 @@
 // dependencies
-import { useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 // src
 import style from '../scss/umenu.module.scss'
 import UmenuSVG from '../svg/umenu-arrow.svg?react'
 
-const Umenu: React.FC<{
+const Umenu: FC<{
 	ariaLabel?: string
 	items?: string[]
 	width?: number
@@ -40,7 +40,7 @@ const Umenu: React.FC<{
 	useEffect(() => {
 		const listTouchStart = (e: TouchEvent) => {
 			if (e.cancelable && self.current) {
-				let t = null
+				let t: number | null = null
 				self.current.childNodes[1]?.childNodes.forEach((button, i) => {
 					const b = (button as HTMLElement).getBoundingClientRect()
 					if (
@@ -82,43 +82,32 @@ const Umenu: React.FC<{
 				const umenuDim = self.current.getBoundingClientRect()
 				const dropdownDim = (self.current.childNodes[1] as HTMLElement).getBoundingClientRect()
 				if (
-					!dropdownVisible &&
 					e.clientX > umenuDim.left &&
 					e.clientX < umenuDim.right &&
 					e.clientY > umenuDim.top &&
 					e.clientY < umenuDim.bottom
 				) {
 					return
-				} else if (dropdownVisible) {
+				}
+				if (dropdownVisible) {
 					if (
-						e.clientX > umenuDim.left &&
-						e.clientX < umenuDim.right &&
-						e.clientY > umenuDim.top &&
-						e.clientY < umenuDim.bottom
-					) {
-						return
-					} else if (
 						e.clientX > dropdownDim.left &&
 						e.clientX < dropdownDim.right &&
 						e.clientY > dropdownDim.top &&
 						e.clientY < dropdownDim.bottom
 					) {
 						return
-					} else {
-						setDropdown(false)
-						setFocus(null)
-						self.current.blur()
 					}
-				} else {
-					self.current.blur()
+					setDropdown(false)
+					setFocus(null)
 				}
+				self.current.blur()
 			}
 		}
 
 		if (self.current) {
-			// prettier-ignore
-			{(self.current.childNodes[0] as HTMLElement).addEventListener('touchstart', toggleTouchStart)
-			;(self.current.childNodes[1] as HTMLElement).addEventListener('touchstart', listTouchStart)}
+			;(self.current.childNodes[0] as HTMLElement).addEventListener('touchstart', toggleTouchStart)
+			;(self.current.childNodes[1] as HTMLElement).addEventListener('touchstart', listTouchStart)
 			window.addEventListener('resize', responsiveDropdown)
 			window.addEventListener('mousedown', customBlur)
 			window.addEventListener('scroll', isNotInViewport)
@@ -126,9 +115,8 @@ const Umenu: React.FC<{
 		const cleanup_self = self.current
 		return () => {
 			if (cleanup_self) {
-				// prettier-ignore
-				{(cleanup_self.childNodes[0] as HTMLElement).removeEventListener('touchstart', toggleTouchStart)
-				;(cleanup_self.childNodes[1] as HTMLElement).removeEventListener('touchstart', listTouchStart)}
+				;(cleanup_self.childNodes[0] as HTMLElement).removeEventListener('touchstart', toggleTouchStart)
+				;(cleanup_self.childNodes[1] as HTMLElement).removeEventListener('touchstart', listTouchStart)
 				window.removeEventListener('mousedown', customBlur)
 				window.removeEventListener('resize', responsiveDropdown)
 				window.removeEventListener('scroll', isNotInViewport)
@@ -141,9 +129,7 @@ const Umenu: React.FC<{
 		setFocus(focus)
 		if (dropdownVisible) {
 			responsiveDropdown()
-			focus !== null &&
-				self.current?.childNodes[1]?.childNodes[focus] &&
-				(self.current.childNodes[1].childNodes[focus] as HTMLElement).focus()
+			focus !== null && (self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
 		}
 	}
 
@@ -154,15 +140,14 @@ const Umenu: React.FC<{
 				self.current.getBoundingClientRect().left
 			setDropdownWidth('fit-content')
 			maxWidth < (self.current.childNodes[1] as HTMLElement).offsetWidth &&
-				setDropdownWidth((maxWidth - 2).toString() + 'px')
+				setDropdownWidth(`${(maxWidth - 2).toString()}px`)
 		}
 	}
 
 	const arrowKeys = (value: 1 | -1): void => {
 		if (focus !== null) {
 			setFocus((focus + items.length + value) % items.length)
-			self.current?.childNodes[1]?.childNodes[focus] &&
-				(self.current.childNodes[1].childNodes[focus] as HTMLElement).focus()
+			;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
 		} else {
 			const f = value === -1 ? items.length - 1 : 0
 			setFocus(f)
@@ -182,7 +167,7 @@ const Umenu: React.FC<{
 		<div
 			className={style.umenu}
 			ref={self}
-			style={{ width: Math.max(50, width).toString() + 'px' }}
+			style={{ width: `${Math.max(50, width).toString()}px` }}
 			{...(items.length > 0 && {
 				'aria-expanded': dropdownVisible,
 				'aria-haspopup': 'listbox',
@@ -192,7 +177,7 @@ const Umenu: React.FC<{
 				onKeyDown: (e) => {
 					switch (e.key) {
 						case 'Enter':
-						case ' ':
+						case ' ': {
 							e.preventDefault()
 							dropdownVisible
 								? focus !== null
@@ -200,34 +185,38 @@ const Umenu: React.FC<{
 									: openDropdown(null)
 								: openDropdown(0)
 							break
+						}
 						case 'Esc':
-						case 'Escape':
+						case 'Escape': {
 							e.preventDefault()
 							setDropdown(false)
 							setFocus(null)
 							self.current?.focus()
 							break
+						}
 						case 'Home':
-						case 'End':
+						case 'End': {
 							e.preventDefault()
 							setFocus(e.key === 'Home' ? 0 : items.length - 1)
-							focus !== null &&
-								self.current?.childNodes[1]?.childNodes[focus] &&
-								(self.current.childNodes[1].childNodes[focus] as HTMLElement).focus()
+							focus !== null && (self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
 							break
+						}
 						case 'Up':
-						case 'ArrowUp':
+						case 'ArrowUp': {
 							e.preventDefault()
 							dropdownVisible && arrowKeys(-1)
 							break
+						}
 						case 'Down':
-						case 'ArrowDown':
+						case 'ArrowDown': {
 							e.preventDefault()
 							dropdownVisible && arrowKeys(1)
 							break
-						case 'Tab':
+						}
+						case 'Tab': {
 							dropdownVisible && setDropdown(false)
 							break
+						}
 						default:
 							break
 					}
@@ -256,8 +245,8 @@ const Umenu: React.FC<{
 				{items.map((item, i) => {
 					return (
 						<li
-							{...(i === index && { 'aria-selected': true })}
-							key={i}
+							aria-selected={i === index}
+							key={i.toString()}
 							role='option'
 							style={{
 								background: focus === i ? '#4c4c4c' : 'inherit',

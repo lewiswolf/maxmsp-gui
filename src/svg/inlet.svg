@@ -1,8 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" x="0px" y="0px"
-	 viewBox="0 0 135.69 441" style="enable-background:new 0 0 135.69 441;" xml:space="preserve">
-<g>
-	<path style="fill: #FDB7AA;" d="M135.24,0c0,0,0,60.56-67.62,60.56S0,0,0,0s30.27,0,67.62,0S135.24,0,135.24,0z"/>
-	<path style="fill: #333333;" d="M116.27,0.2c0,0,0,43.53-48.42,43.53S19.42,0.2,19.42,0.2S41.16,0,67.9,0S116.27,0.2,116.27,0.2z"/>
-</g>
+<?xml version='1.0' encoding='utf-8' ?>
+<svg
+	xml:space='preserve'
+	style='enable-background:new 0 0 135.69 441;'
+	version='1.1'
+	viewBox='0 0 135.69 441'
+	x='0px'
+	y='0px'
+>
+	<g>
+		<path d='M135.24,0c0,0,0,60.56-67.62,60.56S0,0,0,0s30.27,0,67.62,0S135.24,0,135.24,0z' style='fill: #FDB7AA;' />
+		<path
+			d='M116.27,0.2c0,0,0,43.53-48.42,43.53S19.42,0.2,19.42,0.2S41.16,0,67.9,0S116.27,0.2,116.27,0.2z'
+			style='fill: #333333;'
+		/>
+	</g>
 </svg>

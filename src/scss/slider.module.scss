@@ -11,11 +11,12 @@
 
 .slider {
 	@include main;
-	@include focus;
 	height: 24px;
 	width: fit-content;
 	max-width: 100%;
 	background: #393939;
+
+	@include focus;
 
 	div {
 		height: inherit;

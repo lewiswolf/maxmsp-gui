@@ -1,8 +1,11 @@
+// dependencies
+import type { FC } from 'react'
+
 // src
 import SVG from '../svg/inlet.svg?react'
 import style from '../scss/object.module.scss'
 
-const object: React.FC<{
+const object: FC<{
 	inactive?: boolean
 	text?: string
 }> = ({ inactive = false, text = '' }) => {

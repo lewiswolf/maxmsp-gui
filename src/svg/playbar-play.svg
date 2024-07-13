@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?> 
-<svg version="1.1" x="0px" y="0px"
-	 viewBox="0 0 84 84" style="enable-background:new 0 0 84 84;" xml:space="preserve">
-<g>
-	<path d="M24.19,19.01C36.3,26.7,48.03,34.14,60.18,41.85c-12.19,7.83-23.89,15.34-35.99,23.11
-		C24.19,49.55,24.19,34.64,24.19,19.01z"/>
-</g>
+<?xml version='1.0' encoding='utf-8' ?>
+<svg xml:space='preserve' style='enable-background:new 0 0 84 84;' version='1.1' viewBox='0 0 84 84' x='0px' y='0px'>
+	<g>
+		<path
+			d='M24.19,19.01C36.3,26.7,48.03,34.14,60.18,41.85c-12.19,7.83-23.89,15.34-35.99,23.11
+	C24.19,49.55,24.19,34.64,24.19,19.01z'
+		/>
+	</g>
 </svg>

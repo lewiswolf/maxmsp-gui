@@ -2,19 +2,21 @@
 
 .radiogroup {
 	@include main;
-	@include focus;
 	height: fit-content;
 	width: fit-content;
 	max-width: 100%;
 	background: unset;
 
+	@include focus;
+
 	> div {
-		@include focus;
 		height: fit-content;
 		width: fit-content;
 		display: flex;
 		float: right;
 		clear: right;
+
+		@include focus;
 
 		p {
 			height: inherit;

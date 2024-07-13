@@ -1,10 +1,10 @@
 // dependencies
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { type FC, type TouchEvent as ReactTouchEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 // src
 import style from '../scss/slider.module.scss'
 
-const Slider: React.FC<{
+const Slider: FC<{
 	ariaLabel?: string
 	setValue?: number
 	width?: number
@@ -64,7 +64,7 @@ const Slider: React.FC<{
 				updateValue(0)
 			}
 		},
-		[SliderColors, fidelity],
+		[SliderColors],
 	)
 
 	// what is the value - state and prop
@@ -86,21 +86,18 @@ const Slider: React.FC<{
 				touchmove(e)
 			}
 		}
-		self.current && self.current.addEventListener('touchstart', touchstart)
+		self.current?.addEventListener('touchstart', touchstart)
 		const cleanup_self = self.current
 		return () => {
-			cleanup_self && cleanup_self.removeEventListener('touchstart', touchstart)
+			cleanup_self?.removeEventListener('touchstart', touchstart)
 		}
 	})
 
-	const touchmove = (e: React.TouchEvent | TouchEvent) => {
+	const touchmove = (e: ReactTouchEvent | TouchEvent) => {
 		if (self.current && e.targetTouches[0]) {
 			const rect = self.current.getBoundingClientRect()
 			const new_val = Math.max(
-				Math.min(
-					Math.round((e.targetTouches[0].clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity)),
-					fidelity,
-				),
+				Math.min(Math.round((e.targetTouches[0].clientX - (rect.x + 5)) / ((rect.width - 10) / fidelity)), fidelity),
 				0,
 			)
 			colourAndState(new_val)
@@ -120,38 +117,42 @@ const Slider: React.FC<{
 			role='slider'
 			tabIndex={0}
 			onKeyDown={(e) => {
-				let new_val
+				let new_val: number
 				switch (e.key) {
 					case 'Up':
 					case 'ArrowUp':
 					case 'Right':
-					case 'ArrowRight':
+					case 'ArrowRight': {
 						e.preventDefault()
 						new_val = Math.min(Math.round(value + fidelity / 100), fidelity)
 						colourAndState(new_val)
 						onChange(new_val / fidelity)
 						break
+					}
 					case 'Down':
 					case 'ArrowDown':
 					case 'Left':
-					case 'ArrowLeft':
+					case 'ArrowLeft': {
 						e.preventDefault()
 						new_val = Math.max(Math.round(value - fidelity / 100), 0)
 						colourAndState(new_val)
 						onChange(new_val / fidelity)
 						break
-					case 'PageUp':
+					}
+					case 'PageUp': {
 						e.preventDefault()
 						new_val = Math.min(Math.round(value + fidelity / 10), fidelity)
 						colourAndState(new_val)
 						onChange(new_val / fidelity)
 						break
-					case 'PageDown':
+					}
+					case 'PageDown': {
 						e.preventDefault()
 						new_val = Math.max(Math.round(value - fidelity / 10), 0)
 						colourAndState(new_val)
 						onChange(new_val / fidelity)
 						break
+					}
 					default:
 						break
 				}
