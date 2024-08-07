@@ -22,12 +22,15 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
+		"@eslint/js": "^9.8.0",
 		"@prettier/plugin-xml": "^3.4.1",
 		"@types/node": "^22.1.0",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react-swc": "^3.7.0",
+		"eslint": "^9.8.0",
 		"gh-pages": "^6.1.1",
+		"globals": "^15.9.0",
 		"prettier": "^3.3.3",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
@@ -35,6 +38,7 @@
 		"stylelint": "^16.8.1",
 		"stylelint-config-standard-scss": "^13.1.0",
 		"typescript": "^5.5.4",
+		"typescript-eslint": "^8.0.1",
 		"vite": "^5.3.5",
 		"vite-plugin-compression2": "^1.1.3",
 		"vite-plugin-css-injected-by-js": "^3.5.1",
@@ -49,6 +53,7 @@
 		"deploy": "gh-pages -d example/dist",
 		"example": "cd example && npm run dev",
 		"format": "biome format --write && prettier --write ./src/scss && prettier --write ./src/svg",
+		"lint": "npx eslint .",
 		"test": "tsc && biome lint && stylelint **/*.css **/*.scss"
 	},
 	"prettier": {
