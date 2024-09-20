@@ -53,7 +53,7 @@
 		"predeploy": "npm run build && cd example && npm run build",
 		"deploy": "gh-pages -d example/dist",
 		"example": "cd example && npm run dev",
-		"format": "biome format --write && prettier --write ./src/scss && prettier --write ./src/svg",
+		"format": "biome format --write && prettier --write ./**/*.html ./**/*.scss ./**/*.svg",
 		"test": "tsc && biome lint && eslint . && stylelint **/*.css **/*.scss"
 	},
 	"prettier": {
