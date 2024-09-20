@@ -6,12 +6,11 @@
 	"files": {
 		"ignore": ["**/node_modules/**", "**/dist/**", "**/unused/**"],
 		"include": [
+			"**/*.css",
 			"**/*.html",
 			"**/*.js",
 			"**/*.json",
 			"**/*.jsx",
-			"**/*.scss",
-			"**/*.svg",
 			"**/*.ts",
 			"**/*.d.ts",
 			"**/*.tsx"
@@ -25,7 +24,8 @@
 				"noNoninteractiveElementToInteractiveRole": "off",
 				"noSvgWithoutTitle": "off",
 				"useKeyWithClickEvents": "off",
-				"useMediaCaption": "off"
+				"useMediaCaption": "off",
+				"useSemanticElements": "off"
 			},
 			"complexity": {
 				"noExcessiveCognitiveComplexity": "off",
@@ -36,10 +36,12 @@
 			},
 			"style": {
 				"noDefaultExport": "off",
-				"noInferrableTypes": "off",
 				"noNamespaceImport": "off",
 				"noParameterAssign": "off",
 				"useNamingConvention": "off"
+			},
+			"suspicious": {
+				"noReactSpecificProps": "off"
 			}
 		}
 	},
@@ -49,6 +51,11 @@
 		"lineWidth": 125,
 		"indentWidth": 4,
 		"indentStyle": "tab"
+	},
+	"css": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
 	},
 	"javascript": {
 		"formatter": {

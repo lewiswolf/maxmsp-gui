@@ -1,4 +1,5 @@
 import eslint from '@eslint/js'
+import reactRefresh from 'eslint-plugin-react-refresh'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -17,6 +18,9 @@ export default tseslint.config(
 				projectService: true,
 				tsconfigRootDir: import.meta.dirname,
 			},
+		},
+		plugins: {
+			'react-refresh': reactRefresh,
 		},
 		rules: {
 			'@typescript-eslint/no-unused-expressions': 'off',

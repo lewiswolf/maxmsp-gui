@@ -29,6 +29,7 @@
 		// javascript support
 		"allowJs": false,
 		// interop constraints
+		"allowImportingTsExtensions": true,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,

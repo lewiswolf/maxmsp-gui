@@ -229,7 +229,6 @@ const PlaybarSlider: FC<{
 						aria-valuenow={value}
 						max={fidelity}
 						min='0'
-						role='slider'
 						tabIndex={-1}
 						type='range'
 						value={value}

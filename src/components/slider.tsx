@@ -167,7 +167,6 @@ const Slider: FC<{
 					aria-valuenow={value}
 					max={fidelity}
 					min={0}
-					role='slider'
 					style={{ background, width }}
 					tabIndex={-1}
 					type='range'
