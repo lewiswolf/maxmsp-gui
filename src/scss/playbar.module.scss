@@ -1,4 +1,4 @@
-@import './main';
+@use './utils.scss' as utils;
 
 @mixin thumb-style {
 	height: 20px;
@@ -10,7 +10,7 @@
 }
 
 .playbar {
-	@include main;
+	@include utils.main;
 	height: 20px;
 	// width set by component
 	max-width: 100%;
@@ -46,7 +46,7 @@
 		left: 0;
 		margin: 0;
 
-		@include focus;
+		@include utils.focus;
 
 		> div {
 			height: inherit;
@@ -69,7 +69,7 @@
 		padding: 0 5px 0 0;
 		float: right;
 
-		@include focus;
+		@include utils.focus;
 
 		div {
 			height: inherit;

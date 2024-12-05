@@ -1,7 +1,7 @@
-@import './main';
+@use './utils.scss' as utils;
 
 .umenu {
-	@include main;
+	@include utils.main;
 	height: 24px;
 	// width set by component
 	max-width: 100%;
@@ -11,7 +11,7 @@
 	color: #f7f7f7;
 	background: linear-gradient(to top, rgb(51 51 51) 0%, rgb(76 76 76) 100%);
 
-	@include focus;
+	@include utils.focus;
 
 	> div {
 		outline: 0;

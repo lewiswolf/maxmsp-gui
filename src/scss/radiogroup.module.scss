@@ -1,13 +1,13 @@
-@import './main';
+@use './utils.scss' as utils;
 
 .radiogroup {
-	@include main;
+	@include utils.main;
 	height: fit-content;
 	width: fit-content;
 	max-width: 100%;
 	background: unset;
 
-	@include focus;
+	@include utils.focus;
 
 	> div {
 		height: fit-content;
@@ -16,7 +16,7 @@
 		float: right;
 		clear: right;
 
-		@include focus;
+		@include utils.focus;
 
 		p {
 			height: inherit;

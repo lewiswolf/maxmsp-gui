@@ -1,7 +1,7 @@
-@import './main';
+@use './utils.scss' as utils;
 
 .message {
-	@include main;
+	@include utils.main;
 	height: fit-content;
 	min-height: 24px;
 	width: fit-content;
@@ -9,7 +9,7 @@
 	background: linear-gradient(to top, rgb(51 51 51) 0%, rgb(76 76 76) 100%);
 	border-radius: 5px;
 
-	@include focus;
+	@include utils.focus;
 
 	p {
 		margin: auto 0;

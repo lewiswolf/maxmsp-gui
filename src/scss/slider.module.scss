@@ -1,4 +1,4 @@
-@import './main';
+@use './utils.scss' as utils;
 
 @mixin thumb-style() {
 	height: 20px;
@@ -10,13 +10,13 @@
 }
 
 .slider {
-	@include main;
+	@include utils.main;
 	height: 24px;
 	width: fit-content;
 	max-width: 100%;
 	background: #393939;
 
-	@include focus;
+	@include utils.focus;
 
 	div {
 		height: inherit;

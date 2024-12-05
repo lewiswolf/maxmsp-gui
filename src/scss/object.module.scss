@@ -1,7 +1,7 @@
-@import './main';
+@use './utils.scss' as utils;
 
 .object {
-	@include main;
+	@include utils.main;
 	height: fit-content;
 	min-height: 24px;
 	width: fit-content;

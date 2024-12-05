@@ -1,11 +1,11 @@
-@import './main';
+@use './utils.scss' as utils;
 
 .textbutton {
-	@include main;
+	@include utils.main;
 	height: 24px;
 	width: fit-content;
 
-	@include focus;
+	@include utils.focus;
 
 	p {
 		height: 100%;

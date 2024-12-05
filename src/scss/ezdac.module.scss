@@ -1,11 +1,11 @@
-@import './main';
+@use './utils.scss' as utils;
 
 .ezdac {
-	@include main;
+	@include utils.main;
 	height: 45px;
 	width: 45px;
 
-	@include focus;
+	@include utils.focus;
 
 	svg {
 		outline: 0;
