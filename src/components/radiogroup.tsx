@@ -36,6 +36,8 @@ const RadioGroup: FC<{
 		indexPressed(i)
 		onClick(i)
 	}
+	// keyboard event specific watch state
+	const [keydown, isKeyDown] = useState<boolean>(false)
 	// which toggle is focused
 	const [focus, indexFocused] = useState<number>(setValue)
 	// focus method
@@ -56,7 +58,9 @@ const RadioGroup: FC<{
 						break
 					}
 				}
-				t !== null && togglePressed(t)
+				if (t !== null) {
+					togglePressed(t)
+				}
 			}
 		}
 		self.current?.addEventListener('touchstart', touchstart)
@@ -85,8 +89,11 @@ const RadioGroup: FC<{
 							switch (e.key) {
 								case 'Enter':
 								case ' ': {
-									e.preventDefault()
-									togglePressed(i)
+									if (!keydown) {
+										e.preventDefault()
+										isKeyDown(true)
+										togglePressed(i)
+									}
 									break
 								}
 								case 'Up':
@@ -105,8 +112,16 @@ const RadioGroup: FC<{
 									break
 							}
 						}}
+						onKeyUp={(e) => {
+							if ((e.key === 'Enter' || e.key === ' ') && keydown) {
+								e.preventDefault()
+								isKeyDown(false)
+							}
+						}}
 						onMouseDown={(e) => {
-							e.button === 0 && togglePressed(i)
+							if (e.button === 0) {
+								togglePressed(i)
+							}
 						}}
 					>
 						{item && (

@@ -70,16 +70,20 @@ const PlaybarToggle: FC<{
 			}}
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if (e.key === ' ' || e.key === 'Enter') {
+				if ((e.key === 'Enter' || e.key === ' ') && !mousedown) {
 					e.preventDefault()
 					toggle()
 				}
 			}}
-			onKeyUp={() => {
-				isMouseDown(false)
+			onKeyUp={(e) => {
+				if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
+					isMouseDown(false)
+				}
 			}}
 			onMouseDown={(e) => {
-				e.button === 0 && toggle()
+				if (e.button === 0) {
+					toggle()
+				}
 			}}
 			onTouchCancel={() => {
 				isMouseDown(false)
@@ -121,8 +125,9 @@ const PlaybarSlider: FC<{
 	const [stateWidth, updateWidth] = useState<number>(width)
 	useEffect(() => {
 		const computeWidth = () => {
-			self.current?.parentElement &&
+			if (self.current?.parentElement) {
 				updateWidth(Math.min(width, self.current.parentElement.getBoundingClientRect().width))
+			}
 		}
 		window.addEventListener('resize', computeWidth)
 		computeWidth()

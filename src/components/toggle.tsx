@@ -31,6 +31,8 @@ const Toggle: FC<{
 		isPressed(!pressed)
 		onClick(pressed)
 	}
+	// keyboard event specific watch state
+	const [keydown, isKeyDown] = useState<boolean>(false)
 	// this useEffect adds a touch event listener used to prevent bubbling.
 	useEffect(() => {
 		const touchstart = (e: TouchEvent): void => {
@@ -55,13 +57,22 @@ const Toggle: FC<{
 			role='switch'
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
+				if ((e.key === 'Enter' || e.key === ' ') && !keydown) {
 					e.preventDefault()
+					isKeyDown(true)
 					togglePressed()
 				}
 			}}
+			onKeyUp={(e) => {
+				if ((e.key === 'Enter' || e.key === ' ') && keydown) {
+					e.preventDefault()
+					isKeyDown(false)
+				}
+			}}
 			onMouseDown={(e) => {
-				e.button === 0 && togglePressed()
+				if (e.button === 0) {
+					togglePressed()
+				}
 			}}
 		>
 			<SVG

@@ -35,6 +35,8 @@ const Umenu: FC<{
 	const [dropdownWidth, setDropdownWidth] = useState<string>('fit-content')
 	// which index is focused
 	const [focus, setFocus] = useState<null | number>(null)
+	// keyboard event specific watch state
+	const [keydown, isKeyDown] = useState<boolean>(false)
 
 	// this useEffect adds a touch event listener used to prevent bubbling.
 	useEffect(() => {
@@ -125,7 +127,9 @@ const Umenu: FC<{
 		setFocus(focus)
 		if (dropdownVisible) {
 			responsiveDropdown()
-			focus !== null && (self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
+			if (focus !== null) {
+				;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
+			}
 		}
 	}
 
@@ -135,8 +139,9 @@ const Umenu: FC<{
 				(self.current.parentNode as HTMLElement).getBoundingClientRect().right -
 				self.current.getBoundingClientRect().left
 			setDropdownWidth('fit-content')
-			maxWidth < (self.current.childNodes[1] as HTMLElement).offsetWidth &&
+			if (maxWidth < (self.current.childNodes[1] as HTMLElement).offsetWidth) {
 				setDropdownWidth(`${(maxWidth - 2).toString()}px`)
+			}
 		}
 	}
 
@@ -155,7 +160,9 @@ const Umenu: FC<{
 		indexPressed(new_index)
 		setDropdown(false)
 		onChange(new_index)
-		aria && self.current?.focus()
+		if (aria) {
+			self.current?.focus()
+		}
 	}
 
 	return (
@@ -173,12 +180,19 @@ const Umenu: FC<{
 					switch (e.key) {
 						case 'Enter':
 						case ' ': {
-							e.preventDefault()
-							dropdownVisible
-								? focus !== null
-									? changeSelected(focus, true)
-									: openDropdown(null)
-								: openDropdown(0)
+							if (!keydown) {
+								e.preventDefault()
+								isKeyDown(true)
+								if (dropdownVisible) {
+									if (focus !== null) {
+										changeSelected(focus, true)
+									} else {
+										openDropdown(null)
+									}
+								} else {
+									openDropdown(0)
+								}
+							}
 							break
 						}
 						case 'Esc':
@@ -193,27 +207,41 @@ const Umenu: FC<{
 						case 'End': {
 							e.preventDefault()
 							setFocus(e.key === 'Home' ? 0 : items.length - 1)
-							focus !== null && (self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
+							if (focus !== null) {
+								;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
+							}
 							break
 						}
 						case 'Up':
 						case 'ArrowUp': {
 							e.preventDefault()
-							dropdownVisible && arrowKeys(-1)
+							if (dropdownVisible) {
+								arrowKeys(-1)
+							}
 							break
 						}
 						case 'Down':
 						case 'ArrowDown': {
 							e.preventDefault()
-							dropdownVisible && arrowKeys(1)
+							if (dropdownVisible) {
+								arrowKeys(1)
+							}
 							break
 						}
 						case 'Tab': {
-							dropdownVisible && setDropdown(false)
+							if (dropdownVisible) {
+								setDropdown(false)
+							}
 							break
 						}
 						default:
 							break
+					}
+				},
+				onKeyUp: (e) => {
+					if ((e.key === 'Enter' || e.key === ' ') && keydown) {
+						e.preventDefault()
+						isKeyDown(false)
 					}
 				},
 			})}
@@ -221,7 +249,9 @@ const Umenu: FC<{
 			<div
 				tabIndex={-1}
 				onMouseDown={(e) => {
-					e.button === 0 && openDropdown(null)
+					if (e.button === 0) {
+						openDropdown(null)
+					}
 				}}
 			>
 				<p>{items[index]}</p>

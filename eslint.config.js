@@ -22,9 +22,6 @@ export default tseslint.config(
 		plugins: {
 			'react-refresh': reactRefresh,
 		},
-		rules: {
-			'@typescript-eslint/no-unused-expressions': 'off',
-		},
 	},
 	{
 		files: ['**/*.js', '**/*.jsx'],

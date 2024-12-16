@@ -76,7 +76,9 @@ const TextButton: FC<{
 		if (!inactive) {
 			isPressed(new_value)
 			onClick()
-			mode && onChange(new_value)
+			if (mode) {
+				onChange(new_value)
+			}
 		}
 	}
 
@@ -134,14 +136,14 @@ const TextButton: FC<{
 				role: mode ? 'switch' : 'button',
 				tabIndex: 0,
 				onKeyDown: (e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
+					if ((e.key === 'Enter' || e.key === ' ') && !mousedown) {
 						e.preventDefault()
 						setHover(true)
 						setMousedown(true)
 					}
 				},
 				onKeyUp: (e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
+					if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
 						e.preventDefault()
 						setHover(false)
 						setMousedown(false)
@@ -162,10 +164,14 @@ const TextButton: FC<{
 				pressButton(mode && !pressed)
 			}}
 			onMouseEnter={() => {
-				!inactive && setHover(true)
+				if (!inactive) {
+					setHover(true)
+				}
 			}}
 			onMouseLeave={() => {
-				!inactive && setHover(false)
+				if (!inactive) {
+					setHover(false)
+				}
 			}}
 			onTouchEnd={(e) => {
 				e.preventDefault()

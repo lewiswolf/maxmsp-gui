@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as MaxMSP from 'maxmsp-gui'
 
-const App = () => {
+export default function App() {
 	// handle iframe styles
 	const iframe = window !== window.top
 
@@ -58,5 +58,3 @@ const App = () => {
 		</>
 	)
 }
-
-export default App

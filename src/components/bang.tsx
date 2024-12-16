@@ -65,19 +65,21 @@ const Bang: FC<{
 			role='button'
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
+				if ((e.key === 'Enter' || e.key === ' ') && !mousedown) {
 					e.preventDefault()
 					buttonPressed()
 				}
 			}}
 			onKeyUp={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
+				if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
 					e.preventDefault()
 					isMouseDown(false)
 				}
 			}}
 			onMouseDown={(e) => {
-				e.button === 0 && buttonPressed()
+				if (e.button === 0) {
+					buttonPressed()
+				}
 			}}
 			onTouchCancel={() => {
 				isMouseDown(false)
