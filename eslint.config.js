@@ -1,14 +1,15 @@
 import eslint from '@eslint/js'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import reactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
 	eslint.configs.recommended,
+	reactHooks.configs['recommended-latest'],
 	...tseslint.configs.strictTypeChecked,
 	...tseslint.configs.stylisticTypeChecked,
 	{
-		ignores: ['**/dist/**'],
+		ignores: ['**/dist/**', '**/unused/**'],
 	},
 	{
 		files: ['**/*.ts', '**/*.tsx'],
@@ -18,9 +19,6 @@ export default tseslint.config(
 				projectService: true,
 				tsconfigRootDir: import.meta.dirname,
 			},
-		},
-		plugins: {
-			'react-refresh': reactRefresh,
 		},
 	},
 	{
