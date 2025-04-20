@@ -106,7 +106,7 @@ const PlaybarSlider: FC<{
 	inactive: boolean
 	setValue: number
 	width: number
-	onChange: (v: number) => void
+	onChange: (x: number) => void
 }> = ({ ariaLabel, inactive, setValue, width, onChange }): JSX.Element => {
 	/*
 		The slider element of the playbar.
@@ -281,7 +281,7 @@ const Playbar: FC<{
 	setPlaying?: boolean
 	setValue?: number
 	width?: number
-	onChange?: (v: number) => void
+	onChange?: (x: number) => void
 	onPlay?: (b: boolean) => void
 }> = ({
 	ariaLabel = 'playbar',

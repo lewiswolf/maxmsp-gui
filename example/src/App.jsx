@@ -40,8 +40,8 @@ export default function App() {
 			<MaxMSP.Playbar
 				setPlaying={playing}
 				setValue={playbar}
-				onChange={(i) => {
-					setPlaybar(i)
+				onChange={(x) => {
+					setPlaybar(x)
 				}}
 				onPlay={(bool) => {
 					setPlaying(bool)
