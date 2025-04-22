@@ -180,8 +180,8 @@ const Umenu: FC<{
 					switch (e.key) {
 						case 'Enter':
 						case ' ': {
+							e.preventDefault()
 							if (!keydown) {
-								e.preventDefault()
 								isKeyDown(true)
 								if (dropdownVisible) {
 									if (focus !== null) {

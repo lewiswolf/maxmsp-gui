@@ -65,9 +65,11 @@ const Bang: FC<{
 			role='button'
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if ((e.key === 'Enter' || e.key === ' ') && !mousedown) {
+				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault()
-					buttonPressed()
+					if (!mousedown) {
+						buttonPressed()
+					}
 				}
 			}}
 			onKeyUp={(e) => {

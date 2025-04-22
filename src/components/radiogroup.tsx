@@ -89,8 +89,8 @@ const RadioGroup: FC<{
 							switch (e.key) {
 								case 'Enter':
 								case ' ': {
+									e.preventDefault()
 									if (!keydown) {
-										e.preventDefault()
 										isKeyDown(true)
 										togglePressed(i)
 									}

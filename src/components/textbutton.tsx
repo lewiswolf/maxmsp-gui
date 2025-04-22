@@ -136,10 +136,12 @@ const TextButton: FC<{
 				role: mode ? 'switch' : 'button',
 				tabIndex: 0,
 				onKeyDown: (e) => {
-					if ((e.key === 'Enter' || e.key === ' ') && !mousedown) {
+					if (e.key === 'Enter' || e.key === ' ') {
 						e.preventDefault()
-						setHover(true)
-						setMousedown(true)
+						if (!mousedown) {
+							setHover(true)
+							setMousedown(true)
+						}
 					}
 				},
 				onKeyUp: (e) => {

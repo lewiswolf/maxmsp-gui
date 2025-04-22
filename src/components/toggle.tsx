@@ -57,10 +57,12 @@ const Toggle: FC<{
 			role='switch'
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if ((e.key === 'Enter' || e.key === ' ') && !keydown) {
+				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault()
-					isKeyDown(true)
-					togglePressed()
+					if (!keydown) {
+						isKeyDown(true)
+						togglePressed()
+					}
 				}
 			}}
 			onKeyUp={(e) => {

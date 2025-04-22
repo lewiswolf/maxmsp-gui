@@ -70,9 +70,11 @@ const PlaybarToggle: FC<{
 			}}
 			tabIndex={0}
 			onKeyDown={(e) => {
-				if ((e.key === 'Enter' || e.key === ' ') && !mousedown) {
+				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault()
-					toggle()
+					if (!mousedown) {
+						toggle()
+					}
 				}
 			}}
 			onKeyUp={(e) => {
