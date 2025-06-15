@@ -52,7 +52,8 @@
 		li {
 			min-height: 13px;
 			padding: 5px 20px;
-			word-break: break-word;
+			word-break: normal;
+			overflow-wrap: anywhere;
 			text-align: justify;
 			outline: 0;
 		}
