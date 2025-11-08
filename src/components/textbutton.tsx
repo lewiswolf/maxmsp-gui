@@ -73,12 +73,10 @@ const TextButton: FC<{
 
 	const pressButton = (new_value: boolean): void => {
 		// press button
-		if (!inactive) {
-			isPressed(new_value)
-			onClick()
-			if (mode) {
-				onChange(new_value)
-			}
+		isPressed(new_value)
+		onClick()
+		if (mode) {
+			onChange(new_value)
 		}
 	}
 
@@ -135,6 +133,9 @@ const TextButton: FC<{
 				'aria-label': ariaLabel,
 				role: mode ? 'switch' : 'button',
 				tabIndex: 0,
+				onClick: () => {
+					pressButton(mode && !pressed)
+				},
 				onKeyDown: (e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
 						e.preventDefault()
@@ -152,6 +153,22 @@ const TextButton: FC<{
 						pressButton(mode && !pressed)
 					}
 				},
+				onMouseEnter: () => {
+					setHover(true)
+				},
+				onMouseLeave: () => {
+					setHover(false)
+				},
+				onTouchEnd: (e) => {
+					e.preventDefault()
+					setHover(false)
+					setMousedown(false)
+					pressButton(mode && !pressed)
+				},
+				onTouchCancel: () => {
+					setHover(false)
+					setMousedown(false)
+				},
 			})}
 			className={style.textbutton}
 			ref={self}
@@ -161,29 +178,6 @@ const TextButton: FC<{
 					: hover && !externalMousedown
 						? BackgroundGradients.hover
 						: BackgroundGradients.neutral,
-			}}
-			onClick={() => {
-				pressButton(mode && !pressed)
-			}}
-			onMouseEnter={() => {
-				if (!inactive) {
-					setHover(true)
-				}
-			}}
-			onMouseLeave={() => {
-				if (!inactive) {
-					setHover(false)
-				}
-			}}
-			onTouchEnd={(e) => {
-				e.preventDefault()
-				setHover(false)
-				setMousedown(false)
-				pressButton(mode && !pressed)
-			}}
-			onTouchCancel={() => {
-				setHover(false)
-				setMousedown(false)
 			}}
 		>
 			<p

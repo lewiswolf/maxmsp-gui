@@ -51,7 +51,7 @@ const RadioGroup: FC<{
 			if (e.cancelable && self.current && e.targetTouches[0]) {
 				e.preventDefault()
 				let t: number | null = null
-				for (let i = 0; i < self.current.childNodes.length; i++) {
+				for (let i = 0; i < self.current.childNodes.length; i += 1) {
 					const b = (self.current.childNodes[i] as HTMLElement).getBoundingClientRect()
 					if (e.targetTouches[0].clientY > b.top && e.targetTouches[0].clientY < b.bottom) {
 						t = i + 1
@@ -73,7 +73,7 @@ const RadioGroup: FC<{
 	return (
 		<div aria-label={ariaLabel} className={style.radiogroup} ref={self} role='radiogroup'>
 			{items.map((item: string, i: number) => {
-				i++
+				i += 1
 				return (
 					<div
 						aria-checked={i === index}

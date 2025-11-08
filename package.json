@@ -1,9 +1,10 @@
 {
 	"name": "maxmsp-gui",
-	"version": "2.5.3",
+	"version": "2.6.0",
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "Creative Commons SA",
+	"homepage": "https://lewiswolf.github.io/maxmsp-gui/",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/lewiswolf/maxmsp-gui.git"
@@ -15,43 +16,49 @@
 	"engines": {
 		"node": ">=10"
 	},
-	"keywords": ["cycling74", "max msp", "maxmsp"],
+	"keywords": [
+		"cycling74",
+		"max msp",
+		"maxmsp"
+	],
 	"peerDependencies": {
-		"react": "^19.1.0",
-		"react-dom": "^19.1.0"
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@eslint/js": "^9.29.0",
-		"@prettier/plugin-xml": "^3.4.1",
-		"@types/node": "^24.0.1",
-		"@types/react": "^19.1.8",
-		"@types/react-dom": "^19.1.6",
-		"@vitejs/plugin-react-swc": "^3.10.2",
-		"eslint": "^9.29.0",
-		"eslint-plugin-react-hooks": "^5.2.0",
+		"@biomejs/biome": "^2.3.4",
+		"@eslint/js": "^9.39.1",
+		"@prettier/plugin-xml": "^3.4.2",
+		"@types/node": "^24.10.0",
+		"@types/react": "^19.2.2",
+		"@types/react-dom": "^19.2.2",
+		"@vitejs/plugin-react-swc": "^4.2.1",
+		"eslint": "^9.39.1",
+		"eslint-plugin-react-hooks": "^7.0.1",
 		"gh-pages": "^6.3.0",
-		"globals": "^16.2.0",
-		"prettier": "^3.5.3",
-		"sass": "^1.89.2",
-		"stylelint": "^16.20.0",
-		"stylelint-config-standard-scss": "^15.0.1",
-		"typescript": "^5.8.3",
-		"typescript-eslint": "^8.34.0",
-		"vite": "^6.3.5",
-		"vite-plugin-compression2": "^2.0.1",
+		"globals": "^16.5.0",
+		"prettier": "^3.6.2",
+		"sass": "^1.93.3",
+		"stylelint": "^16.25.0",
+		"stylelint-config-standard-scss": "^16.0.0",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.46.3",
+		"vite": "^7.2.2",
+		"vite-plugin-compression2": "^2.3.1",
 		"vite-plugin-css-injected-by-js": "^3.5.2",
 		"vite-plugin-dts": "^4.5.4",
-		"vite-plugin-svgr": "^4.3.0"
+		"vite-plugin-svgr": "^4.5.0"
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "tsc && vite build",
 		"dev": "vite build --watch",
 		"predeploy": "npm run build && cd example && npm run build",
 		"deploy": "gh-pages -d example/dist",
 		"example": "cd example && npm run dev",
-		"format": "biome format --write && prettier --write ./**/*.html ./**/*.md ./**/*.scss ./**/*.svg",
+		"format": "biome format --write && prettier --write ./**/*.md ./**/*.scss ./**/*.svg",
 		"test": "tsc && biome lint && eslint . && stylelint **/*.css **/*.scss"
 	},
 	"prettier": {
@@ -61,7 +68,9 @@
 		"endOfLine": "lf",
 		"htmlWhitespaceSensitivity": "strict",
 		"jsxSingleQuote": true,
-		"plugins": ["@prettier/plugin-xml"],
+		"plugins": [
+			"@prettier/plugin-xml"
+		],
 		"printWidth": 125,
 		"quoteProps": "as-needed",
 		"semi": false,
@@ -75,7 +84,9 @@
 	},
 	"stylelint": {
 		"extends": "stylelint-config-standard-scss",
-		"ignoreFiles": ["**/dist/**"],
+		"ignoreFiles": [
+			"**/dist/**"
+		],
 		"rules": {
 			"declaration-empty-line-before": null,
 			"no-descending-specificity": null,

@@ -29,13 +29,14 @@ const Slider: FC<{
 		positive: string
 		negative: string
 		off: string
-	}>(() => {
-		return {
+	}>(
+		() => ({
 			positive: '#cee5e8',
 			negative: '#595959',
 			off: '#818d8f',
-		}
-	}, [])
+		}),
+		[],
+	)
 
 	// declare slider colour update function
 	const colourAndState = useCallback(

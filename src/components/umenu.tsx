@@ -122,13 +122,13 @@ const Umenu: FC<{
 		}
 	})
 
-	const openDropdown = (focus: number | null): void => {
+	const openDropdown = (_focus: number | null): void => {
 		setDropdown(!dropdownVisible)
-		setFocus(focus)
+		setFocus(_focus)
 		if (dropdownVisible) {
 			responsiveDropdown()
-			if (focus !== null) {
-				;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
+			if (_focus !== null) {
+				;(self.current?.childNodes[1]?.childNodes[_focus] as HTMLElement).focus()
 			}
 		}
 	}
@@ -138,10 +138,11 @@ const Umenu: FC<{
 			const maxWidth =
 				(self.current.parentNode as HTMLElement).getBoundingClientRect().right -
 				self.current.getBoundingClientRect().left
-			setDropdownWidth('fit-content')
-			if (maxWidth < (self.current.childNodes[1] as HTMLElement).offsetWidth) {
-				setDropdownWidth(`${(maxWidth - 2).toString()}px`)
-			}
+			setDropdownWidth(
+				maxWidth <= (self.current.childNodes[1] as HTMLElement).offsetWidth
+					? `${(maxWidth - 2).toString()}px`
+					: 'fit-content',
+			)
 		}
 	}
 
@@ -267,33 +268,31 @@ const Umenu: FC<{
 					whiteSpace: dropdownWidth !== 'fit-content' ? 'normal' : 'nowrap',
 				}}
 			>
-				{items.map((item, i) => {
-					return (
-						<li
-							aria-selected={i === index}
-							key={i.toString()}
-							role='option'
-							style={{
-								background: focus === i ? '#4c4c4c' : 'inherit',
-							}}
-							tabIndex={-1}
-							onMouseEnter={() => {
-								setFocus(i)
-							}}
-							onMouseLeave={() => {
-								setFocus(null)
-							}}
-							onClick={() => {
-								changeSelected(i, false)
-							}}
-							onTouchEnd={() => {
-								setFocus(null)
-							}}
-						>
-							{item}
-						</li>
-					)
-				})}
+				{items.map((item, i) => (
+					<li
+						aria-selected={i === index}
+						key={i.toString()}
+						role='option'
+						style={{
+							background: focus === i ? '#4c4c4c' : 'inherit',
+						}}
+						tabIndex={-1}
+						onMouseEnter={() => {
+							setFocus(i)
+						}}
+						onMouseLeave={() => {
+							setFocus(null)
+						}}
+						onClick={() => {
+							changeSelected(i, false)
+						}}
+						onTouchEnd={() => {
+							setFocus(null)
+						}}
+					>
+						{item}
+					</li>
+				))}
 			</ul>
 		</div>
 	)
