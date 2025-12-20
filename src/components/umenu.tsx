@@ -245,16 +245,14 @@ const Umenu: FC<{
 						isKeyDown(false)
 					}
 				},
-			})}
-		>
-			<div
-				tabIndex={-1}
-				onMouseDown={(e) => {
+				onMouseDown: (e) => {
 					if (e.button === 0) {
 						openDropdown(null)
 					}
-				}}
-			>
+				},
+			})}
+		>
+			<div tabIndex={-1}>
 				<p>{items[index]}</p>
 				<UmenuSVG />
 			</div>

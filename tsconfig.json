@@ -1,6 +1,8 @@
 {
 	"compilerOptions": {
 		// type checking
+		"allowArbitraryExtensions": false,
+		"allowUmdGlobalAccess": false,
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
 		"alwaysStrict": true,
@@ -10,15 +12,18 @@
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"noImplicitThis": true,
+		"noImplicitUseStrict": false,
 		"noPropertyAccessFromIndexSignature": false,
 		"noUncheckedIndexedAccess": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"strict": true,
 		"strictBindCallApply": true,
+		"strictBuiltinIteratorReturn": true,
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
 		"strictPropertyInitialization": true,
+		"useDefineForClassFields": true,
 		"useUnknownInCatchVariables": true,
 		// modules
 		"module": "ESNext",
@@ -26,6 +31,7 @@
 		"resolveJsonModule": true,
 		// emit
 		"noEmit": true,
+		"removeComments": true,
 		// javascript support
 		"allowJs": false,
 		// interop constraints
