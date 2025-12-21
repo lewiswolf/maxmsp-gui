@@ -32,9 +32,8 @@ const RadioGroup: FC<{
 	}, [setValue])
 	// click event with prop
 	const togglePressed = (i: number): void => {
-		i = i === index ? 0 : i
-		indexPressed(i)
-		onClick(i)
+		indexPressed(i === index ? 0 : i)
+		onClick(i === index ? 0 : i)
 	}
 	// keyboard event specific watch state
 	const [keydown, isKeyDown] = useState<boolean>(false)
@@ -73,17 +72,17 @@ const RadioGroup: FC<{
 	return (
 		<div aria-label={ariaLabel} className={style.radiogroup} ref={self} role='radiogroup'>
 			{items.map((item: string, i: number) => {
-				i += 1
+				const _i = i + 1
 				return (
 					<div
-						aria-checked={i === index}
-						aria-label={item ? item : `${ariaLabel} button ${i.toString()}`}
-						key={i.toString()}
+						aria-checked={_i === index}
+						aria-label={item ? item : `${ariaLabel} button ${_i.toString()}`}
+						key={_i.toString()}
 						role='radio'
 						style={{ height: spacing > 16 ? `${spacing.toString()}px` : '16px' }}
-						tabIndex={i === Math.max(index, 1) ? 0 : -1}
+						tabIndex={_i === Math.max(index, 1) ? 0 : -1}
 						onFocus={() => {
-							indexFocused(i - 1)
+							indexFocused(i)
 						}}
 						onKeyDown={(e) => {
 							switch (e.key) {
@@ -92,7 +91,7 @@ const RadioGroup: FC<{
 									e.preventDefault()
 									if (!keydown) {
 										isKeyDown(true)
-										togglePressed(i)
+										togglePressed(_i)
 									}
 									break
 								}
@@ -120,11 +119,11 @@ const RadioGroup: FC<{
 						}}
 						onMouseDown={(e) => {
 							if (e.button === 0) {
-								togglePressed(i)
+								togglePressed(_i)
 							}
 						}}
 					>
-						{item && (
+						{!!item && (
 							<p
 								style={{
 									lineHeight: spacing > 16 ? `${spacing.toString()}px` : '16px',
@@ -138,7 +137,7 @@ const RadioGroup: FC<{
 						<div
 							style={{
 								background:
-									i === index
+									_i === index
 										? 'radial-gradient(18px circle at center,#cee5e8 50%,#333333 50%)'
 										: 'radial-gradient(18px circle at center,#595959 50%,#333333 50%)',
 							}}
