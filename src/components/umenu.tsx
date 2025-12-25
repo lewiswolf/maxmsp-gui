@@ -1,3 +1,6 @@
+// biome-ignore-all lint/a11y/noNoninteractiveElementInteractions : fixing this rule breaks the interaction
+// biome-ignore-all lint/a11y/noStaticElementInteractions : fixing this rule breaks the interaction
+
 // dependencies
 import { type FC, useEffect, useRef, useState } from 'react'
 
@@ -245,14 +248,16 @@ const Umenu: FC<{
 						isKeyDown(false)
 					}
 				},
-				onMouseDown: (e) => {
+			})}
+		>
+			<div
+				onMouseDown={(e) => {
 					if (e.button === 0) {
 						openDropdown(null)
 					}
-				},
-			})}
-		>
-			<div tabIndex={-1}>
+				}}
+				tabIndex={-1}
+			>
 				<p>{items[index]}</p>
 				<UmenuSVG />
 			</div>
