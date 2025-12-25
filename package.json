@@ -1,6 +1,6 @@
 {
 	"name": "maxmsp-gui",
-	"version": "2.6.0",
+	"version": "2.5.3",
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "Creative Commons SA",
@@ -42,7 +42,7 @@
 		"stylelint": "^16.26.1",
 		"stylelint-config-standard-scss": "^16.0.0",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.50.0",
+		"typescript-eslint": "^8.50.1",
 		"vite": "^7.3.0",
 		"vite-plugin-compression2": "^2.4.0",
 		"vite-plugin-css-injected-by-js": "^3.5.2",
