@@ -1,0 +1,15 @@
+# dependencies
+node_modules
+
+# production
+build
+dist
+
+# misc
+.deno
+.DS_Store
+.vscode
+
+# package specific
+unused
+todo.md

@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    all-tests:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [macos-latest]
+                node: [22.x]
+
+        steps:
+            - uses: actions/checkout@master
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node }}
+
+            - name: Install node modules
+              run: npm install --include=dev
+
+            - name: Format project
+              run: |
+                  npx @biomejs/biome format
+                  npx prettier --check ./src/scss
+                  npx prettier --check ./src/svg
+
+            - name: Assert types
+              run: npx tsc
+
+            - name: Lint project
+              run: |
+                  npx @biomejs/biome lint
+                  npx eslint .
+                  npx stylelint **/*.css **/*.scss
