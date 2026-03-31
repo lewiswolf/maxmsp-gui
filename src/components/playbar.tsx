@@ -104,8 +104,7 @@ const PlaybarSlider: FC<{
 	setValue: number
 	width: number
 	onChange: (x: number) => void
-	onScrub: (b: boolean) => void
-}> = ({ ariaLabel, inactive, setValue, width, onChange, onScrub }): JSX.Element => {
+}> = ({ ariaLabel, inactive, setValue, width, onChange }): JSX.Element => {
 	/*
 		The slider element of the playbar.
 	*/
@@ -175,19 +174,15 @@ const PlaybarSlider: FC<{
 	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
 		e.currentTarget.setPointerCapture(e.pointerId)
 		isMouseDown(true)
-		onScrub(true)
 	}
 	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		isMouseDown(false)
-		onChange(value / fidelity)
-		onScrub(false)
 		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
 			e.currentTarget.releasePointerCapture(e.pointerId)
 		}
 	}
 	const _onPointerCancel = (): void => {
 		isMouseDown(false)
-		onScrub(false)
 	}
 	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>) => {
 		if (self.current && e.targetTouches[0]) {
@@ -261,7 +256,6 @@ const Playbar: FC<{
 	width?: number
 	onChange?: (x: number) => void
 	onPlay?: (b: boolean) => void
-	onScrub?: (b: boolean) => void
 }> = ({
 	ariaLabel = 'playbar',
 	inactive = false,
@@ -274,9 +268,6 @@ const Playbar: FC<{
 	onPlay = () => {
 		/**/
 	},
-	onScrub = () => {
-		/**/
-	},
 }): JSX.Element => (
 	<div className={style.playbar} style={{ width: Math.max(width, 100) }}>
 		<PlaybarToggle ariaLabel={ariaLabel} inactive={inactive} setPlaying={setPlaying} onPlay={onPlay} />
@@ -286,7 +277,6 @@ const Playbar: FC<{
 			setValue={setValue}
 			width={Math.max(width, 100)}
 			onChange={onChange}
-			onScrub={onScrub}
 		/>
 	</div>
 )
