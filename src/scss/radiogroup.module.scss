@@ -37,13 +37,17 @@
 			width: 20.1px;
 			display: grid;
 			position: relative;
-			background: #333;
+			background: utils.$background;
 			outline: 0;
 
 			svg {
 				height: 20px;
 				width: 20px;
 				place-self: center;
+
+				path {
+					fill: utils.$background;
+				}
 			}
 		}
 	}

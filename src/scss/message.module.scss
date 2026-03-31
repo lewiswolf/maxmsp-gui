@@ -6,7 +6,7 @@
 	min-height: 24px;
 	width: fit-content;
 	min-width: 29.5px;
-	background: linear-gradient(to top, rgb(51 51 51) 0%, rgb(76 76 76) 100%);
+	background: utils.$background-gradient;
 	border-radius: 5px;
 
 	@include utils.focus;
@@ -15,7 +15,12 @@
 		margin: auto 0;
 		line-height: 14px;
 		font-size: 13px;
-		color: #f7f7f7;
+		color: utils.$white;
 		outline: 0;
+		padding: 5px;
+
+		&[data-state='mousedown'] {
+			padding: 6px 4px 4px 6px;
+		}
 	}
 }

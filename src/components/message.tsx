@@ -1,5 +1,5 @@
 // dependencies
-import { type FC, useEffect, useRef, useState } from 'react'
+import { type FC, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, useState } from 'react'
 
 // src
 import style from '../scss/message.module.scss'
@@ -21,39 +21,40 @@ const Message: FC<{
 		[message]
 	*/
 
-	const self = useRef<HTMLDivElement>(null)
-	// click event with prop
-	const buttonPressed = (): void => {
-		isMouseDown(true)
-		onClick()
-	}
 	// mousedown state
 	const [mousedown, isMouseDown] = useState<boolean>(false)
-	// this useEffect adds a global mouse up to allow for press and hover,
-	// and a touchstart event used to prevent event bubbling.
-	useEffect(() => {
-		const buttonFreed = (): void => {
-			isMouseDown(false)
-		}
-		const touchstart = (e: TouchEvent): void => {
-			if (e.cancelable) {
-				e.preventDefault()
+	// event handlers
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault()
+			if (!mousedown) {
 				isMouseDown(true)
 				onClick()
 			}
 		}
-		if (self.current) {
-			window.addEventListener('mouseup', buttonFreed)
-			self.current.addEventListener('touchstart', touchstart)
+	}
+	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
+		if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
+			e.preventDefault()
+			isMouseDown(false)
 		}
-		const cleanup_self = self.current
-		return () => {
-			if (cleanup_self) {
-				cleanup_self.removeEventListener('touchstart', touchstart)
-				window.removeEventListener('mouseup', buttonFreed)
-			}
+	}
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+		if (e.button === 0) {
+			isMouseDown(true)
+			e.currentTarget.setPointerCapture(e.pointerId)
+			onClick()
 		}
-	}, [onClick])
+	}
+	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
+		isMouseDown(false)
+		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+			e.currentTarget.releasePointerCapture(e.pointerId)
+		}
+	}
+	const _onPointerCancel = (): void => {
+		isMouseDown(false)
+	}
 
 	return (
 		<div
@@ -62,41 +63,15 @@ const Message: FC<{
 				'aria-pressed': ariaPressed,
 			})}
 			className={style.message}
-			ref={self}
+			onKeyDown={_onKeyDown}
+			onKeyUp={_onKeyUp}
+			onPointerCancel={_onPointerCancel}
+			onPointerDown={_onPointerDown}
+			onPointerUp={_onPointerUp}
 			role='button'
 			tabIndex={0}
-			onKeyDown={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault()
-					if (!mousedown) {
-						buttonPressed()
-					}
-				}
-			}}
-			onKeyUp={(e) => {
-				if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
-					e.preventDefault()
-					isMouseDown(false)
-				}
-			}}
-			onMouseDown={(e) => {
-				if (e.button === 0) {
-					buttonPressed()
-				}
-			}}
-			onTouchCancel={() => {
-				isMouseDown(false)
-			}}
-			onTouchEnd={() => {
-				isMouseDown(false)
-			}}
 		>
-			<p
-				style={{
-					padding: mousedown ? '6px 4px 4px 6px' : '5px 5px',
-				}}
-				tabIndex={-1}
-			>
+			<p data-state={mousedown ? 'mousedown' : 'default'} tabIndex={-1}>
 				{text}
 			</p>
 		</div>

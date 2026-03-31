@@ -1,5 +1,16 @@
 // dependencies
-import { type FC, type TouchEvent as ReactTouchEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+	type FC,
+	type ChangeEvent,
+	type KeyboardEvent as ReactKeyboardEvent,
+	type PointerEvent as ReactPointerEvent,
+	type TouchEvent as ReactTouchEvent,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react'
 
 // src
 import style from '../scss/slider.module.scss'
@@ -21,31 +32,36 @@ const Slider: FC<{
 		[slider]
 	*/
 
+	// decalre slider parameters
 	const fidelity = 10000
-	const self = useRef<HTMLDivElement>(null)
-
-	// decalre slider colors
 	const SliderColors = useMemo<{
 		positive: string
 		negative: string
 		off: string
 	}>(
 		() => ({
-			positive: '#cee5e8',
-			negative: '#595959',
-			off: '#818d8f',
+			negative: 'rgb(89, 89, 89)',
+			off: 'rgb(129, 141, 143)',
+			positive: 'rgb(206, 229, 232)',
 		}),
 		[],
 	)
+	const default_background = `linear-gradient(90deg, ${SliderColors.off}, ${SliderColors.off} 6px, ${SliderColors.negative} 6px)`
 
+	// component states
+	const self = useRef<HTMLDivElement>(null)
+	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
+	const [background, setBackground] = useState<string>(default_background)
 	// declare slider colour update function
 	const colourAndState = useCallback(
 		(new_value: number): void => {
-			if (new_value !== 0) {
-				if (self.current) {
-					const sliderWidth = self.current.getBoundingClientRect().width - 10
-					const position = ((sliderWidth - 6) * new_value) / fidelity
-					setBackground(`linear-gradient(90deg,
+			if (new_value === 0) {
+				setBackground(default_background)
+				updateValue(0)
+			} else if (self.current) {
+				const sliderWidth = self.current.getBoundingClientRect().width - 10
+				const position = ((sliderWidth - 6) * new_value) / fidelity
+				setBackground(`linear-gradient(90deg,
 					${SliderColors.negative}, 
 					${SliderColors.negative} 0px, 
 					${SliderColors.positive} 0px, 
@@ -56,45 +72,67 @@ const Slider: FC<{
 					${SliderColors.positive} ${(position + 6).toString()}px,
 					${SliderColors.negative} ${(position + 6).toString()}px
 					)`)
-					updateValue(new_value)
-				}
-			} else {
-				setBackground(
-					`linear-gradient(90deg, ${SliderColors.off}, ${SliderColors.off} 6px, ${SliderColors.negative} 6px)`,
-				)
-				updateValue(0)
+				updateValue(new_value)
 			}
 		},
-		[SliderColors],
+		[default_background, SliderColors],
 	)
-
-	// what is the value - state and prop
-	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
+	// what is the value - prop
 	useEffect(() => {
 		colourAndState(Math.max(Math.min(setValue, 1), 0) * fidelity)
 	}, [setValue, colourAndState])
 
-	// background gradient / colour
-	const [background, setBackground] = useState<string>(
-		`linear-gradient(90deg, ${SliderColors.off}, ${SliderColors.off} 6px, ${SliderColors.negative} 6px)`,
-	)
-
-	// this useEffect adds a touch event listener used to prevent bubbling.
-	useEffect(() => {
-		const touchstart = (e: TouchEvent) => {
-			if (e.cancelable) {
+	// event handlers
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+		switch (e.key) {
+			case 'Up':
+			case 'ArrowUp':
+			case 'Right':
+			case 'ArrowRight': {
 				e.preventDefault()
-				touchmove(e)
+				const new_val = Math.min(Math.round(value + fidelity * 0.01), fidelity)
+				colourAndState(new_val)
+				onChange(new_val / fidelity)
+				break
 			}
+			case 'Down':
+			case 'ArrowDown':
+			case 'Left':
+			case 'ArrowLeft': {
+				e.preventDefault()
+				const new_val = Math.max(Math.round(value - fidelity * 0.01), 0)
+				colourAndState(new_val)
+				onChange(new_val / fidelity)
+				break
+			}
+			case 'PageUp': {
+				e.preventDefault()
+				const new_val = Math.min(Math.round(value + fidelity * 0.1), fidelity)
+				colourAndState(new_val)
+				onChange(new_val / fidelity)
+				break
+			}
+			case 'PageDown': {
+				e.preventDefault()
+				const new_val = Math.max(Math.round(value - fidelity * 0.1), 0)
+				colourAndState(new_val)
+				onChange(new_val / fidelity)
+				break
+			}
+			default:
+				break
 		}
-		self.current?.addEventListener('touchstart', touchstart)
-		const cleanup_self = self.current
-		return () => {
-			cleanup_self?.removeEventListener('touchstart', touchstart)
+	}
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+		e.currentTarget.setPointerCapture(e.pointerId)
+	}
+	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
+		onChange(value / fidelity)
+		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+			e.currentTarget.releasePointerCapture(e.pointerId)
 		}
-	})
-
-	const touchmove = (e: ReactTouchEvent | TouchEvent) => {
+	}
+	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>) => {
 		if (self.current && e.targetTouches[0]) {
 			const rect = self.current.getBoundingClientRect()
 			const new_val = Math.max(
@@ -105,59 +143,24 @@ const Slider: FC<{
 			onChange(new_val / fidelity)
 		}
 	}
+	const _onChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const new_val = Number(e.target.value)
+		colourAndState(new_val)
+		onChange(new_val / fidelity)
+	}
 
 	return (
 		<div
-			className={style.slider}
 			aria-label={ariaLabel}
 			aria-orientation='horizontal'
 			aria-valuemax={fidelity}
 			aria-valuemin={0}
 			aria-valuenow={value}
+			className={style.slider}
+			onKeyDown={_onKeyDown}
 			ref={self}
 			role='slider'
 			tabIndex={0}
-			onKeyDown={(e) => {
-				let new_val: number
-				switch (e.key) {
-					case 'Up':
-					case 'ArrowUp':
-					case 'Right':
-					case 'ArrowRight': {
-						e.preventDefault()
-						new_val = Math.min(Math.round(value + fidelity / 100), fidelity)
-						colourAndState(new_val)
-						onChange(new_val / fidelity)
-						break
-					}
-					case 'Down':
-					case 'ArrowDown':
-					case 'Left':
-					case 'ArrowLeft': {
-						e.preventDefault()
-						new_val = Math.max(Math.round(value - fidelity / 100), 0)
-						colourAndState(new_val)
-						onChange(new_val / fidelity)
-						break
-					}
-					case 'PageUp': {
-						e.preventDefault()
-						new_val = Math.min(Math.round(value + fidelity / 10), fidelity)
-						colourAndState(new_val)
-						onChange(new_val / fidelity)
-						break
-					}
-					case 'PageDown': {
-						e.preventDefault()
-						new_val = Math.max(Math.round(value - fidelity / 10), 0)
-						colourAndState(new_val)
-						onChange(new_val / fidelity)
-						break
-					}
-					default:
-						break
-				}
-			}}
 		>
 			<div tabIndex={-1}>
 				<input
@@ -168,18 +171,14 @@ const Slider: FC<{
 					aria-valuenow={value}
 					max={fidelity}
 					min={0}
+					onChange={_onChange}
+					onPointerDown={_onPointerDown}
+					onPointerUp={_onPointerUp}
+					onTouchMove={_onTouchMove}
 					style={{ background, width }}
 					tabIndex={-1}
 					type='range'
 					value={value}
-					onChange={(e) => {
-						const new_val = +e.target.value
-						colourAndState(new_val)
-						onChange(new_val / fidelity)
-					}}
-					onTouchMove={(e) => {
-						touchmove(e)
-					}}
 				/>
 			</div>
 		</div>

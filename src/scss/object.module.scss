@@ -7,6 +7,7 @@
 	width: fit-content;
 	min-width: 29.5px;
 	max-width: 100%;
+	background: utils.$foreground;
 
 	svg {
 		height: 24px;
@@ -14,6 +15,14 @@
 		position: absolute;
 		top: 0;
 		left: 5px;
+
+		path:nth-of-type(1) {
+			fill: utils.$red;
+		}
+
+		path:nth-of-type(2) {
+			fill: utils.$background;
+		}
 	}
 
 	p {
@@ -24,6 +33,15 @@
 		padding: 1px 5px;
 		line-height: 14px;
 		font-size: 13px;
-		color: #f7f7f7;
+		background: utils.$background;
+		color: utils.$white;
+	}
+
+	&[data-state='inactive'] {
+		background: utils.$background-inactive;
+
+		p {
+			background: utils.$foreground-inactive;
+		}
 	}
 }
