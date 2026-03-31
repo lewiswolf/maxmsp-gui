@@ -10,7 +10,7 @@ body {
 	padding: 0;
 	background-image: url('./background.png');
 	background-size: 30px 30px;
-	background-color: #e5e5e5;
+	background-color: rgb(229 229 229);
 }
 
 main {
@@ -22,7 +22,8 @@ main {
 
 h2 {
 	font-family: inherit;
-	user-select: none;
 	padding: 0 5px;
 	text-align: center;
+	user-select: none;
+	-webkit-user-select: none;
 }

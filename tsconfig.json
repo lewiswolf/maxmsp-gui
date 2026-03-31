@@ -6,15 +6,16 @@
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
 		"alwaysStrict": true,
+		"erasableSyntaxOnly": true,
 		"exactOptionalPropertyTypes": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitAny": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"noImplicitThis": true,
-		"noImplicitUseStrict": false,
 		"noPropertyAccessFromIndexSignature": false,
 		"noUncheckedIndexedAccess": true,
+		"noUncheckedSideEffectImports": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"strict": true,
@@ -25,11 +26,8 @@
 		"strictPropertyInitialization": true,
 		"useDefineForClassFields": true,
 		"useUnknownInCatchVariables": true,
-		// modules
-		"module": "ESNext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
 		// emit
+		"composite": true,
 		"noEmit": true,
 		"removeComments": true,
 		// javascript support
@@ -42,10 +40,18 @@
 		"isolatedModules": true,
 		// language and environment
 		"jsx": "react-jsx",
-		"lib": ["dom", "dom.iterable", "ESNext"],
+		"lib": ["DOM", "ESNext"],
 		"target": "ESNext",
-		// completeness
-		"skipLibCheck": true
+		"types": ["node", "react", "react-dom"],
+		// compilation
+		"module": "ESNext",
+		"moduleDetection": "force",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+		"importHelpers": true,
+		"skipLibCheck": true,
+		"verbatimModuleSyntax": true
 	},
 	"include": ["src"],
 	"references": [{ "path": "./tsconfig.node.json" }]

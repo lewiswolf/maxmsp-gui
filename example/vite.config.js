@@ -1,16 +1,26 @@
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { compression } from 'vite-plugin-compression2'
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	base: '/maxmsp-gui',
-	build: { target: 'ESNext' },
-	esbuild: { legalComments: 'none' },
+	build: {
+		rolldownOptions: {
+			output: {
+				comments: {
+					annotation: false,
+					jsdoc: false,
+					legal: false,
+				},
+			},
+		},
+		target: 'baseline-widely-available',
+	},
 	plugins: [
 		compression({
 			algorithms: ['gzip'],
-			include: /\.(js|mjs|json|css|svg)$/i,
+			include: /\.(?:js|map|mjs|json|css|svg)$/iu,
 		}),
 		react(),
 	],
