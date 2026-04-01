@@ -40,9 +40,9 @@ const Slider: FC<{
 		off: string
 	}>(
 		() => ({
-			negative: 'rgb(89, 89, 89)',
-			off: 'rgb(129, 141, 143)',
-			positive: 'rgb(206, 229, 232)',
+			negative: 'rgb(89 89 89)',
+			off: 'rgb(129 141 143)',
+			positive: 'rgb(206 229 232)',
 		}),
 		[],
 	)

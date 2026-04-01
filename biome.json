@@ -340,7 +340,7 @@
 				"noMagicNumbers": "off",
 				"noNamespace": "error",
 				"noNegationElse": "error",
-				"noNestedTernary": "off",
+				"noNestedTernary": "error",
 				"noNonNullAssertion": "error",
 				"noParameterAssign": "error",
 				"noParameterProperties": "error",
