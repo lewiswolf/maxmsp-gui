@@ -38,10 +38,10 @@
 	}
 
 	&[data-state='inactive'] {
-		background: utils.$background-inactive;
+		background: utils.$foreground-inactive;
 
 		p {
-			background: utils.$foreground-inactive;
+			background: utils.$background-inactive;
 		}
 	}
 }

@@ -6,7 +6,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig(
-	globalIgnores(['dist', 'unused']),
+	globalIgnores(['**/dist', '**/unused']),
 	{
 		extends: [
 			eslint.configs.all,
