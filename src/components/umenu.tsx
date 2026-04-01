@@ -1,8 +1,15 @@
-// biome-ignore-all lint/a11y/noNoninteractiveElementInteractions : fixing this rule breaks the interaction
-// biome-ignore-all lint/a11y/noStaticElementInteractions : fixing this rule breaks the interaction
+// biome-ignore-all lint/a11y/noNoninteractiveElementToInteractiveRole : <ul /> and <li /> works way better than <select /> and <option />
+// biome-ignore-all lint/nursery/noJsxPropsBind : prop bindings are here used in conjunction with Array.map()
 
 // dependencies
-import { type FC, useEffect, useRef, useState } from 'react'
+import {
+	type FC,
+	type KeyboardEvent as ReactKeyboardEvent,
+	type PointerEvent as ReactPointerEvent,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
 
 // src
 import style from '../scss/umenu.module.scss'
@@ -41,27 +48,28 @@ const Umenu: FC<{
 	// keyboard event specific watch state
 	const [keydown, isKeyDown] = useState<boolean>(false)
 
-	// this useEffect adds a touch event listener used to prevent bubbling.
-	useEffect(() => {
-		const listTouchStart = (e: TouchEvent) => {
-			if (e.cancelable && self.current) {
-				let t: number | null = null
-				self.current.childNodes[1]?.childNodes.forEach((button, i) => {
-					const b = (button as HTMLElement).getBoundingClientRect()
-					if (e.targetTouches[0] && e.targetTouches[0].clientY > b.top && e.targetTouches[0].clientY < b.bottom) {
-						t = i
-					}
-				})
-				setFocus(t)
+	// methods
+	const responsiveDropdown = (): void => {
+		if (self.current) {
+			const maxWidth =
+				(self.current.parentNode as HTMLElement).getBoundingClientRect().right -
+				self.current.getBoundingClientRect().left
+			setDropdownWidth(`${(maxWidth - 2).toString()}px`)
+		}
+	}
+	const openDropdown = (_focus: number | null): void => {
+		setDropdown(!dropdownVisible)
+		setFocus(_focus)
+		if (dropdownVisible) {
+			responsiveDropdown()
+			if (_focus !== null) {
+				;(self.current?.childNodes[1]?.childNodes[_focus] as HTMLElement).focus()
 			}
 		}
-		const toggleTouchStart = (e: TouchEvent): void => {
-			if (e.cancelable) {
-				e.preventDefault()
-				openDropdown(null)
-			}
-		}
+	}
 
+	// this useEffect adds global blurring and dropdown closing listeners.
+	useEffect(() => {
 		const isNotInViewport = (): void => {
 			if (dropdownVisible && self.current) {
 				const umenuDim = self.current.getBoundingClientRect()
@@ -107,8 +115,7 @@ const Umenu: FC<{
 		}
 
 		if (self.current) {
-			;(self.current.childNodes[0] as HTMLElement).addEventListener('touchstart', toggleTouchStart)
-			;(self.current.childNodes[1] as HTMLElement).addEventListener('touchstart', listTouchStart)
+			responsiveDropdown()
 			window.addEventListener('resize', responsiveDropdown)
 			window.addEventListener('mousedown', customBlur)
 			window.addEventListener('scroll', isNotInViewport)
@@ -116,8 +123,6 @@ const Umenu: FC<{
 		const cleanup_self = self.current
 		return () => {
 			if (cleanup_self) {
-				;(cleanup_self.childNodes[0] as HTMLElement).removeEventListener('touchstart', toggleTouchStart)
-				;(cleanup_self.childNodes[1] as HTMLElement).removeEventListener('touchstart', listTouchStart)
 				window.removeEventListener('mousedown', customBlur)
 				window.removeEventListener('resize', responsiveDropdown)
 				window.removeEventListener('scroll', isNotInViewport)
@@ -125,38 +130,14 @@ const Umenu: FC<{
 		}
 	})
 
-	const openDropdown = (_focus: number | null): void => {
-		setDropdown(!dropdownVisible)
-		setFocus(_focus)
-		if (dropdownVisible) {
-			responsiveDropdown()
-			if (_focus !== null) {
-				;(self.current?.childNodes[1]?.childNodes[_focus] as HTMLElement).focus()
-			}
-		}
-	}
-
-	const responsiveDropdown = (): void => {
-		if (self.current) {
-			const maxWidth =
-				(self.current.parentNode as HTMLElement).getBoundingClientRect().right -
-				self.current.getBoundingClientRect().left
-			setDropdownWidth(
-				maxWidth <= (self.current.childNodes[1] as HTMLElement).offsetWidth
-					? `${(maxWidth - 2).toString()}px`
-					: 'fit-content',
-			)
-		}
-	}
-
 	const arrowKeys = (value: 1 | -1): void => {
-		if (focus !== null) {
-			setFocus((focus + items.length + value) % items.length)
-			;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
-		} else {
+		if (focus === null) {
 			const f = value === -1 ? items.length - 1 : 0
 			setFocus(f)
 			;(self.current?.childNodes[1]?.childNodes[f] as HTMLElement).focus()
+		} else {
+			setFocus((focus + items.length + value) % items.length)
+			;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
 		}
 	}
 
@@ -169,6 +150,81 @@ const Umenu: FC<{
 		}
 	}
 
+	// event handlers
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+		switch (e.key) {
+			case 'Enter':
+			case ' ': {
+				e.preventDefault()
+				if (!keydown) {
+					isKeyDown(true)
+					if (dropdownVisible) {
+						if (focus === null) {
+							openDropdown(null)
+						} else {
+							changeSelected(focus, true)
+						}
+					} else {
+						openDropdown(null)
+					}
+				}
+				break
+			}
+			case 'Esc':
+			case 'Escape': {
+				e.preventDefault()
+				setDropdown(false)
+				setFocus(null)
+				self.current?.focus()
+				break
+			}
+			case 'Home':
+			case 'End': {
+				e.preventDefault()
+				setFocus(e.key === 'Home' ? 0 : items.length - 1)
+				if (focus !== null) {
+					;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
+				}
+				break
+			}
+			case 'Up':
+			case 'ArrowUp': {
+				e.preventDefault()
+				if (dropdownVisible) {
+					arrowKeys(-1)
+				}
+				break
+			}
+			case 'Down':
+			case 'ArrowDown': {
+				e.preventDefault()
+				if (dropdownVisible) {
+					arrowKeys(1)
+				}
+				break
+			}
+			case 'Tab': {
+				if (dropdownVisible) {
+					setDropdown(false)
+				}
+				break
+			}
+			default:
+				break
+		}
+	}
+	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+		if ((e.key === 'Enter' || e.key === ' ') && keydown) {
+			e.preventDefault()
+			isKeyDown(false)
+		}
+	}
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+		if (e.button === 0) {
+			openDropdown(null)
+		}
+	}
+
 	return (
 		<div
 			className={style.umenu}
@@ -178,120 +234,47 @@ const Umenu: FC<{
 				'aria-expanded': dropdownVisible,
 				'aria-haspopup': 'listbox',
 				'aria-label': `${ariaLabel}: ${items[index] ?? 'nothing'} selected`,
+				onKeyDown: _onKeyDown,
+				onKeyUp: _onKeyUp,
 				role: 'button',
 				tabIndex: 0,
-				onKeyDown: (e) => {
-					switch (e.key) {
-						case 'Enter':
-						case ' ': {
-							e.preventDefault()
-							if (!keydown) {
-								isKeyDown(true)
-								if (dropdownVisible) {
-									if (focus !== null) {
-										changeSelected(focus, true)
-									} else {
-										openDropdown(null)
-									}
-								} else {
-									openDropdown(0)
-								}
-							}
-							break
-						}
-						case 'Esc':
-						case 'Escape': {
-							e.preventDefault()
-							setDropdown(false)
-							setFocus(null)
-							self.current?.focus()
-							break
-						}
-						case 'Home':
-						case 'End': {
-							e.preventDefault()
-							setFocus(e.key === 'Home' ? 0 : items.length - 1)
-							if (focus !== null) {
-								;(self.current?.childNodes[1]?.childNodes[focus] as HTMLElement).focus()
-							}
-							break
-						}
-						case 'Up':
-						case 'ArrowUp': {
-							e.preventDefault()
-							if (dropdownVisible) {
-								arrowKeys(-1)
-							}
-							break
-						}
-						case 'Down':
-						case 'ArrowDown': {
-							e.preventDefault()
-							if (dropdownVisible) {
-								arrowKeys(1)
-							}
-							break
-						}
-						case 'Tab': {
-							if (dropdownVisible) {
-								setDropdown(false)
-							}
-							break
-						}
-						default:
-							break
-					}
-				},
-				onKeyUp: (e) => {
-					if ((e.key === 'Enter' || e.key === ' ') && keydown) {
-						e.preventDefault()
-						isKeyDown(false)
-					}
-				},
 			})}
 		>
-			<div
-				onMouseDown={(e) => {
-					if (e.button === 0) {
-						openDropdown(null)
-					}
-				}}
-				tabIndex={-1}
-			>
+			<div onPointerDown={_onPointerDown} tabIndex={-1}>
 				<p>{items[index]}</p>
 				<UmenuSVG />
 			</div>
 			<ul
 				aria-label={`${ariaLabel}: ${items[index] ?? 'nothing'} selected`}
 				role='listbox'
-				tabIndex={-1}
 				style={{
 					display: dropdownVisible && items.length > 0 ? 'block' : 'none',
-					width: dropdownWidth || 'fit-content',
-					whiteSpace: dropdownWidth !== 'fit-content' ? 'normal' : 'nowrap',
+					width: dropdownWidth,
 				}}
+				tabIndex={-1}
 			>
 				{items.map((item, i) => (
 					<li
 						aria-selected={i === index}
 						key={i.toString()}
-						role='option'
-						style={{
-							background: focus === i ? '#4c4c4c' : 'inherit',
-						}}
-						tabIndex={-1}
-						onMouseEnter={() => {
+						onPointerEnter={() => {
 							setFocus(i)
 						}}
-						onMouseLeave={() => {
+						onPointerLeave={() => {
 							setFocus(null)
 						}}
-						onClick={() => {
+						onPointerDown={() => {
+							setFocus(i)
+						}}
+						onPointerUp={() => {
 							changeSelected(i, false)
-						}}
-						onTouchEnd={() => {
 							setFocus(null)
 						}}
+						role='option'
+						style={{
+							background: focus === i ? 'rgb(76, 76, 76)' : 'inherit',
+						}}
+						tabIndex={-1}
 					>
 						{item}
 					</li>

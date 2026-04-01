@@ -14,7 +14,8 @@
 	height: 24px;
 	width: fit-content;
 	max-width: 100%;
-	background: #393939;
+	background: utils.$background-lighter;
+	touch-action: none;
 
 	@include utils.focus;
 

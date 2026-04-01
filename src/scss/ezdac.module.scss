@@ -9,5 +9,14 @@
 
 	svg {
 		outline: 0;
+		background: utils.$negative-space;
+
+		path {
+			fill: utils.$background;
+		}
+	}
+
+	&[aria-checked='true'] svg {
+		background: radial-gradient(40px circle at center, utils.$accent 50%, utils.$background 50%);
 	}
 }

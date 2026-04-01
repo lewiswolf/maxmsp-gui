@@ -1,5 +1,11 @@
 // dependencies
-import { type FC, useEffect, useRef, useState } from 'react'
+import {
+	type FC,
+	type KeyboardEvent as ReactKeyboardEvent,
+	type PointerEvent as ReactPointerEvent,
+	useEffect,
+	useState,
+} from 'react'
 
 // src
 import style from '../scss/toggle.module.scss'
@@ -20,69 +26,56 @@ const Toggle: FC<{
 		[toggle]
 	*/
 
-	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(setValue)
 	useEffect(() => {
 		isPressed(setValue)
 	}, [setValue])
-	// click event with prop
-	const togglePressed = (): void => {
-		isPressed(!pressed)
-		onClick(pressed)
-	}
 	// keyboard event specific watch state
 	const [keydown, isKeyDown] = useState<boolean>(false)
-	// this useEffect adds a touch event listener used to prevent bubbling.
-	useEffect(() => {
-		const touchstart = (e: TouchEvent): void => {
-			if (e.cancelable) {
-				e.preventDefault()
-				togglePressed()
+	// event handlers
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault()
+			if (!keydown) {
+				isKeyDown(true)
+				isPressed(!pressed)
+				onClick(pressed)
 			}
 		}
-		self.current?.addEventListener('touchstart', touchstart)
-		const cleanup_self = self.current
-		return () => {
-			cleanup_self?.removeEventListener('touchstart', touchstart)
+	}
+	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
+		if ((e.key === 'Enter' || e.key === ' ') && keydown) {
+			e.preventDefault()
+			isKeyDown(false)
 		}
-	})
+	}
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+		if (e.button === 0) {
+			isPressed(!pressed)
+			e.currentTarget.setPointerCapture(e.pointerId)
+			onClick(pressed)
+		}
+	}
+	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
+		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+			e.currentTarget.releasePointerCapture(e.pointerId)
+		}
+	}
 
 	return (
 		<div
 			aria-checked={pressed}
 			aria-label={ariaLabel}
 			className={style.toggle}
-			ref={self}
+			onKeyDown={_onKeyDown}
+			onKeyUp={_onKeyUp}
+			onPointerDown={_onPointerDown}
+			onPointerUp={_onPointerUp}
 			role='switch'
 			tabIndex={0}
-			onKeyDown={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault()
-					if (!keydown) {
-						isKeyDown(true)
-						togglePressed()
-					}
-				}
-			}}
-			onKeyUp={(e) => {
-				if ((e.key === 'Enter' || e.key === ' ') && keydown) {
-					e.preventDefault()
-					isKeyDown(false)
-				}
-			}}
-			onMouseDown={(e) => {
-				if (e.button === 0) {
-					togglePressed()
-				}
-			}}
 		>
-			<SVG
-				style={{
-					background: pressed ? 'radial-gradient(40px circle at center,#cee5e8 50%,#333333 50%)' : '#595959',
-				}}
-				tabIndex={-1}
-			/>
+			<SVG tabIndex={-1} />
 		</div>
 	)
 }

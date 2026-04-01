@@ -9,5 +9,18 @@
 
 	svg {
 		outline: 0;
+		background: utils.$background;
+
+		&[data-state='mousedown'] {
+			background: radial-gradient(10px circle at center, utils.$accent 50%, utils.$background 50%);
+		}
+
+		path {
+			fill: utils.$background;
+
+			&:nth-of-type(2) {
+				fill: utils.$negative-space;
+			}
+		}
 	}
 }

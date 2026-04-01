@@ -1,5 +1,15 @@
+// biome-ignore-all lint/style/noNestedTernary : if it ain't broke don't fix it
+/* eslint-disable no-nested-ternary */
+
 // dependencies
-import { type FC, useEffect, useRef, useState } from 'react'
+import {
+	type FC,
+	type KeyboardEvent as ReactKeyboardEvent,
+	type PointerEvent as ReactPointerEvent,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
 
 // src
 import style from '../scss/textbutton.module.scss'
@@ -44,21 +54,21 @@ const TextButton: FC<{
 		toggleOffClicked: string
 		toggleOffInactive: string
 	} = {
-		clicked: '#96aaac',
-		inactive: '#afbabb',
-		neutral: '#cee5e8',
-		toggleOff: '#808080',
-		toggleOffClicked: '#6c6c6c',
-		toggleOffInactive: '#878787',
+		clicked: 'rgb(150 170 172)',
+		inactive: 'rgb(175 186 187)',
+		neutral: 'rgb(206 229 232)',
+		toggleOff: 'rgb(128 128 128)',
+		toggleOffClicked: 'rgb(108 108 108)',
+		toggleOffInactive: 'rgb(135 135 135)',
 	}
 	const BackgroundGradients: {
-		neutral: string
 		hover: string
 		inactive: string
+		neutral: string
 	} = {
-		neutral: 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(76, 76, 76) 100%)',
-		hover: 'linear-gradient(to top, rgb(51, 51, 51) 0%, rgb(81, 81, 81) 100%)',
-		inactive: 'linear-gradient(to top, rgb(138, 138, 138) 0%, rgb(151, 151, 151) 100%)',
+		hover: 'linear-gradient(to top, rgb(51 51 51) 0%, rgb(81 81 81) 100%)',
+		inactive: 'linear-gradient(to top, rgb(138 138 138) 0%, rgb(151 151 151) 100%)',
+		neutral: 'linear-gradient(to top, rgb(51 51 51) 0%, rgb(76 76 76) 100%)',
 	}
 
 	// is the toggle pressed - state and prop
@@ -69,7 +79,21 @@ const TextButton: FC<{
 	// button interactions
 	const [hover, setHover] = useState<boolean>(false)
 	const [mousedown, setMousedown] = useState<boolean>(false)
-	const [externalMousedown, setExternalMousedown] = useState<boolean>(false)
+	// style methods
+	const display_text = (() => {
+		if (mode) {
+			if (pressed) {
+				if (mousedown && hover) {
+					return text
+				}
+				return toggleText
+			}
+			if (mousedown && hover) {
+				return toggleText
+			}
+		}
+		return text
+	})()
 
 	const pressButton = (new_value: boolean): void => {
 		// press button
@@ -80,44 +104,45 @@ const TextButton: FC<{
 		}
 	}
 
-	// this useEffect adds a touch event listener used to prevent bubbling.
-	// also add global mouse up and down listeners for cosmetic updates.
-	useEffect(() => {
-		const globalMousedown = (e: MouseEvent) => {
-			if (!inactive && self.current) {
-				const rect = self.current.getBoundingClientRect()
-				if (e.clientX > rect.left && e.clientX < rect.right && e.clientY > rect.top && e.clientY < rect.bottom) {
-					setMousedown(true)
-				} else {
-					setExternalMousedown(true)
-				}
-			}
-		}
-		const globalMouseup = () => {
-			setExternalMousedown(false)
-			setMousedown(false)
-		}
-		const touchstart = (e: TouchEvent): void => {
-			if (e.cancelable) {
-				e.preventDefault()
+	// event handlers
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault()
+			if (!mousedown) {
 				setHover(true)
 				setMousedown(true)
 			}
 		}
-		if (self.current) {
-			window.addEventListener('mousedown', globalMousedown)
-			window.addEventListener('mouseup', globalMouseup)
-			self.current.addEventListener('touchstart', touchstart)
+	}
+	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+		if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
+			e.preventDefault()
+			setHover(false)
+			setMousedown(false)
+			pressButton(mode && !pressed)
 		}
-		const cleanup_self = self.current
-		return () => {
-			if (cleanup_self) {
-				window.removeEventListener('mousedown', globalMousedown)
-				window.removeEventListener('mouseup', globalMouseup)
-				cleanup_self.removeEventListener('touchstart', touchstart)
-			}
+	}
+	const _onPointerCancel = () => {
+		setHover(false)
+		setMousedown(false)
+	}
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+		if (e.button === 0) {
+			setHover(true)
+			setMousedown(true)
 		}
-	})
+	}
+	const _onPointerEnter = () => {
+		setHover(true)
+	}
+	const _onPointerLeave = () => {
+		setHover(false)
+	}
+	const _onPointerUp = (): void => {
+		setHover(false)
+		setMousedown(false)
+		pressButton(mode && !pressed)
+	}
 
 	return (
 		<div
@@ -131,51 +156,22 @@ const TextButton: FC<{
 				})}
 			{...(!inactive && {
 				'aria-label': ariaLabel,
+				onKeyDown: _onKeyDown,
+				onKeyUp: _onKeyUp,
+				onPointerCancel: _onPointerCancel,
+				onPointerDown: _onPointerDown,
+				onPointerEnter: _onPointerEnter,
+				onPointerLeave: _onPointerLeave,
+				onPointerUp: _onPointerUp,
 				role: mode ? 'switch' : 'button',
 				tabIndex: 0,
-				onClick: () => {
-					pressButton(mode && !pressed)
-				},
-				onKeyDown: (e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
-						e.preventDefault()
-						if (!mousedown) {
-							setHover(true)
-							setMousedown(true)
-						}
-					}
-				},
-				onKeyUp: (e) => {
-					if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
-						e.preventDefault()
-						setHover(false)
-						setMousedown(false)
-						pressButton(mode && !pressed)
-					}
-				},
-				onMouseEnter: () => {
-					setHover(true)
-				},
-				onMouseLeave: () => {
-					setHover(false)
-				},
-				onTouchEnd: (e) => {
-					e.preventDefault()
-					setHover(false)
-					setMousedown(false)
-					pressButton(mode && !pressed)
-				},
-				onTouchCancel: () => {
-					setHover(false)
-					setMousedown(false)
-				},
 			})}
 			className={style.textbutton}
 			ref={self}
 			style={{
 				background: inactive
 					? BackgroundGradients.inactive
-					: hover && !externalMousedown
+					: hover
 						? BackgroundGradients.hover
 						: BackgroundGradients.neutral,
 			}}
@@ -202,7 +198,7 @@ const TextButton: FC<{
 				}}
 				tabIndex={-1}
 			>
-				{mode ? (pressed ? (mousedown && hover ? text : toggleText) : mousedown && hover ? toggleText : text) : text}
+				{display_text}
 			</p>
 		</div>
 	)

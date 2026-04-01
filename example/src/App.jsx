@@ -1,3 +1,6 @@
+// biome-ignore-all lint/nursery/noJsxPropsBind : this example file doesn't require this design pattern
+// biome-ignore-all lint/performance/noNamespaceImport : allow here for clarity of example
+
 // dependencies
 import { useEffect, useRef, useState } from 'react'
 import * as MaxMSP from 'maxmsp-gui'
@@ -16,11 +19,9 @@ export default function App() {
 				if (playbar <= 0.995) {
 					setPlaybar(playbar + 0.005)
 				} else {
-					setPlaybar(0)
 					setPlaying(false)
-					return () => {
-						window.clearInterval(interval.current)
-					}
+					setPlaybar(0)
+					window.clearInterval(interval.current)
 				}
 			}, 10)
 		}

@@ -10,7 +10,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@vitejs/plugin-react-swc": "file:../node_modules/@vitejs/plugin-react-swc",
+		"@vitejs/plugin-react": "file:../node_modules/@vitejs/plugin-react",
 		"maxmsp-gui": "file:..",
 		"react": "file:../node_modules/react",
 		"react-dom": "file:../node_modules/react-dom",

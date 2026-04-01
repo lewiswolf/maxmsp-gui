@@ -14,7 +14,7 @@
 	height: 20px;
 	// width set by component
 	max-width: 100%;
-	background: #333;
+	background: utils.$background;
 
 	hr {
 		height: 2px;
@@ -24,18 +24,8 @@
 		top: 0;
 		bottom: 0;
 		left: 26px;
-		background: #808080;
+		background: utils.$foreground;
 		border: 0;
-	}
-
-	> svg {
-		height: 20px;
-		width: 20px;
-		margin: auto;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		pointer-events: none;
 	}
 
 	> div:first-of-type {
@@ -45,6 +35,7 @@
 		top: 0;
 		left: 0;
 		margin: 0;
+		background: utils.$background;
 
 		@include utils.focus;
 
@@ -57,6 +48,37 @@
 				height: inherit;
 				width: inherit;
 				pointer-events: none;
+				fill: utils.$accent;
+			}
+		}
+
+		&[data-state='mousedown'] {
+			background: utils.$background-gradient;
+		}
+
+		&[aria-disabled='true'] {
+			background: utils.$background;
+
+			svg {
+				fill: utils.$foreground;
+			}
+		}
+	}
+
+	> svg {
+		height: 20px;
+		width: 20px;
+		margin: auto;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		pointer-events: none;
+
+		path {
+			fill: utils.$accent;
+
+			&:nth-of-type(2) {
+				opacity: 0.4;
 			}
 		}
 	}
@@ -67,6 +89,7 @@
 		width: calc(100% - 25px);
 		padding: 0 5px 0 0;
 		float: right;
+		touch-action: none;
 
 		@include utils.focus;
 
@@ -93,6 +116,14 @@
 					@include thumb-style;
 				}
 			}
+		}
+
+		&[aria-disabled='true'] ~ svg path {
+			fill: utils.$foreground;
+		}
+
+		&[data-state='default'] ~ svg path:nth-of-type(2) {
+			fill: none;
 		}
 	}
 }

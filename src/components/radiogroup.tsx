@@ -1,3 +1,5 @@
+// biome-ignore-all lint/nursery/noJsxPropsBind : here prop bindings are used alongside Aray.map()
+
 // dependencies
 import { type FC, useEffect, useRef, useState } from 'react'
 
@@ -44,30 +46,6 @@ const RadioGroup: FC<{
 		indexFocused(i)
 		;(self.current?.childNodes[i] as HTMLElement).focus()
 	}
-	// this useEffect adds a touch event listener used to prevent bubbling.
-	useEffect(() => {
-		const touchstart = (e: TouchEvent): void => {
-			if (e.cancelable && self.current && e.targetTouches[0]) {
-				e.preventDefault()
-				let t: number | null = null
-				for (let i = 0; i < self.current.childNodes.length; i += 1) {
-					const b = (self.current.childNodes[i] as HTMLElement).getBoundingClientRect()
-					if (e.targetTouches[0].clientY > b.top && e.targetTouches[0].clientY < b.bottom) {
-						t = i + 1
-						break
-					}
-				}
-				if (t !== null) {
-					togglePressed(t)
-				}
-			}
-		}
-		self.current?.addEventListener('touchstart', touchstart)
-		const cleanup_self = self.current
-		return () => {
-			cleanup_self?.removeEventListener('touchstart', touchstart)
-		}
-	})
 
 	return (
 		<div aria-label={ariaLabel} className={style.radiogroup} ref={self} role='radiogroup'>
@@ -117,13 +95,13 @@ const RadioGroup: FC<{
 								isKeyDown(false)
 							}
 						}}
-						onMouseDown={(e) => {
+						onPointerDown={(e) => {
 							if (e.button === 0) {
 								togglePressed(_i)
 							}
 						}}
 					>
-						{!!item && (
+						{Boolean(item) && (
 							<p
 								style={{
 									lineHeight: spacing > 16 ? `${spacing.toString()}px` : '16px',
@@ -138,8 +116,8 @@ const RadioGroup: FC<{
 							style={{
 								background:
 									_i === index
-										? 'radial-gradient(18px circle at center,#cee5e8 50%,#333333 50%)'
-										: 'radial-gradient(18px circle at center,#595959 50%,#333333 50%)',
+										? 'radial-gradient(18px circle at center, rgb(206, 229, 232) 50%, rgb(51, 51, 51) 50%)'
+										: 'radial-gradient(18px circle at center, rgb(89, 89, 89) 50%, rgb(51, 51, 51) 50%)',
 							}}
 							tabIndex={-1}
 						>

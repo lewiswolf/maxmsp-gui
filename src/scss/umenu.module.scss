@@ -8,12 +8,13 @@
 	min-width: 40px;
 	text-align: left;
 	font-size: 13px;
-	color: #f7f7f7;
-	background: linear-gradient(to top, rgb(51 51 51) 0%, rgb(76 76 76) 100%);
+	color: utils.$white;
+	background: utils.$background-gradient;
 
 	@include utils.focus;
 
 	> div {
+		anchor-name: --umenu;
 		outline: 0;
 
 		p {
@@ -31,21 +32,27 @@
 			position: absolute;
 			top: 0;
 			right: 5px;
+
+			path {
+				fill: utils.$white;
+			}
 		}
 	}
 
 	ul {
 		height: fit-content;
+		max-width: max-content;
 		margin: 0;
 		padding: 0;
-		position: absolute;
-		top: 24px;
-		left: 0;
+		position-anchor: --umenu;
+		top: anchor(--umenu bottom);
+		left: anchor(--umenu right);
 		z-index: 10;
 		outline: 0;
 		list-style: none;
+		white-space: normal;
 		overflow: hidden;
-		background: #393939;
+		background: utils.$background-lighter;
 		border: 1px solid black;
 		border-radius: 4px;
 

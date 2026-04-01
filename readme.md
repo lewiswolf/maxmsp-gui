@@ -52,8 +52,8 @@ export default function App() {
 				setPlaying={true || false} // set onPlay externally
 				setValue={0} // initial/updated state, 0 to props.fidelity
 				width={200} // width of the slider in pixels
-				onPlay={(b: boolean) => console.log(b)}
 				onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
+				onPlay={(b: boolean) => console.log(b)}
 			/>
 
 			<MaxMSP.RadioGroup
