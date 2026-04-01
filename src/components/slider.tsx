@@ -3,7 +3,6 @@ import {
 	type FC,
 	type ChangeEvent,
 	type KeyboardEvent as ReactKeyboardEvent,
-	type PointerEvent as ReactPointerEvent,
 	type TouchEvent as ReactTouchEvent,
 	useCallback,
 	useEffect,
@@ -123,16 +122,11 @@ const Slider: FC<{
 				break
 		}
 	}
-	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-		e.currentTarget.setPointerCapture(e.pointerId)
-	}
-	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
+	const _onPointerUp = (): void => {
 		onChange(value / fidelity)
-		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-			e.currentTarget.releasePointerCapture(e.pointerId)
-		}
 	}
 	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>) => {
+		e.preventDefault()
 		if (self.current && e.targetTouches[0]) {
 			const rect = self.current.getBoundingClientRect()
 			const new_val = Math.max(
@@ -172,7 +166,6 @@ const Slider: FC<{
 					max={fidelity}
 					min={0}
 					onChange={_onChange}
-					onPointerDown={_onPointerDown}
 					onPointerUp={_onPointerUp}
 					onTouchMove={_onTouchMove}
 					style={{ background, width }}

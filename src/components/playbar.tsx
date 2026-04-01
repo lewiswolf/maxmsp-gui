@@ -171,20 +171,17 @@ const PlaybarSlider: FC<{
 				break
 		}
 	}
-	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-		e.currentTarget.setPointerCapture(e.pointerId)
+	const _onPointerDown = () => {
 		isMouseDown(true)
 	}
-	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
+	const _onPointerUp = (): void => {
 		isMouseDown(false)
-		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-			e.currentTarget.releasePointerCapture(e.pointerId)
-		}
 	}
 	const _onPointerCancel = (): void => {
 		isMouseDown(false)
 	}
 	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>) => {
+		e.preventDefault()
 		if (self.current && e.targetTouches[0]) {
 			const rect = self.current.getBoundingClientRect()
 			changeSlider(

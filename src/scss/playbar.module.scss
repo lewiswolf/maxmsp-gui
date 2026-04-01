@@ -89,6 +89,7 @@
 		width: calc(100% - 25px);
 		padding: 0 5px 0 0;
 		float: right;
+		touch-action: none;
 
 		@include utils.focus;
 

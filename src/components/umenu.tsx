@@ -165,7 +165,7 @@ const Umenu: FC<{
 							changeSelected(focus, true)
 						}
 					} else {
-						openDropdown(0)
+						openDropdown(null)
 					}
 				}
 				break
