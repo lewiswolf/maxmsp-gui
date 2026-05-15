@@ -11,13 +11,13 @@
 
 .slider {
 	@include utils.main;
+	@include utils.focus;
+
 	height: 24px;
 	width: fit-content;
 	max-width: 100%;
 	background: utils.$background-lighter;
 	touch-action: none;
-
-	@include utils.focus;
 
 	div {
 		height: inherit;

@@ -26,7 +26,7 @@ const Umenu: FC<{
 	items = [],
 	width = 100,
 	setValue = 0,
-	onChange = () => {
+	onChange = (): void => {
 		/**/
 	},
 }) => {
@@ -37,7 +37,7 @@ const Umenu: FC<{
 	const self = useRef<HTMLDivElement>(null)
 	// which toggle is pressed - state and prop
 	const [index, indexPressed] = useState<number>(setValue < items.length && setValue >= 0 ? setValue : 0)
-	useEffect(() => {
+	useEffect((): void => {
 		indexPressed((i) => (setValue < items.length && setValue >= 0 ? setValue : i))
 	}, [items, setValue])
 	// is the dropdown displayed
@@ -69,7 +69,7 @@ const Umenu: FC<{
 	}
 
 	// this useEffect adds global blurring and dropdown closing listeners.
-	useEffect(() => {
+	useEffect((): (() => void) => {
 		const isNotInViewport = (): void => {
 			if (dropdownVisible && self.current) {
 				const umenuDim = self.current.getBoundingClientRect()
@@ -121,7 +121,7 @@ const Umenu: FC<{
 			window.addEventListener('scroll', isNotInViewport)
 		}
 		const cleanup_self = self.current
-		return () => {
+		return (): void => {
 			if (cleanup_self) {
 				window.removeEventListener('mousedown', customBlur)
 				window.removeEventListener('resize', responsiveDropdown)
@@ -151,7 +151,7 @@ const Umenu: FC<{
 	}
 
 	// event handlers
-	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		switch (e.key) {
 			case 'Enter':
 			case ' ': {
@@ -213,13 +213,13 @@ const Umenu: FC<{
 				break
 		}
 	}
-	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		if ((e.key === 'Enter' || e.key === ' ') && keydown) {
 			e.preventDefault()
 			isKeyDown(false)
 		}
 	}
-	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
 			openDropdown(null)
 		}
@@ -257,16 +257,16 @@ const Umenu: FC<{
 					<li
 						aria-selected={i === index}
 						key={i.toString()}
-						onPointerEnter={() => {
+						onPointerEnter={(): void => {
 							setFocus(i)
 						}}
-						onPointerLeave={() => {
+						onPointerLeave={(): void => {
 							setFocus(null)
 						}}
-						onPointerDown={() => {
+						onPointerDown={(): void => {
 							setFocus(i)
 						}}
-						onPointerUp={() => {
+						onPointerUp={(): void => {
 							changeSelected(i, false)
 							setFocus(null)
 						}}

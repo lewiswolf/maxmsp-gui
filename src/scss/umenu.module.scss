@@ -2,6 +2,8 @@
 
 .umenu {
 	@include utils.main;
+	@include utils.focus;
+
 	height: 24px;
 	// width set by component
 	max-width: 100%;
@@ -10,8 +12,6 @@
 	font-size: 13px;
 	color: utils.$white;
 	background: utils.$background-gradient;
-
-	@include utils.focus;
 
 	> div {
 		anchor-name: --umenu;

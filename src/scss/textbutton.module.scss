@@ -2,10 +2,10 @@
 
 .textbutton {
 	@include utils.main;
+	@include utils.focus;
+
 	height: 24px;
 	width: fit-content;
-
-	@include utils.focus;
 
 	p {
 		height: 100%;

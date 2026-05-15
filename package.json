@@ -1,6 +1,6 @@
 {
 	"name": "maxmsp-gui",
-	"version": "2.6.0",
+	"version": "2.6.1",
 	"description": "React component library for stylised Max MSP GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "MIT",
@@ -22,32 +22,33 @@
 		"maxmsp"
 	],
 	"peerDependencies": {
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4"
+		"react": "^19.2.6",
+		"react-dom": "^19.2.6"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.10",
+		"@biomejs/biome": "^2.4.15",
 		"@eslint/js": "^10.0.1",
 		"@prettier/plugin-xml": "^3.4.2",
-		"@types/node": "^25.5.0",
+		"@types/node": "^25.8.0",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
-		"@vitejs/plugin-react": "^6.0.1",
-		"eslint": "^10.1.0",
+		"@vitejs/plugin-react": "^6.0.2",
+		"eslint": "^10.4.0",
+		"eslint-plugin-react-hooks": "^7.1.1",
 		"eslint-plugin-react-refresh": "^0.5.2",
 		"gh-pages": "^6.3.0",
-		"globals": "^17.4.0",
-		"prettier": "^3.8.1",
-		"sass-embedded": "^1.98.0",
-		"stylelint": "^17.6.0",
+		"globals": "^17.6.0",
+		"prettier": "^3.8.3",
+		"sass-embedded": "^1.99.0",
+		"stylelint": "^17.11.1",
 		"stylelint-config-standard-scss": "^17.0.0",
-		"typescript": "^6.0.2",
-		"typescript-eslint": "^8.58.0",
-		"vite": "^8.0.3",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.59.3",
+		"vite": "^8.0.13",
 		"vite-plugin-compression2": "^2.5.3",
-		"vite-plugin-css-injected-by-js": "^4.0.1",
-		"vite-plugin-dts": "^4.5.4",
-		"vite-plugin-svgr": "^5.0.0"
+		"vite-plugin-css-injected-by-js": "^5.0.1",
+		"vite-plugin-dts": "^5.0.0",
+		"vite-plugin-svgr": "^5.2.0"
 	},
 	"files": [
 		"dist"
@@ -88,8 +89,6 @@
 			"**/dist/**"
 		],
 		"rules": {
-			"declaration-empty-line-before": null,
-			"no-descending-specificity": null,
 			"property-no-vendor-prefix": null,
 			"scss/double-slash-comment-empty-line-before": null
 		}

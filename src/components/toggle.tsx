@@ -18,7 +18,7 @@ const Toggle: FC<{
 }> = ({
 	ariaLabel = 'toggle',
 	setValue = false,
-	onClick = () => {
+	onClick = (): void => {
 		/**/
 	},
 }) => {
@@ -28,7 +28,7 @@ const Toggle: FC<{
 
 	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(setValue)
-	useEffect(() => {
+	useEffect((): void => {
 		isPressed(setValue)
 	}, [setValue])
 	// keyboard event specific watch state
@@ -50,7 +50,7 @@ const Toggle: FC<{
 			isKeyDown(false)
 		}
 	}
-	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
 			isPressed(!pressed)
 			e.currentTarget.setPointerCapture(e.pointerId)

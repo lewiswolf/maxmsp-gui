@@ -30,7 +30,7 @@ const PlaybarToggle: FC<{
 
 	// is the toggle pressed - state and prop
 	const [playing, isPlaying] = useState<boolean>(setPlaying)
-	useEffect(() => {
+	useEffect((): void => {
 		isPlaying(setPlaying)
 	}, [setPlaying])
 	// mousedown state
@@ -54,7 +54,7 @@ const PlaybarToggle: FC<{
 			isMouseDown(false)
 		}
 	}
-	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
 			isMouseDown(true)
 			if (!inactive) {
@@ -104,7 +104,7 @@ const PlaybarSlider: FC<{
 	setValue: number
 	width: number
 	onChange: (x: number) => void
-}> = ({ ariaLabel, inactive, setValue, width, onChange }): JSX.Element => {
+}> = ({ ariaLabel, inactive, setValue, width, onChange }) => {
 	/*
 		The slider element of the playbar.
 	*/
@@ -113,15 +113,15 @@ const PlaybarSlider: FC<{
 	// dynamic width - state and prop
 	// this maintains that the svg is always positioned within the slider
 	const [stateWidth, updateWidth] = useState<number>(width)
-	useEffect(() => {
-		const computeWidth = () => {
+	useEffect((): (() => void) => {
+		const computeWidth = (): void => {
 			if (self.current?.parentElement) {
 				updateWidth(Math.min(width, self.current.parentElement.getBoundingClientRect().width))
 			}
 		}
 		window.addEventListener('resize', computeWidth)
 		computeWidth()
-		return () => {
+		return (): void => {
 			window.removeEventListener('resize', computeWidth)
 		}
 	}, [width])
@@ -129,18 +129,18 @@ const PlaybarSlider: FC<{
 	const [mousedown, isMouseDown] = useState<boolean>(false)
 	// slider value - state and prop
 	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
-	useEffect(() => {
+	useEffect((): void => {
 		if (!mousedown) {
 			updateValue(Math.max(Math.min(setValue, 1), 0) * fidelity)
 		}
 	}, [mousedown, setValue])
 	// onChange event with prop
-	const changeSlider = (v: number) => {
+	const changeSlider = (v: number): void => {
 		updateValue(v)
 		onChange(v / fidelity)
 	}
 	// event handlers
-	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		switch (e.key) {
 			case 'Up':
 			case 'ArrowUp':
@@ -171,7 +171,7 @@ const PlaybarSlider: FC<{
 				break
 		}
 	}
-	const _onPointerDown = () => {
+	const _onPointerDown = (): void => {
 		isMouseDown(true)
 	}
 	const _onPointerUp = (): void => {
@@ -180,7 +180,7 @@ const PlaybarSlider: FC<{
 	const _onPointerCancel = (): void => {
 		isMouseDown(false)
 	}
-	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>) => {
+	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>): void => {
 		e.preventDefault()
 		if (self.current && e.targetTouches[0]) {
 			const rect = self.current.getBoundingClientRect()
@@ -195,7 +195,7 @@ const PlaybarSlider: FC<{
 			)
 		}
 	}
-	const _onChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const _onChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		changeSlider(Number(e.target.value))
 	}
 
@@ -259,10 +259,10 @@ const Playbar: FC<{
 	setPlaying = false,
 	setValue = 0,
 	width = 200,
-	onChange = () => {
+	onChange = (): void => {
 		/**/
 	},
-	onPlay = () => {
+	onPlay = (): void => {
 		/**/
 	},
 }): JSX.Element => (

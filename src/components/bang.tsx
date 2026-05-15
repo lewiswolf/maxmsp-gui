@@ -12,7 +12,7 @@ const Bang: FC<{
 }> = ({
 	ariaLabel = 'bang',
 	ariaPressed = null,
-	onClick = () => {
+	onClick = (): void => {
 		/* */
 	},
 }) => {
@@ -38,7 +38,7 @@ const Bang: FC<{
 			isMouseDown(false)
 		}
 	}
-	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
 			isMouseDown(true)
 			e.currentTarget.setPointerCapture(e.pointerId)

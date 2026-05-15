@@ -2,10 +2,10 @@
 
 .toggle {
 	@include utils.main;
+	@include utils.focus;
+
 	height: 24px;
 	width: 24px;
-
-	@include utils.focus;
 
 	svg {
 		outline: 0;

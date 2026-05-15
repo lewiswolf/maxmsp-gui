@@ -2,10 +2,10 @@
 
 .ezdac {
 	@include utils.main;
+	@include utils.focus;
+
 	height: 45px;
 	width: 45px;
-
-	@include utils.focus;
 
 	svg {
 		outline: 0;

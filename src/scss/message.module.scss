@@ -2,14 +2,14 @@
 
 .message {
 	@include utils.main;
+	@include utils.focus;
+
 	height: fit-content;
 	min-height: 24px;
 	width: fit-content;
 	min-width: 29.5px;
 	background: utils.$background-gradient;
 	border-radius: 5px;
-
-	@include utils.focus;
 
 	p {
 		margin: auto 0;

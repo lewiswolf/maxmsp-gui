@@ -23,7 +23,7 @@ const Slider: FC<{
 	ariaLabel = 'slider',
 	setValue = 0,
 	width = 200,
-	onChange = () => {
+	onChange = (): void => {
 		/**/
 	},
 }) => {
@@ -77,12 +77,12 @@ const Slider: FC<{
 		[default_background, SliderColors],
 	)
 	// what is the value - prop
-	useEffect(() => {
+	useEffect((): void => {
 		colourAndState(Math.max(Math.min(setValue, 1), 0) * fidelity)
 	}, [setValue, colourAndState])
 
 	// event handlers
-	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		switch (e.key) {
 			case 'Up':
 			case 'ArrowUp':
@@ -125,7 +125,7 @@ const Slider: FC<{
 	const _onPointerUp = (): void => {
 		onChange(value / fidelity)
 	}
-	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>) => {
+	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>): void => {
 		e.preventDefault()
 		if (self.current && e.targetTouches[0]) {
 			const rect = self.current.getBoundingClientRect()
@@ -137,7 +137,7 @@ const Slider: FC<{
 			onChange(new_val / fidelity)
 		}
 	}
-	const _onChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const _onChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		const new_val = Number(e.target.value)
 		colourAndState(new_val)
 		onChange(new_val / fidelity)

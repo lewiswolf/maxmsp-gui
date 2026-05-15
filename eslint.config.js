@@ -1,7 +1,7 @@
 import eslint from '@eslint/js'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
-// import reactHooks from 'eslint-plugin-react-hooks'
+import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
@@ -12,7 +12,7 @@ export default defineConfig(
 			eslint.configs.all,
 			tseslint.configs.strictTypeChecked,
 			tseslint.configs.stylisticTypeChecked,
-			// reactHooks.configs.flat.recommended,
+			reactHooks.configs.flat['recommended-latest'],
 			reactRefresh.configs.vite,
 		],
 		languageOptions: {
@@ -40,6 +40,7 @@ export default defineConfig(
 			'no-underscore-dangle': 'off',
 			'no-void': ['error', { allowAsStatement: true }],
 			'one-var': 'off',
+			'react-hooks/set-state-in-effect': 'off',
 			'sort-imports': 'off',
 		},
 	},
