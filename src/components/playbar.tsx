@@ -1,7 +1,6 @@
 // dependencies
 import {
 	type FC,
-	type JSX,
 	type ChangeEvent,
 	type KeyboardEvent as ReactKeyboardEvent,
 	type PointerEvent as ReactPointerEvent,
@@ -23,7 +22,7 @@ const PlaybarToggle: FC<{
 	inactive: boolean
 	setPlaying: boolean
 	onPlay: (b: boolean) => void
-}> = ({ ariaLabel, inactive, setPlaying, onPlay }): JSX.Element => {
+}> = ({ ariaLabel, inactive, setPlaying, onPlay }) => {
 	/*
 		The toggle element of the playbar.
 	*/
@@ -265,7 +264,7 @@ const Playbar: FC<{
 	onPlay = (): void => {
 		/**/
 	},
-}): JSX.Element => (
+}) => (
 	<div className={style.playbar} style={{ width: Math.max(width, 100) }}>
 		<PlaybarToggle ariaLabel={ariaLabel} inactive={inactive} setPlaying={setPlaying} onPlay={onPlay} />
 		<PlaybarSlider
