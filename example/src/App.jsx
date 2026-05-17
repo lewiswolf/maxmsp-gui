@@ -1,5 +1,6 @@
 // biome-ignore-all lint/nursery/noJsxPropsBind : this example file doesn't require this design pattern
-// biome-ignore-all lint/performance/noNamespaceImport : allow here for clarity of example
+// biome-ignore-all lint/performance/noNamespaceImport : allowed here for clarity of example
+// biome-ignore-all lint/style/noJsxLiterals : template literals are used for the production website
 
 // dependencies
 import { useEffect, useRef, useState } from 'react'

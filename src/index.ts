@@ -1,3 +1,5 @@
+// biome-ignore-all lint/performance/noBarrelFile : this is by design of the library
+
 export { default as Bang } from './components/bang.tsx'
 export { default as Ezdac } from './components/ezdac.tsx'
 export { default as Message } from './components/message.tsx'
