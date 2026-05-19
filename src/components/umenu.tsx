@@ -242,7 +242,7 @@ const Umenu: FC<{
 		>
 			<div onPointerDown={_onPointerDown} tabIndex={-1}>
 				<p>{items[index]}</p>
-				<UmenuSVG />
+				<UmenuSVG role='img' />
 			</div>
 			<ul
 				aria-label={`${ariaLabel}: ${items[index] ?? 'nothing'} selected`}

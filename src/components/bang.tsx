@@ -1,3 +1,5 @@
+// biome-ignore-all lint/a11y/useSemanticElements : <div> is used here to remain consistent with other exported components
+
 // dependencies
 import { type FC, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, useState } from 'react'
 
@@ -70,7 +72,7 @@ const Bang: FC<{
 			role='button'
 			tabIndex={0}
 		>
-			<SVG data-state={mousedown ? 'mousedown' : 'default'} tabIndex={-1} />
+			<SVG data-state={mousedown ? 'mousedown' : 'default'} role='img' tabIndex={-1} />
 		</div>
 	)
 }

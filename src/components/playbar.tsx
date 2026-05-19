@@ -90,6 +90,7 @@ const PlaybarToggle: FC<{
 		>
 			<div tabIndex={-1}>
 				{createElement(!inactive && playing ? PauseButtonSVG : PlayButtonSVG, {
+					role: 'img',
 					tabIndex: -1,
 				})}
 			</div>
@@ -236,6 +237,7 @@ const PlaybarSlider: FC<{
 				</div>
 			</div>
 			<PlaySliderSVG
+				role='img'
 				style={{
 					left: `${((stateWidth - 37) * (value / fidelity) + 16).toString()}px`,
 				}}

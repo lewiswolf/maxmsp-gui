@@ -1,3 +1,4 @@
+// biome-ignore-all lint/a11y/useSemanticElements : <div> is used instead of <input type=radio /> to have more control over styling and interaction
 // biome-ignore-all lint/nursery/noJsxPropsBind : here prop bindings are used alongside Aray.map()
 
 // dependencies
@@ -121,7 +122,7 @@ const RadioGroup: FC<{
 							}}
 							tabIndex={-1}
 						>
-							<RadioGroupSVG />
+							<RadioGroupSVG role='img' />
 						</div>
 					</div>
 				)

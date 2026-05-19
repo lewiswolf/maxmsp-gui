@@ -1,3 +1,5 @@
+// biome-ignore-all lint/a11y/useSemanticElements : <div> is used here to remain consistent with other exported components
+
 // dependencies
 import { type FC, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, useState } from 'react'
 

@@ -75,7 +75,7 @@ const Toggle: FC<{
 			role='switch'
 			tabIndex={0}
 		>
-			<SVG tabIndex={-1} />
+			<SVG role='img' tabIndex={-1} />
 		</div>
 	)
 }

@@ -10,7 +10,7 @@ const object: FC<{
 	text?: string
 }> = ({ inactive = false, text = '' }) => (
 	<div className={style.object} data-state={inactive ? 'inactive' : 'default'}>
-		{!inactive && text && <SVG />}
+		{!inactive && text && <SVG role='img' />}
 		<p>{text}</p>
 	</div>
 )
