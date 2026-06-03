@@ -72,7 +72,7 @@ const Bang: FC<{
 			role='button'
 			tabIndex={0}
 		>
-			<SVG data-state={mousedown ? 'mousedown' : 'default'} role='img' tabIndex={-1} />
+			<SVG className={mousedown ? style.mousedown : ''} role='img' tabIndex={-1} />
 		</div>
 	)
 }

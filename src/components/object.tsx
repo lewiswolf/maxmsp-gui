@@ -9,7 +9,7 @@ const object: FC<{
 	inactive?: boolean
 	text?: string
 }> = ({ inactive = false, text = '' }) => (
-	<div className={style.object} data-state={inactive ? 'inactive' : 'default'}>
+	<div className={[style.object, inactive && style.inactive].filter(Boolean).join(' ')}>
 		{!inactive && text && <SVG role='img' />}
 		<p>{text}</p>
 	</div>

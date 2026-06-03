@@ -1,5 +1,6 @@
 // biome-ignore-all lint/a11y/useSemanticElements : <div> is used instead of <input type=radio /> to have more control over styling and interaction
 // biome-ignore-all lint/nursery/noJsxPropsBind : here prop bindings are used alongside Aray.map()
+// biome-ignore-all lint/nursery/noInlineStyles : inline styling is here used to curate a dynamic composition
 
 // dependencies
 import { type FC, type JSX, useEffect, useRef, useState } from 'react'
@@ -20,7 +21,7 @@ const RadioGroup: FC<{
 	spacing = 20,
 	setValue = 0,
 	onClick = (): void => {
-		/**/
+		/* */
 	},
 }) => {
 	/*
@@ -113,15 +114,7 @@ const RadioGroup: FC<{
 								{item}
 							</p>
 						)}
-						<div
-							style={{
-								background:
-									_i === index
-										? 'radial-gradient(18px circle at center, rgb(206, 229, 232) 50%, rgb(51, 51, 51) 50%)'
-										: 'radial-gradient(18px circle at center, rgb(89, 89, 89) 50%, rgb(51, 51, 51) 50%)',
-							}}
-							tabIndex={-1}
-						>
+						<div className={_i === index ? style.clicked : ''} tabIndex={-1}>
 							<RadioGroupSVG role='img' />
 						</div>
 					</div>

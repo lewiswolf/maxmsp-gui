@@ -10,8 +10,8 @@
 	min-width: 40px;
 	text-align: left;
 	font-size: 13px;
-	color: utils.$white;
 	background: utils.$background-gradient;
+	color: utils.$white;
 
 	> div {
 		anchor-name: --umenu;
@@ -49,12 +49,17 @@
 		left: anchor(--umenu right);
 		z-index: 10;
 		outline: 0;
+		display: none;
 		list-style: none;
 		white-space: normal;
 		overflow: hidden;
 		background: utils.$background-lighter;
 		border: 1px solid black;
 		border-radius: 4px;
+
+		&.visible {
+			display: block;
+		}
 
 		li {
 			min-height: 13px;
@@ -63,6 +68,11 @@
 			overflow-wrap: anywhere;
 			text-align: justify;
 			outline: 0;
+			background: inherit;
+
+			&.focused {
+				background: rgb(76 76 76);
+			}
 		}
 	}
 }

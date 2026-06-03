@@ -6,6 +6,8 @@
 
 	height: 24px;
 	width: fit-content;
+	background: utils.$background-gradient;
+	color: utils.$accent;
 
 	p {
 		height: 100%;
@@ -21,5 +23,38 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		outline: 0;
+	}
+
+	&.mode {
+		color: utils.$foreground;
+	}
+
+	&.pressed {
+		color: utils.$accent;
+	}
+
+	&.hover {
+		background: linear-gradient(to top, utils.$background 0%, rgb(81 81 81) 100%);
+	}
+
+	&.hover.mousedown {
+		color: rgb(150 170 172);
+	}
+
+	&.hover.mousedown.pressed {
+		color: rgb(108 108 108);
+	}
+
+	&.inactive {
+		background: linear-gradient(to top, rgb(138 138 138) 0%, rgb(151 151 151) 100%);
+		color: rgb(175 186 187);
+	}
+
+	&.inactive.mode {
+		color: rgb(135 135 135);
+	}
+
+	&.inactive.mode.pressed {
+		color: rgb(175 186 187);
 	}
 }

@@ -1,6 +1,3 @@
-// biome-ignore-all lint/style/noNestedTernary : if it ain't broke don't fix it
-/* eslint-disable no-nested-ternary */
-
 // dependencies
 import {
 	type FC,
@@ -33,10 +30,10 @@ const TextButton: FC<{
 	text = 'Button',
 	toggleText = 'Button On',
 	onChange = (): void => {
-		/**/
+		/* */
 	},
 	onClick = (): void => {
-		/**/
+		/* */
 	},
 }) => {
 	/*
@@ -44,33 +41,6 @@ const TextButton: FC<{
 	*/
 
 	const self = useRef<HTMLDivElement>(null)
-
-	// declare button colours
-	const TextColours: {
-		clicked: string
-		inactive: string
-		neutral: string
-		toggleOff: string
-		toggleOffClicked: string
-		toggleOffInactive: string
-	} = {
-		clicked: 'rgb(150 170 172)',
-		inactive: 'rgb(175 186 187)',
-		neutral: 'rgb(206 229 232)',
-		toggleOff: 'rgb(128 128 128)',
-		toggleOffClicked: 'rgb(108 108 108)',
-		toggleOffInactive: 'rgb(135 135 135)',
-	}
-	const BackgroundGradients: {
-		hover: string
-		inactive: string
-		neutral: string
-	} = {
-		hover: 'linear-gradient(to top, rgb(51 51 51) 0%, rgb(81 81 81) 100%)',
-		inactive: 'linear-gradient(to top, rgb(138 138 138) 0%, rgb(151 151 151) 100%)',
-		neutral: 'linear-gradient(to top, rgb(51 51 51) 0%, rgb(76 76 76) 100%)',
-	}
-
 	// is the toggle pressed - state and prop
 	const [pressed, isPressed] = useState<boolean>(mode && setValue)
 	useEffect((): void => {
@@ -166,40 +136,19 @@ const TextButton: FC<{
 				role: mode ? 'switch' : 'button',
 				tabIndex: 0,
 			})}
-			className={style.textbutton}
+			className={[
+				style.textbutton,
+				hover && style.hover,
+				mousedown && style.mousedown,
+				pressed && style.pressed,
+				mode && style.mode,
+				inactive && style.inactive,
+			]
+				.filter(Boolean)
+				.join(' ')}
 			ref={self}
-			style={{
-				background: inactive
-					? BackgroundGradients.inactive
-					: hover
-						? BackgroundGradients.hover
-						: BackgroundGradients.neutral,
-			}}
 		>
-			<p
-				style={{
-					color: inactive
-						? pressed
-							? TextColours.inactive
-							: mode
-								? TextColours.toggleOffInactive
-								: TextColours.inactive
-						: mousedown && hover
-							? pressed
-								? mode
-									? TextColours.toggleOffClicked
-									: TextColours.clicked
-								: TextColours.clicked
-							: pressed
-								? TextColours.neutral
-								: mode
-									? TextColours.toggleOff
-									: TextColours.neutral,
-				}}
-				tabIndex={-1}
-			>
-				{display_text}
-			</p>
+			<p tabIndex={-1}>{display_text}</p>
 		</div>
 	)
 }

@@ -18,9 +18,11 @@
 	"assist": {
 		"actions": {
 			"source": {
+				"noDuplicateClasses": "off",
 				"organizeImports": "on",
-				"useSortedKeys": "on",
 				"useSortedAttributes": "on",
+				"useSortedInterfaceMembers": "on",
+				"useSortedKeys": "on",
 				"useSortedProperties": "on"
 			}
 		}
@@ -190,7 +192,7 @@
 				"noIdenticalTestTitle": "error",
 				"noImpliedEval": "error",
 				"noIncrementDecrement": "error",
-				"noInlineStyles": "off",
+				"noInlineStyles": "error",
 				"noJsxLeakedDollar": "error",
 				"noJsxNamespace": "error",
 				"noJsxPropsBind": "error",
@@ -504,8 +506,8 @@
 	"formatter": {
 		"enabled": true,
 		"attributePosition": "auto",
-		"bracketSpacing": true,
 		"bracketSameLine": false,
+		"bracketSpacing": true,
 		"expand": null,
 		"formatWithErrors": false,
 		"indentStyle": "tab",

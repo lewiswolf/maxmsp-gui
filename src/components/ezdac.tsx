@@ -19,7 +19,7 @@ const Ezdac: FC<{
 	ariaLabel = 'ezdac',
 	setValue = false,
 	onClick = (): void => {
-		/**/
+		/* */
 	},
 }) => {
 	/*

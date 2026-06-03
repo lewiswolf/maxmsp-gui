@@ -16,7 +16,7 @@ const Message: FC<{
 	ariaPressed = null,
 	text = '',
 	onClick = (): void => {
-		/**/
+		/* */
 	},
 }) => {
 	/*
@@ -73,7 +73,7 @@ const Message: FC<{
 			role='button'
 			tabIndex={0}
 		>
-			<p data-state={mousedown ? 'mousedown' : 'default'} tabIndex={-1}>
+			<p className={mousedown ? style.mousedown : ''} tabIndex={-1}>
 				{text}
 			</p>
 		</div>

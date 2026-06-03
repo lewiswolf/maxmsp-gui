@@ -38,7 +38,7 @@
 		color: utils.$white;
 	}
 
-	&[data-state='inactive'] {
+	&.inactive {
 		background: utils.$foreground-inactive;
 
 		p {

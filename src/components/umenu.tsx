@@ -1,5 +1,6 @@
 // biome-ignore-all lint/a11y/noNoninteractiveElementToInteractiveRole : <ul /> and <li /> works way better than <select /> and <option />
 // biome-ignore-all lint/nursery/noJsxPropsBind : prop bindings are here used in conjunction with Array.map()
+// biome-ignore-all lint/nursery/noInlineStyles : inline styling is here used to curate a dynamic width
 
 // dependencies
 import {
@@ -27,7 +28,7 @@ const Umenu: FC<{
 	width = 100,
 	setValue = 0,
 	onChange = (): void => {
-		/**/
+		/* */
 	},
 }) => {
 	/*
@@ -227,9 +228,6 @@ const Umenu: FC<{
 
 	return (
 		<div
-			className={style.umenu}
-			ref={self}
-			style={{ width: `${Math.max(50, width).toString()}px` }}
 			{...(items.length > 0 && {
 				'aria-expanded': dropdownVisible,
 				'aria-haspopup': 'listbox',
@@ -239,23 +237,25 @@ const Umenu: FC<{
 				role: 'button',
 				tabIndex: 0,
 			})}
+			className={style.umenu}
+			ref={self}
+			style={{ width: `${Math.max(50, width).toString()}px` }}
 		>
 			<div onPointerDown={_onPointerDown} tabIndex={-1}>
 				<p>{items[index]}</p>
 				<UmenuSVG role='img' />
 			</div>
 			<ul
+				className={dropdownVisible && items.length > 0 ? style.visible : ''}
 				aria-label={`${ariaLabel}: ${items[index] ?? 'nothing'} selected`}
 				role='listbox'
-				style={{
-					display: dropdownVisible && items.length > 0 ? 'block' : 'none',
-					width: dropdownWidth,
-				}}
+				style={{ width: dropdownWidth }}
 				tabIndex={-1}
 			>
 				{items.map((item, i) => (
 					<li
 						aria-selected={i === index}
+						className={focus === i ? style.focused : ''}
 						key={i.toString()}
 						onPointerEnter={(): void => {
 							setFocus(i)
@@ -271,9 +271,6 @@ const Umenu: FC<{
 							setFocus(null)
 						}}
 						role='option'
-						style={{
-							background: focus === i ? 'rgb(76, 76, 76)' : 'inherit',
-						}}
 						tabIndex={-1}
 					>
 						{item}

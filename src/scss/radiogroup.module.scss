@@ -37,8 +37,12 @@
 			width: 20.1px;
 			display: grid;
 			position: relative;
-			background: utils.$background;
+			background: radial-gradient(18px circle at center, utils.$negative-space 50%, utils.$background 50%);
 			outline: 0;
+
+			&.clicked {
+				background: radial-gradient(18px circle at center, utils.$accent 50%, utils.$background 50%);
+			}
 
 			svg {
 				height: 20px;
