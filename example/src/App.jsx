@@ -1,4 +1,4 @@
-// biome-ignore-all lint/nursery/noJsxPropsBind : this example file doesn't require this design pattern
+// biome-ignore-all lint/performance/noJsxPropsBind : this example file doesn't require this design pattern
 // biome-ignore-all lint/performance/noNamespaceImport : allowed here for clarity of example
 // biome-ignore-all lint/style/noJsxLiterals : template literals are used for the production website
 
@@ -40,7 +40,7 @@ export default function App() {
 			<MaxMSP.Message text='text' />
 			<MaxMSP.Object text='text' />
 			<MaxMSP.Playbar
-				setPlaying={playing}
+				isPlaying={playing}
 				setValue={playbar}
 				onChange={(x) => {
 					setPlaybar(x)
@@ -51,7 +51,7 @@ export default function App() {
 			/>
 			<MaxMSP.RadioGroup />
 			<MaxMSP.Slider />
-			<div className='textbuttons'>
+			<div>
 				<MaxMSP.TextButton mode={false} />
 				<MaxMSP.TextButton mode={true} />
 			</div>

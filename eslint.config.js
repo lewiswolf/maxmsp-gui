@@ -1,17 +1,19 @@
-import eslint from '@eslint/js'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import js from '@eslint/js'
 import globals from 'globals'
+import react from '@eslint-react/eslint-plugin'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import ts from 'typescript-eslint'
 
 export default defineConfig(
 	globalIgnores(['**/dist', '**/unused']),
 	{
 		extends: [
-			eslint.configs.all,
-			tseslint.configs.strictTypeChecked,
-			tseslint.configs.stylisticTypeChecked,
+			js.configs.all,
+			ts.configs.strictTypeChecked,
+			ts.configs.stylisticTypeChecked,
+			react.configs['strict-type-checked'],
 			reactHooks.configs.flat['recommended-latest'],
 			reactRefresh.configs.vite,
 		],
@@ -23,6 +25,8 @@ export default defineConfig(
 			},
 		},
 		rules: {
+			'@eslint-react/naming-convention-ref-name': 'off',
+			'@eslint-react/set-state-in-effect': 'off',
 			'@typescript-eslint/consistent-type-definitions': 'off',
 			'@typescript-eslint/no-unnecessary-type-arguments': 'off',
 			'@typescript-eslint/non-nullable-type-assertion-style': 'off',
@@ -45,7 +49,7 @@ export default defineConfig(
 		},
 	},
 	{
-		extends: [tseslint.configs.disableTypeChecked],
+		extends: [ts.configs.disableTypeChecked, react.configs['disable-type-checked']],
 		files: ['**/*.js', '**/*.jsx'],
 		languageOptions: { globals: globals.browser },
 	},

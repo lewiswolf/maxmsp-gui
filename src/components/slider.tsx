@@ -16,19 +16,17 @@ import {
 // src
 import style from '../scss/slider.module.scss'
 
+// constexpr
+const _defaultVoidFunction = (): void => {
+	/* */
+}
+
 const Slider: FC<{
 	ariaLabel?: string
 	setValue?: number
 	width?: number
 	onChange?: (x: number) => void
-}> = ({
-	ariaLabel = 'slider',
-	setValue = 0,
-	width = 200,
-	onChange = (): void => {
-		/* */
-	},
-}) => {
+}> = ({ ariaLabel = 'slider', setValue = 0, width = 200, onChange = _defaultVoidFunction }) => {
 	/*
 		[slider]
 	*/
@@ -51,29 +49,29 @@ const Slider: FC<{
 
 	// component states
 	const self = useRef<HTMLDivElement>(null)
-	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
+	const [position, setPosition] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
 	const [background, setBackground] = useState<string>(default_background)
 	// declare slider colour update function
 	const colourAndState = useCallback(
-		(new_value: number): void => {
-			if (new_value === 0) {
+		(new_position: number): void => {
+			if (new_position === 0) {
 				setBackground(default_background)
-				updateValue(0)
+				setPosition(0)
 			} else if (self.current) {
 				const sliderWidth = self.current.getBoundingClientRect().width - 10
-				const position = ((sliderWidth - 6) * new_value) / fidelity
+				const _position = ((sliderWidth - 6) * new_position) / fidelity
 				setBackground(`linear-gradient(90deg,
 					${SliderColors.negative}, 
 					${SliderColors.negative} 0px, 
 					${SliderColors.positive} 0px, 
-					${SliderColors.positive} ${(position - 1).toString()}px, 
-					${SliderColors.negative} ${(position - 1).toString()}px,
-					${SliderColors.negative} ${position.toString()}px,
-					${SliderColors.positive} ${position.toString()}px,
-					${SliderColors.positive} ${(position + 6).toString()}px,
-					${SliderColors.negative} ${(position + 6).toString()}px
+					${SliderColors.positive} ${(_position - 1).toString()}px, 
+					${SliderColors.negative} ${(_position - 1).toString()}px,
+					${SliderColors.negative} ${_position.toString()}px,
+					${SliderColors.positive} ${_position.toString()}px,
+					${SliderColors.positive} ${(_position + 6).toString()}px,
+					${SliderColors.negative} ${(_position + 6).toString()}px
 					)`)
-				updateValue(new_value)
+				setPosition(new_position)
 			}
 		},
 		[default_background, SliderColors],
@@ -91,7 +89,7 @@ const Slider: FC<{
 			case 'Right':
 			case 'ArrowRight': {
 				e.preventDefault()
-				const new_val = Math.min(Math.round(value + fidelity * 0.01), fidelity)
+				const new_val = Math.min(Math.round(position + fidelity * 0.01), fidelity)
 				colourAndState(new_val)
 				onChange(new_val / fidelity)
 				break
@@ -101,21 +99,21 @@ const Slider: FC<{
 			case 'Left':
 			case 'ArrowLeft': {
 				e.preventDefault()
-				const new_val = Math.max(Math.round(value - fidelity * 0.01), 0)
+				const new_val = Math.max(Math.round(position - fidelity * 0.01), 0)
 				colourAndState(new_val)
 				onChange(new_val / fidelity)
 				break
 			}
 			case 'PageUp': {
 				e.preventDefault()
-				const new_val = Math.min(Math.round(value + fidelity * 0.1), fidelity)
+				const new_val = Math.min(Math.round(position + fidelity * 0.1), fidelity)
 				colourAndState(new_val)
 				onChange(new_val / fidelity)
 				break
 			}
 			case 'PageDown': {
 				e.preventDefault()
-				const new_val = Math.max(Math.round(value - fidelity * 0.1), 0)
+				const new_val = Math.max(Math.round(position - fidelity * 0.1), 0)
 				colourAndState(new_val)
 				onChange(new_val / fidelity)
 				break
@@ -125,7 +123,7 @@ const Slider: FC<{
 		}
 	}
 	const _onPointerUp = (): void => {
-		onChange(value / fidelity)
+		onChange(position / fidelity)
 	}
 	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>): void => {
 		e.preventDefault()
@@ -151,7 +149,7 @@ const Slider: FC<{
 			aria-orientation='horizontal'
 			aria-valuemax={fidelity}
 			aria-valuemin={0}
-			aria-valuenow={value}
+			aria-valuenow={position}
 			className={style.slider}
 			onKeyDown={_onKeyDown}
 			ref={self}
@@ -164,7 +162,7 @@ const Slider: FC<{
 					aria-orientation='horizontal'
 					aria-valuemax={fidelity}
 					aria-valuemin={0}
-					aria-valuenow={value}
+					aria-valuenow={position}
 					max={fidelity}
 					min={0}
 					onChange={_onChange}
@@ -173,7 +171,7 @@ const Slider: FC<{
 					style={{ background, width }}
 					tabIndex={-1}
 					type='range'
-					value={value}
+					value={position}
 				/>
 			</div>
 		</div>

@@ -6,56 +6,54 @@ import { type FC, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as
 // src
 import style from '../scss/message.module.scss'
 
+// constexpr
+const _defaultVoidFunction = (): void => {
+	/* */
+}
+
 const Message: FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
 	text?: string
 	onClick?: () => void
-}> = ({
-	ariaLabel = 'message',
-	ariaPressed = null,
-	text = '',
-	onClick = (): void => {
-		/* */
-	},
-}) => {
+}> = ({ ariaLabel = 'message', ariaPressed = null, text = '', onClick = _defaultVoidFunction }) => {
 	/*
 		[message]
 	*/
 
 	// mousedown state
-	const [mousedown, isMouseDown] = useState<boolean>(false)
+	const [mouse_down, setMouseDown] = useState<boolean>(false)
 	// event handlers
 	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault()
-			if (!mousedown) {
-				isMouseDown(true)
+			if (!mouse_down) {
+				setMouseDown(true)
 				onClick()
 			}
 		}
 	}
 	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
-		if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
+		if ((e.key === 'Enter' || e.key === ' ') && mouse_down) {
 			e.preventDefault()
-			isMouseDown(false)
+			setMouseDown(false)
 		}
 	}
 	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
-			isMouseDown(true)
+			setMouseDown(true)
 			e.currentTarget.setPointerCapture(e.pointerId)
 			onClick()
 		}
 	}
 	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
-		isMouseDown(false)
+		setMouseDown(false)
 		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
 			e.currentTarget.releasePointerCapture(e.pointerId)
 		}
 	}
 	const _onPointerCancel = (): void => {
-		isMouseDown(false)
+		setMouseDown(false)
 	}
 
 	return (
@@ -73,7 +71,7 @@ const Message: FC<{
 			role='button'
 			tabIndex={0}
 		>
-			<p className={mousedown ? style.mousedown : ''} tabIndex={-1}>
+			<p className={mouse_down ? style.mousedown : ''} tabIndex={-1}>
 				{text}
 			</p>
 		</div>

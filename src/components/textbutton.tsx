@@ -11,6 +11,11 @@ import {
 // src
 import style from '../scss/textbutton.module.scss'
 
+// constexpr
+const _defaultVoidFunction = (): void => {
+	/* */
+}
+
 const TextButton: FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
@@ -29,12 +34,8 @@ const TextButton: FC<{
 	setValue = false,
 	text = 'Button',
 	toggleText = 'Button On',
-	onChange = (): void => {
-		/* */
-	},
-	onClick = (): void => {
-		/* */
-	},
+	onChange = _defaultVoidFunction,
+	onClick = _defaultVoidFunction,
 }) => {
 	/*
 		[textbutton]
@@ -42,23 +43,23 @@ const TextButton: FC<{
 
 	const self = useRef<HTMLDivElement>(null)
 	// is the toggle pressed - state and prop
-	const [pressed, isPressed] = useState<boolean>(mode && setValue)
+	const [pressed, setPressed] = useState<boolean>(mode && setValue)
 	useEffect((): void => {
-		isPressed(mode && setValue)
+		setPressed(mode && setValue)
 	}, [mode, setValue])
 	// button interactions
 	const [hover, setHover] = useState<boolean>(false)
-	const [mousedown, setMousedown] = useState<boolean>(false)
+	const [mouse_down, setMouseDown] = useState<boolean>(false)
 	// style methods
 	const display_text = ((): string => {
 		if (mode) {
 			if (pressed) {
-				if (mousedown && hover) {
+				if (mouse_down && hover) {
 					return text
 				}
 				return toggleText
 			}
-			if (mousedown && hover) {
+			if (mouse_down && hover) {
 				return toggleText
 			}
 		}
@@ -67,7 +68,7 @@ const TextButton: FC<{
 
 	const pressButton = (new_value: boolean): void => {
 		// press button
-		isPressed(new_value)
+		setPressed(new_value)
 		onClick()
 		if (mode) {
 			onChange(new_value)
@@ -78,28 +79,28 @@ const TextButton: FC<{
 	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault()
-			if (!mousedown) {
+			if (!mouse_down) {
 				setHover(true)
-				setMousedown(true)
+				setMouseDown(true)
 			}
 		}
 	}
 	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
-		if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
+		if ((e.key === 'Enter' || e.key === ' ') && mouse_down) {
 			e.preventDefault()
 			setHover(false)
-			setMousedown(false)
+			setMouseDown(false)
 			pressButton(mode && !pressed)
 		}
 	}
 	const _onPointerCancel = (): void => {
 		setHover(false)
-		setMousedown(false)
+		setMouseDown(false)
 	}
 	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
 			setHover(true)
-			setMousedown(true)
+			setMouseDown(true)
 		}
 	}
 	const _onPointerEnter = (): void => {
@@ -110,7 +111,7 @@ const TextButton: FC<{
 	}
 	const _onPointerUp = (): void => {
 		setHover(false)
-		setMousedown(false)
+		setMouseDown(false)
 		pressButton(mode && !pressed)
 	}
 
@@ -139,7 +140,7 @@ const TextButton: FC<{
 			className={[
 				style.textbutton,
 				hover && style.hover,
-				mousedown && style.mousedown,
+				mouse_down && style.mousedown,
 				pressed && style.pressed,
 				mode && style.mode,
 				inactive && style.inactive,

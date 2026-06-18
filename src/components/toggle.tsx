@@ -11,48 +11,47 @@ import {
 import style from '../scss/toggle.module.scss'
 import SVG from '../svg/toggle.svg?react'
 
+// constexpr
+const _defaultVoidFunction = (): void => {
+	/* */
+}
+
 const Toggle: FC<{
 	ariaLabel?: string
 	setValue?: boolean
 	onClick?: (b: boolean) => void
-}> = ({
-	ariaLabel = 'toggle',
-	setValue = false,
-	onClick = (): void => {
-		/**/
-	},
-}) => {
+}> = ({ ariaLabel = 'toggle', setValue = false, onClick = _defaultVoidFunction }) => {
 	/*
 		[toggle]
 	*/
 
 	// is the toggle pressed - state and prop
-	const [pressed, isPressed] = useState<boolean>(setValue)
+	const [pressed, setPressed] = useState<boolean>(setValue)
 	useEffect((): void => {
-		isPressed(setValue)
+		setPressed(setValue)
 	}, [setValue])
 	// keyboard event specific watch state
-	const [keydown, isKeyDown] = useState<boolean>(false)
+	const [key_down, setKeyDown] = useState<boolean>(false)
 	// event handlers
 	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault()
-			if (!keydown) {
-				isKeyDown(true)
-				isPressed(!pressed)
+			if (!key_down) {
+				setKeyDown(true)
+				setPressed(!pressed)
 				onClick(pressed)
 			}
 		}
 	}
 	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
-		if ((e.key === 'Enter' || e.key === ' ') && keydown) {
+		if ((e.key === 'Enter' || e.key === ' ') && key_down) {
 			e.preventDefault()
-			isKeyDown(false)
+			setKeyDown(false)
 		}
 	}
 	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
-			isPressed(!pressed)
+			setPressed(!pressed)
 			e.currentTarget.setPointerCapture(e.pointerId)
 			onClick(pressed)
 		}

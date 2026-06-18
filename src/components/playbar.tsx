@@ -19,47 +19,52 @@ import PauseButtonSVG from '../svg/playbar-pause.svg?react'
 import PlayButtonSVG from '../svg/playbar-play.svg?react'
 import PlaySliderSVG from '../svg/playbar-slider.svg?react'
 
+// constexpr
+const _defaultVoidFunction = (): void => {
+	/* */
+}
+
 const PlaybarToggle: FC<{
 	ariaLabel: string
 	inactive: boolean
-	setPlaying: boolean
+	isPlaying: boolean
 	onPlay: (b: boolean) => void
-}> = ({ ariaLabel, inactive, setPlaying, onPlay }) => {
+}> = ({ ariaLabel, inactive, isPlaying, onPlay }) => {
 	/*
 		The toggle element of the playbar.
 	*/
 
 	// is the toggle pressed - state and prop
-	const [playing, isPlaying] = useState<boolean>(setPlaying)
+	const [playing, setPlaying] = useState<boolean>(isPlaying)
 	useEffect((): void => {
-		isPlaying(setPlaying)
-	}, [setPlaying])
+		setPlaying(isPlaying)
+	}, [isPlaying])
 	// mousedown state
-	const [mousedown, isMouseDown] = useState<boolean>(false)
+	const [mouse_down, setMouseDown] = useState<boolean>(false)
 	// event handlers
 	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault()
-			if (!mousedown) {
-				isMouseDown(true)
+			if (!mouse_down) {
+				setMouseDown(true)
 				if (!inactive) {
-					isPlaying(!playing)
+					setPlaying(!playing)
 					onPlay(!playing)
 				}
 			}
 		}
 	}
 	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
-		if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
+		if ((e.key === 'Enter' || e.key === ' ') && mouse_down) {
 			e.preventDefault()
-			isMouseDown(false)
+			setMouseDown(false)
 		}
 	}
 	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
-			isMouseDown(true)
+			setMouseDown(true)
 			if (!inactive) {
-				isPlaying(!playing)
+				setPlaying(!playing)
 				e.currentTarget.setPointerCapture(e.pointerId)
 				onPlay(!playing)
 			}
@@ -67,12 +72,12 @@ const PlaybarToggle: FC<{
 	}
 	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-			isMouseDown(false)
+			setMouseDown(false)
 			e.currentTarget.releasePointerCapture(e.pointerId)
 		}
 	}
 	const _onPointerCancel = (): void => {
-		isMouseDown(false)
+		setMouseDown(false)
 	}
 
 	return (
@@ -81,7 +86,7 @@ const PlaybarToggle: FC<{
 			aria-disabled={inactive}
 			aria-label={`${ariaLabel}: play button`}
 			className='playbutton'
-			data-state={mousedown ? 'mousedown' : 'default'}
+			data-state={mouse_down ? 'mousedown' : 'default'}
 			onKeyDown={_onKeyDown}
 			onKeyUp={_onKeyUp}
 			onPointerCancel={_onPointerCancel}
@@ -114,11 +119,11 @@ const PlaybarSlider: FC<{
 	const self = useRef<HTMLDivElement>(null)
 	// dynamic width - state and prop
 	// this maintains that the svg is always positioned within the slider
-	const [stateWidth, updateWidth] = useState<number>(width)
+	const [slider_width, setSliderWidth] = useState<number>(width)
 	useEffect((): (() => void) => {
 		const computeWidth = (): void => {
 			if (self.current?.parentElement) {
-				updateWidth(Math.min(width, self.current.parentElement.getBoundingClientRect().width))
+				setSliderWidth(Math.min(width, self.current.parentElement.getBoundingClientRect().width))
 			}
 		}
 		window.addEventListener('resize', computeWidth)
@@ -128,17 +133,17 @@ const PlaybarSlider: FC<{
 		}
 	}, [width])
 	// mousedown state
-	const [mousedown, isMouseDown] = useState<boolean>(false)
+	const [mouse_down, setMouseDown] = useState<boolean>(false)
 	// slider value - state and prop
-	const [value, updateValue] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
+	const [position, setPosition] = useState<number>(Math.max(Math.min(setValue, 1), 0) * fidelity)
 	useEffect((): void => {
-		if (!mousedown) {
-			updateValue(Math.max(Math.min(setValue, 1), 0) * fidelity)
+		if (!mouse_down) {
+			setPosition(Math.max(Math.min(setValue, 1), 0) * fidelity)
 		}
-	}, [mousedown, setValue])
+	}, [mouse_down, setValue])
 	// onChange event with prop
 	const changeSlider = (v: number): void => {
-		updateValue(v)
+		setPosition(v)
 		onChange(v / fidelity)
 	}
 	// event handlers
@@ -149,7 +154,7 @@ const PlaybarSlider: FC<{
 			case 'Right':
 			case 'ArrowRight': {
 				e.preventDefault()
-				changeSlider(Math.min(Math.round(value + fidelity * 0.01), fidelity))
+				changeSlider(Math.min(Math.round(position + fidelity * 0.01), fidelity))
 				break
 			}
 			case 'Down':
@@ -157,16 +162,16 @@ const PlaybarSlider: FC<{
 			case 'Left':
 			case 'ArrowLeft':
 				e.preventDefault()
-				changeSlider(Math.max(Math.round(value - fidelity * 0.01), 0))
+				changeSlider(Math.max(Math.round(position - fidelity * 0.01), 0))
 				break
 			case 'PageUp': {
 				e.preventDefault()
-				changeSlider(Math.min(Math.round(value + fidelity * 0.1), fidelity))
+				changeSlider(Math.min(Math.round(position + fidelity * 0.1), fidelity))
 				break
 			}
 			case 'PageDown': {
 				e.preventDefault()
-				changeSlider(Math.max(Math.round(value - fidelity * 0.1), 0))
+				changeSlider(Math.max(Math.round(position - fidelity * 0.1), 0))
 				break
 			}
 			default:
@@ -174,13 +179,13 @@ const PlaybarSlider: FC<{
 		}
 	}
 	const _onPointerDown = (): void => {
-		isMouseDown(true)
+		setMouseDown(true)
 	}
 	const _onPointerUp = (): void => {
-		isMouseDown(false)
+		setMouseDown(false)
 	}
 	const _onPointerCancel = (): void => {
-		isMouseDown(false)
+		setMouseDown(false)
 	}
 	const _onTouchMove = (e: ReactTouchEvent<HTMLInputElement>): void => {
 		e.preventDefault()
@@ -210,8 +215,8 @@ const PlaybarSlider: FC<{
 				aria-orientation='horizontal'
 				aria-valuemax={fidelity}
 				aria-valuemin={0}
-				aria-valuenow={value}
-				data-state={mousedown ? 'mousedown' : 'default'}
+				aria-valuenow={position}
+				data-state={mouse_down ? 'mousedown' : 'default'}
 				onKeyDown={_onKeyDown}
 				ref={self}
 				role='slider'
@@ -224,7 +229,7 @@ const PlaybarSlider: FC<{
 						aria-orientation='horizontal'
 						aria-valuemax={fidelity}
 						aria-valuemin={0}
-						aria-valuenow={value}
+						aria-valuenow={position}
 						max={fidelity}
 						min='0'
 						onChange={_onChange}
@@ -234,14 +239,14 @@ const PlaybarSlider: FC<{
 						onTouchMove={_onTouchMove}
 						tabIndex={-1}
 						type='range'
-						value={value}
+						value={position}
 					/>
 				</div>
 			</div>
 			<PlaySliderSVG
 				role='img'
 				style={{
-					left: `${((stateWidth - 37) * (value / fidelity) + 16).toString()}px`,
+					left: `${((slider_width - 37) * (position / fidelity) + 16).toString()}px`,
 				}}
 			/>
 		</>
@@ -251,7 +256,7 @@ const PlaybarSlider: FC<{
 const Playbar: FC<{
 	ariaLabel?: string
 	inactive?: boolean
-	setPlaying?: boolean
+	isPlaying?: boolean
 	setValue?: number
 	width?: number
 	onChange?: (x: number) => void
@@ -259,18 +264,14 @@ const Playbar: FC<{
 }> = ({
 	ariaLabel = 'playbar',
 	inactive = false,
-	setPlaying = false,
+	isPlaying = false,
 	setValue = 0,
 	width = 200,
-	onChange = (): void => {
-		/**/
-	},
-	onPlay = (): void => {
-		/**/
-	},
+	onChange = _defaultVoidFunction,
+	onPlay = _defaultVoidFunction,
 }) => (
 	<div className={style.playbar} style={{ width: Math.max(width, 100) }}>
-		<PlaybarToggle ariaLabel={ariaLabel} inactive={inactive} setPlaying={setPlaying} onPlay={onPlay} />
+		<PlaybarToggle ariaLabel={ariaLabel} inactive={inactive} isPlaying={isPlaying} onPlay={onPlay} />
 		<PlaybarSlider
 			ariaLabel={ariaLabel}
 			inactive={inactive}

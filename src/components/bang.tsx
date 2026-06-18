@@ -7,54 +7,53 @@ import { type FC, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as
 import style from '../scss/bang.module.scss'
 import SVG from '../svg/bang.svg?react'
 
+// constexpr
+const _defaultVoidFunction = (): void => {
+	/* */
+}
+
 const Bang: FC<{
 	ariaLabel?: string
 	ariaPressed?: boolean | null
 	onClick?: () => void
-}> = ({
-	ariaLabel = 'bang',
-	ariaPressed = null,
-	onClick = (): void => {
-		/* */
-	},
-}) => {
+}> = ({ ariaLabel = 'bang', ariaPressed = null, onClick = _defaultVoidFunction }) => {
 	/*
 		[bang]
 	*/
 
 	// mousedown state
-	const [mousedown, isMouseDown] = useState<boolean>(false)
+	const [mouse_down, setMouseDown] = useState<boolean>(false)
 	// event handlers
 	const _onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault()
-			if (!mousedown) {
-				isMouseDown(true)
+			if (!mouse_down) {
+				setMouseDown(true)
 				onClick()
 			}
 		}
 	}
 	const _onKeyUp = (e: ReactKeyboardEvent<HTMLDivElement>): void => {
-		if ((e.key === 'Enter' || e.key === ' ') && mousedown) {
+		if ((e.key === 'Enter' || e.key === ' ') && mouse_down) {
 			e.preventDefault()
-			isMouseDown(false)
+			setMouseDown(false)
 		}
 	}
 	const _onPointerDown = (e: ReactPointerEvent<HTMLDivElement>): void => {
 		if (e.button === 0) {
-			isMouseDown(true)
+			setMouseDown(true)
 			e.currentTarget.setPointerCapture(e.pointerId)
 			onClick()
 		}
 	}
 	const _onPointerUp = (e: ReactPointerEvent<HTMLDivElement>): void => {
-		isMouseDown(false)
+		setMouseDown(false)
 		if (e.currentTarget.hasPointerCapture(e.pointerId)) {
 			e.currentTarget.releasePointerCapture(e.pointerId)
 		}
 	}
 	const _onPointerCancel = (): void => {
-		isMouseDown(false)
+		setMouseDown(false)
 	}
 
 	return (
@@ -72,7 +71,7 @@ const Bang: FC<{
 			role='button'
 			tabIndex={0}
 		>
-			<SVG className={mousedown ? style.mousedown : ''} role='img' tabIndex={-1} />
+			<SVG className={mouse_down ? style.mousedown : ''} role='img' tabIndex={-1} />
 		</div>
 	)
 }
