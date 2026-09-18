@@ -44,7 +44,7 @@ const RadioGroup: FC<{
 	// focus method
 	const toggleFocused = (i: number): void => {
 		setIndexFocused(i)
-		;(self.current?.childNodes[i] as HTMLElement).focus()
+		self.current?.querySelector<HTMLElement>(`:scope > :nth-child(${(i + 1).toString()})`)?.focus()
 	}
 
 	return (

@@ -49,10 +49,9 @@ const Umenu: FC<{
 
 	// methods
 	const responsiveDropdown = (): void => {
-		if (self.current) {
+		if (self.current?.parentElement) {
 			const maxWidth =
-				(self.current.parentNode as HTMLElement).getBoundingClientRect().right -
-				self.current.getBoundingClientRect().left
+				self.current.parentElement.getBoundingClientRect().right - self.current.getBoundingClientRect().left
 			setDropdownWidth(`${(maxWidth - 2).toString()}px`)
 		}
 	}
@@ -62,7 +61,7 @@ const Umenu: FC<{
 		if (dropdownVisible) {
 			responsiveDropdown()
 			if (_focus !== null) {
-				;(self.current?.childNodes[1]?.childNodes[_focus] as HTMLElement).focus()
+				self.current?.children[1]?.querySelectorAll<HTMLElement>('*')[_focus]?.focus()
 			}
 		}
 	}
@@ -72,12 +71,16 @@ const Umenu: FC<{
 		const isNotInViewport = (): void => {
 			if (dropdownVisible && self.current) {
 				const umenuDim = self.current.getBoundingClientRect()
-				const dropdownDim = (self.current.childNodes[1] as HTMLElement).getBoundingClientRect()
+				const dropdownDim = self.current
+					.querySelector<HTMLElement>(':scope > :nth-child(2)')
+					?.getBoundingClientRect()
+
 				if (
-					umenuDim.top > window.innerHeight ||
-					dropdownDim.bottom < 0 ||
-					umenuDim.left > window.innerWidth ||
-					Math.max(umenuDim.right, dropdownDim.right) < 0
+					dropdownDim &&
+					(umenuDim.top > window.innerHeight ||
+						dropdownDim.bottom < 0 ||
+						umenuDim.left > window.innerWidth ||
+						Math.max(umenuDim.right, dropdownDim.right) < 0)
 				) {
 					setDropdownVisible(false)
 					setIndexFocused(null)
@@ -88,7 +91,9 @@ const Umenu: FC<{
 		const customBlur = (e: MouseEvent): void => {
 			if (self.current) {
 				const umenuDim = self.current.getBoundingClientRect()
-				const dropdownDim = (self.current.childNodes[1] as HTMLElement).getBoundingClientRect()
+				const dropdownDim = self.current
+					.querySelector<HTMLElement>(':scope > :nth-child(2)')
+					?.getBoundingClientRect()
 				if (
 					e.clientX > umenuDim.left &&
 					e.clientX < umenuDim.right &&
@@ -97,7 +102,7 @@ const Umenu: FC<{
 				) {
 					return
 				}
-				if (dropdownVisible) {
+				if (dropdownDim && dropdownVisible) {
 					if (
 						e.clientX > dropdownDim.left &&
 						e.clientX < dropdownDim.right &&
@@ -133,10 +138,10 @@ const Umenu: FC<{
 		if (index_focused === null) {
 			const f = value === -1 ? items.length - 1 : 0
 			setIndexFocused(f)
-			;(self.current?.childNodes[1]?.childNodes[f] as HTMLElement).focus()
+			self.current?.children[1]?.querySelectorAll<HTMLElement>('*')[f]?.focus()
 		} else {
 			setIndexFocused((index_focused + items.length + value) % items.length)
-			;(self.current?.childNodes[1]?.childNodes[index_focused] as HTMLElement).focus()
+			self.current?.children[1]?.querySelectorAll<HTMLElement>('*')[index_focused]?.focus()
 		}
 	}
 
@@ -182,7 +187,7 @@ const Umenu: FC<{
 				e.preventDefault()
 				setIndexFocused(e.key === 'Home' ? 0 : items.length - 1)
 				if (index_focused !== null) {
-					;(self.current?.childNodes[1]?.childNodes[index_focused] as HTMLElement).focus()
+					self.current?.children[1]?.querySelectorAll<HTMLElement>('*')[index_focused]?.focus()
 				}
 				break
 			}
