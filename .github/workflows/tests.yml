@@ -9,6 +9,9 @@ on:
 jobs:
     all-tests:
         runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [macos-latest]
 
         steps:
             - uses: actions/checkout@master
