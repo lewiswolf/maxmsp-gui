@@ -18,7 +18,7 @@
 		display: grid;
 		grid-auto-rows: minmax(70px, max-content);
 		place-items: center;
-		padding-bottom: 48px;
+		padding-block-end: 48px;
 	}
 
 	h2 {

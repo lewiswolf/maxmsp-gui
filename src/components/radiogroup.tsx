@@ -1,6 +1,6 @@
 // biome-ignore-all lint/a11y/useSemanticElements : <div> is used instead of <input type=radio /> to have more control over styling and interaction
-// biome-ignore-all lint/nursery/noInlineStyles : inline styling is here used to curate a dynamic composition
 // biome-ignore-all lint/performance/noJsxPropsBind : here prop bindings are used alongside Aray.map()
+// biome-ignore-all lint/style/noInlineStyles : inline styling is here used to curate a dynamic composition
 
 // dependencies
 import { type FC, type JSX, useEffect, useRef, useState } from 'react'

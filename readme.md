@@ -115,20 +115,20 @@ All components return a div, and so the css can be accessed/overwritten in the f
 
 ```bash
 git clone ...
-npm install --include=dev
+bun install
 ```
 
 ### Run
 
 ```bash
-npm run build
-npm run example
+bun run build
+bun run example
 ```
 
 ### Test
 
 ```bash
-npm run dev
-npm run format
-npm run test
+bun run dev
+bun run format
+bun run test
 ```

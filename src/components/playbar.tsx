@@ -1,4 +1,4 @@
-// biome-ignore-all lint/nursery/noInlineStyles : inline styling is here used to curate a dynamic width
+// biome-ignore-all lint/style/noInlineStyles : inline styling is here used to curate a dynamic width
 
 // dependencies
 import {

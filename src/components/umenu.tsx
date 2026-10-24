@@ -1,6 +1,6 @@
 // biome-ignore-all lint/a11y/noNoninteractiveElementToInteractiveRole : <ul /> and <li /> works way better than <select /> and <option />
-// biome-ignore-all lint/nursery/noInlineStyles : inline styling is here used to curate a dynamic width
 // biome-ignore-all lint/performance/noJsxPropsBind : prop bindings are here used in conjunction with Array.map()
+// biome-ignore-all lint/style/noInlineStyles : inline styling is here used to curate a dynamic width
 
 // dependencies
 import {

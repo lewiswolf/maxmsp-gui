@@ -10,11 +10,11 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@vitejs/plugin-react": "file:../node_modules/@vitejs/plugin-react",
-		"maxmsp-gui": "file:..",
-		"react": "file:../node_modules/react",
-		"react-dom": "file:../node_modules/react-dom",
-		"vite": "file:../node_modules/vite",
-		"vite-plugin-compression2": "file:../node_modules/vite-plugin-compression2"
+		"@vitejs/plugin-react": "^6.1.2",
+		"maxmsp-gui": "workspace:*",
+		"react": "^19.3.1",
+		"react-dom": "^19.3.1",
+		"vite": "^8.3.5",
+		"vite-plugin-compression2": "^2.5.3"
 	}
 }
