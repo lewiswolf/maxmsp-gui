@@ -9,31 +9,25 @@ on:
 jobs:
     all-tests:
         runs-on: ${{ matrix.os }}
-        strategy:
-            matrix:
-                os: [macos-latest]
-                node: [26.x]
 
         steps:
             - uses: actions/checkout@master
-            - uses: actions/setup-node@v7
-              with:
-                  node-version: ${{ matrix.node }}
+            - uses: oven-sh/setup-bun@v2
 
             - name: Install node modules
-              run: npm install --include=dev
+              run: bun install --frozen-lockfile
 
             - name: Format project
               run: |
-                  npx @biomejs/biome format
-                  npx prettier --check ./src/scss
-                  npx prettier --check ./src/svg
+                  bunx @biomejs/biome format
+                  bunx prettier --check ./src/scss
+                  bunx prettier --check ./src/svg
 
             - name: Assert types
-              run: npx tsc
+              run: bunx tsc
 
             - name: Lint project
               run: |
-                  npx @biomejs/biome lint
-                  npx eslint .
-                  npx stylelint **/*.css **/*.scss
+                  bunx @biomejs/biome lint
+                  bunx eslint .
+                  bunx stylelint **/*.css **/*.scss
