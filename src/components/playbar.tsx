@@ -85,7 +85,6 @@ const PlaybarToggle: FC<{
 			aria-checked={playing}
 			aria-disabled={inactive}
 			aria-label={`${ariaLabel}: play button`}
-			className='playbutton'
 			data-state={mouse_down ? 'mousedown' : 'default'}
 			onKeyDown={_onKeyDown}
 			onKeyUp={_onKeyUp}

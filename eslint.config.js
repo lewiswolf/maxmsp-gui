@@ -30,7 +30,6 @@ export default defineConfig(
 			camelcase: 'off',
 			'capitalized-comments': 'off',
 			complexity: 'off',
-			'func-style': 'off',
 			'id-length': 'off',
 			'max-lines': 'off',
 			'max-lines-per-function': 'off',

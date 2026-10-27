@@ -15,6 +15,6 @@
 		"react": "^19.3.1",
 		"react-dom": "^19.3.1",
 		"vite": "^8.3.5",
-		"vite-plugin-compression2": "^2.5.3"
+		"vite-plugin-compression2": "^2.5.4"
 	}
 }

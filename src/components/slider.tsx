@@ -33,12 +33,12 @@ const Slider: FC<{
 
 	// decalre slider parameters
 	const fidelity = 10000
-	const SliderColors = useMemo<{
-		positive: string
-		negative: string
-		off: string
-	}>(
-		() => ({
+	const SliderColors = useMemo(
+		(): {
+			positive: string
+			negative: string
+			off: string
+		} => ({
 			negative: 'rgb(89 89 89)',
 			off: 'rgb(129 141 143)',
 			positive: 'rgb(206 229 232)',

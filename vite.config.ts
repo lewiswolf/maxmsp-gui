@@ -12,7 +12,7 @@ export default defineConfig({
 		copyPublicDir: false,
 		lib: {
 			entry: resolve(import.meta.dirname, 'src/index.ts'),
-			fileName: () => 'index.js',
+			fileName: 'index',
 			formats: ['es'],
 		},
 		rolldownOptions: {
