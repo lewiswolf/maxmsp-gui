@@ -274,9 +274,9 @@ const Playbar: FC<{
 		<PlaybarSlider
 			ariaLabel={ariaLabel}
 			inactive={inactive}
+			onChange={onChange}
 			setValue={setValue}
 			width={Math.max(width, 100)}
-			onChange={onChange}
 		/>
 	</div>
 )

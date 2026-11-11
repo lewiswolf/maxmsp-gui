@@ -249,8 +249,8 @@ const Umenu: FC<{
 				<UmenuSVG role='img' />
 			</div>
 			<ul
-				className={dropdownVisible && items.length > 0 ? style.visible : ''}
 				aria-label={`${ariaLabel}: ${items[index_pressed] ?? 'nothing'} selected`}
+				className={dropdownVisible && items.length > 0 ? style.visible : ''}
 				role='listbox'
 				style={{ width: dropdownWidth }}
 				tabIndex={-1}
@@ -260,14 +260,14 @@ const Umenu: FC<{
 						aria-selected={i === index_pressed}
 						className={index_focused === i ? style.focused : ''}
 						key={item}
+						onPointerDown={(): void => {
+							setIndexFocused(i)
+						}}
 						onPointerEnter={(): void => {
 							setIndexFocused(i)
 						}}
 						onPointerLeave={(): void => {
 							setIndexFocused(null)
-						}}
-						onPointerDown={(): void => {
-							setIndexFocused(i)
 						}}
 						onPointerUp={(): void => {
 							changeSelected(i, false)

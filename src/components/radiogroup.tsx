@@ -3,7 +3,15 @@
 // biome-ignore-all lint/style/noInlineStyles : inline styling is here used to curate a dynamic composition
 
 // dependencies
-import { type FC, type JSX, useEffect, useRef, useState } from 'react'
+import {
+	type FC,
+	type JSX,
+	type KeyboardEvent as ReactKeyboardEvent,
+	type PointerEvent as ReactPointerEvent,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
 
 // src
 import style from '../scss/radiogroup.module.scss'
@@ -56,13 +64,10 @@ const RadioGroup: FC<{
 						aria-checked={_i === index_pressed}
 						aria-label={item ? item : `${ariaLabel} button ${_i.toString()}`}
 						key={_i.toString()}
-						role='radio'
-						style={{ height: spacing > 16 ? `${spacing.toString()}px` : '16px' }}
-						tabIndex={_i === Math.max(index_pressed, 1) ? 0 : -1}
 						onFocus={(): void => {
 							setIndexFocused(i)
 						}}
-						onKeyDown={(e): void => {
+						onKeyDown={(e: ReactKeyboardEvent<HTMLDivElement>): void => {
 							switch (e.key) {
 								case 'Enter':
 								case ' ': {
@@ -89,17 +94,20 @@ const RadioGroup: FC<{
 									break
 							}
 						}}
-						onKeyUp={(e): void => {
+						onKeyUp={(e: ReactKeyboardEvent<HTMLDivElement>): void => {
 							if ((e.key === 'Enter' || e.key === ' ') && key_down) {
 								e.preventDefault()
 								setKeyDown(false)
 							}
 						}}
-						onPointerDown={(e): void => {
+						onPointerDown={(e: ReactPointerEvent<HTMLDivElement>): void => {
 							if (e.button === 0) {
 								togglePressed(_i)
 							}
 						}}
+						role='radio'
+						style={{ height: spacing > 16 ? `${spacing.toString()}px` : '16px' }}
+						tabIndex={_i === Math.max(index_pressed, 1) ? 0 : -1}
 					>
 						{Boolean(item) && (
 							<p
