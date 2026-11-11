@@ -34,20 +34,20 @@ export default function App() {
 	// render page
 	return (
 		<>
-			{!iframe && <h2>React component library for stylised Max MSP GUI</h2>}
+			{!iframe && <h2>React component library for a stylised Max GUI</h2>}
 			<MaxMSP.Bang />
 			<MaxMSP.Ezdac />
 			<MaxMSP.Message text='text' />
 			<MaxMSP.Object text='text' />
 			<MaxMSP.Playbar
 				isPlaying={playing}
-				setValue={playbar}
 				onChange={(x) => {
 					setPlaybar(x)
 				}}
 				onPlay={(bool) => {
 					setPlaying(bool)
 				}}
+				setValue={playbar}
 			/>
 			<MaxMSP.RadioGroup />
 			<MaxMSP.Slider />

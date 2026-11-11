@@ -2,7 +2,7 @@
 
 ## by Lewis Wolf
 
-> React component library for stylised Max MSP GUI.
+> React component library for a stylised Max GUI.
 
 [![NPM](https://img.shields.io/npm/v/maxmsp-gui.svg)](https://www.npmjs.com/package/maxmsp-gui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -30,15 +30,15 @@ export default function App() {
 
 			<MaxMSP.Ezdac
 				ariaLabel='Set the aria-label tag.' // defaults to the object name
-				setValue={true || false} // set the current state
 				onClick={(b: boolean) => console.log(b)}
+				setValue={true || false} // set the current state
 			/>
 
 			<MaxMSP.Message
 				ariaLabel='Set the aria-label tag.' // defaults to the object name
 				ariaPressed={true || false} // default null
-				text='What does the message say?'
 				onClick={() => console.log('bang')}
+				text='What does the message say?'
 			/>
 
 			<MaxMSP.Object
@@ -50,25 +50,25 @@ export default function App() {
 				ariaLabel='Set the aria-label tag.' // defaults to the object name
 				inactive={true || false} // disable user interaction, default false
 				isPlaying={true || false} // set onPlay externally
-				setValue={0} // initial/updated state, 0 to props.fidelity
-				width={200} // width of the slider in pixels
-				onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
+				onChange={(x: number) => console.log(`My value is ${x}`)} // 0. - 1.
 				onPlay={(b: boolean) => console.log(b)}
+				setValue={0} // initial/updated state, 0. - 1.
+				width={200} // width of the slider in pixels
 			/>
 
 			<MaxMSP.RadioGroup
 				ariaLabel='Set the aria-label tag.' // defaults to the object name
-				items={['array', 'of', 'items']} // this sets the amount of radiobuttons, strings create text alongside each button
-				spacing={24} // the height of each button in pixels
-				setValue={0} // props.items[i]
+				items={['array', 'of', 'items']} // this sets the amount of radio buttons, strings create text alongside each button
 				onClick={(i: number) => console.log(`My index is ${i}`)}
+				setValue={0} // props.items[i]
+				spacing={24} // the height of each button in pixels
 			/>
 
 			<MaxMSP.Slider
 				ariaLabel='Set the aria-label tag.' // defaults to the object name
-				setValue={0} // initial/updated state, 0 to props.fidelity
+				onChange={(x: number) => console.log(`My value is ${x}`)} // 0. - 1.
+				setValue={0} // initial/updated state, 0. - 1.
 				width={200} // width of the slider in pixels
-				onChange={(x: number) => console.log(`My value is ${x}`)} // 0 - props.fidelity
 			/>
 
 			<MaxMSP.TextButton
@@ -76,25 +76,25 @@ export default function App() {
 				ariaPressed={true || false} // default null, for button mode only
 				inactive={true || false} // disable user interaction, default false
 				mode={true || false} // true for toggle, false for bang, default false
+				onChange={(b: boolean) => console.log(b)} // toggle mode only
+				onClick={() => console.log('bang')}
 				setValue={true || false} // default false, for toggle mode only
 				text='What does the textbutton say?'
 				toggleText='What does the toggled textbutton say?'
-				onChange={(b: boolean) => console.log(b)} // toggle mode only
-				onClick={() => console.log('bang')}
 			/>
 
 			<MaxMSP.Toggle
 				ariaLabel='Set the aria-label tag.' // defaults to the object name
-				setValue={true || false} // set the current state
 				onClick={(b: boolean) => console.log(b)}
+				setValue={true || false} // set the current state
 			/>
 
 			<MaxMSP.Umenu
 				ariaLabel='Set the aria-label tag.' // defaults to the object name
 				items={['array', 'of', 'items']}
+				onChange={(i: number) => console.log(`My index is ${i}`)}
 				setValue={0} // props.items[i]
 				width={100} // width of the umenu in pixels
-				onChange={(i: number) => console.log(`My index is ${i}`)}
 			/>
 		</>
 	)
