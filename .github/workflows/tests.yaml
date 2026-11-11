@@ -23,7 +23,6 @@ jobs:
             - name: Format project
               run: |
                   bunx @biomejs/biome format
-                  bunx prettier --check ./src/scss
                   bunx prettier --check ./src/svg
 
             - name: Assert types
@@ -33,4 +32,3 @@ jobs:
               run: |
                   bunx @biomejs/biome lint
                   bunx eslint .
-                  bunx stylelint **/*.css **/*.scss

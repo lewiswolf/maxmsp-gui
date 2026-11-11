@@ -4,17 +4,20 @@
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
 	"scripts": {
 		"dev": "vite --host --base /",
 		"build": "vite build",
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@vitejs/plugin-react": "^6.1.2",
+		"@vitejs/plugin-react": "^6.3.0",
 		"maxmsp-gui": "workspace:*",
 		"react": "^19.3.1",
 		"react-dom": "^19.3.1",
-		"vite": "^8.3.5",
+		"vite": "^8.3.8",
 		"vite-plugin-compression2": "^2.5.4"
 	}
 }

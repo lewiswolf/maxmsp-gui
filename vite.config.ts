@@ -1,5 +1,6 @@
+// biome-ignore-all lint/correctness/noNodejsModules : this script is ran by NodeJS.
+
 import react from '@vitejs/plugin-react'
-// biome-ignore lint/correctness/noNodejsModules: This script is ran by NodeJS.
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'

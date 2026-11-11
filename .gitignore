@@ -6,7 +6,6 @@ build
 dist
 
 # misc
-.deno
 .DS_Store
 .vscode
 

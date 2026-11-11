@@ -42,7 +42,7 @@
 		"jsx": "react-jsx",
 		"lib": ["DOM", "ESNext"],
 		"target": "ESNext",
-		"types": ["node", "react", "react-dom"],
+		"types": ["react", "react-dom"],
 		// compilation
 		"module": "ESNext",
 		"moduleDetection": "force",

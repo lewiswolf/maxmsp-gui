@@ -8,7 +8,7 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ESNext",
-		"types": ["node"],
+		"types": ["bun"],
 		"verbatimModuleSyntax": true
 	},
 	"include": ["vite.config.ts"]
