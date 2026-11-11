@@ -1,5 +1,6 @@
-<?xml version='1.0' encoding='utf-8' ?>
-<svg xml:space='preserve' style='enable-background:new 0 0 84 84;' version='1.1' viewBox='0 0 84 84' x='0px' y='0px'>
+<?xml encoding='utf-8' version='1.0' ?>
+<svg xml:space='preserve' version='1.1' viewBox='0 0 84 84' x='0px' y='0px'>
+	<title>playbar slider thumb</title>
 	<g>
 		<path
 			d='M42.13,67.02C28.24,67.05,16.97,55.8,16.98,41.93C17,28.19,28.21,16.98,41.98,16.94

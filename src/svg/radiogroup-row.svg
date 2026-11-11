@@ -1,5 +1,6 @@
-<?xml version='1.0' encoding='utf-8' ?>
-<svg xml:space='preserve' style='enable-background:new 0 0 72 72;' version='1.1' viewBox='0 0 72 72' x='0px' y='0px'>
+<?xml encoding='utf-8' version='1.0' ?>
+<svg xml:space='preserve' version='1.1' viewBox='0 0 72 72' x='0px' y='0px'>
+	<title>radiogroup row</title>
 	<g>
 		<path
 			d='M72,72c-24,0-48,0-72,0C0,48,0,24,0,0c24,0,48,0,72,0C72,24,72,48,72,72z M56.4,36.1
