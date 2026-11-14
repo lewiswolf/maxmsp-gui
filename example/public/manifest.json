@@ -1,6 +1,6 @@
 {
 	"background_color": "#e5e5e5",
-	"description": "React component library for stylised Max MSP GUI",
+	"description": "React component library for a stylised Max GUI",
 	"developer": {
 		"name": "Lewis Wolstanholme",
 		"url": "http://lewiswolstanholme.co.uk"

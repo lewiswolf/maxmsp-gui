@@ -7,11 +7,6 @@
 	"engines": {
 		"node": ">=20"
 	},
-	"scripts": {
-		"dev": "vite --host --base /",
-		"build": "vite build",
-		"preview": "vite preview"
-	},
 	"dependencies": {
 		"@vitejs/plugin-react": "^6.3.0",
 		"maxmsp-gui": "workspace:*",
@@ -19,5 +14,10 @@
 		"react-dom": "^19.3.1",
 		"vite": "^8.3.8",
 		"vite-plugin-compression2": "^2.5.4"
+	},
+	"scripts": {
+		"dev": "vite --host --base /",
+		"build": "vite build",
+		"preview": "vite preview"
 	}
 }

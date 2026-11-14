@@ -22,7 +22,6 @@ export default function App() {
 				} else {
 					setPlaying(false)
 					setPlaybar(0)
-					window.clearInterval(interval.current)
 				}
 			}, 10)
 		}
@@ -39,16 +38,7 @@ export default function App() {
 			<MaxMSP.Ezdac />
 			<MaxMSP.Message text='text' />
 			<MaxMSP.Object text='text' />
-			<MaxMSP.Playbar
-				isPlaying={playing}
-				onChange={(x) => {
-					setPlaybar(x)
-				}}
-				onPlay={(bool) => {
-					setPlaying(bool)
-				}}
-				setValue={playbar}
-			/>
+			<MaxMSP.Playbar isPlaying={playing} onChange={setPlaybar} onPlay={setPlaying} setValue={playbar} />
 			<MaxMSP.RadioGroup />
 			<MaxMSP.Slider />
 			<div>

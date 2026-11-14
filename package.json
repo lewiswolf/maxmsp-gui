@@ -1,7 +1,7 @@
 {
 	"name": "maxmsp-gui",
 	"version": "2.7.1",
-	"description": "React component library for stylised Max MSP GUI.",
+	"description": "React component library for a stylised Max GUI.",
 	"author": "Lewis Wolstanholme",
 	"license": "MIT",
 	"homepage": "https://lewiswolf.github.io/maxmsp-gui/",
@@ -9,18 +9,21 @@
 		"type": "git",
 		"url": "git+https://github.com/lewiswolf/maxmsp-gui.git"
 	},
-	"main": "dist/index.js",
-	"source": "src/index.ts",
-	"types": "dist/index.d.ts",
-	"type": "module",
-	"engines": {
-		"node": ">=20"
-	},
 	"keywords": [
 		"cycling74",
 		"max msp",
 		"maxmsp"
 	],
+	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
+	"source": "src/index.ts",
+	"files": [
+		"dist"
+	],
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"workspaces": [
 		"example"
 	],
@@ -29,20 +32,20 @@
 		"react-dom": "^19.3.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.6.6",
-		"@eslint-react/eslint-plugin": "^5.30.1",
+		"@biomejs/biome": "^2.6.7",
+		"@eslint-react/eslint-plugin": "^5.30.2",
 		"@eslint/js": "^10.0.1",
 		"@prettier/plugin-xml": "^3.4.2",
 		"@types/bun": "^1.4.4",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.3.0",
-		"eslint": "^10.14.0",
+		"eslint": "^10.15.0",
 		"eslint-plugin-react-hooks": "^7.1.1",
 		"eslint-plugin-react-refresh": "^0.5.7",
 		"gh-pages": "^6.3.0",
 		"globals": "^17.14.0",
-		"prettier": "^3.9.10",
+		"prettier": "^3.10.1",
 		"sass-embedded": "^1.108.2",
 		"typescript": "6.0.3",
 		"typescript-eslint": "^8.72.2",
@@ -55,9 +58,6 @@
 	"trustedDependencies": [
 		"@parcel/watcher",
 		"fsevents"
-	],
-	"files": [
-		"dist"
 	],
 	"scripts": {
 		"build": "tsc && vite build",
